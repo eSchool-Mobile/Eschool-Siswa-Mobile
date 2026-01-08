@@ -118,9 +118,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _getToken() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-    print("Token device: $token");
-
+    if (kDebugMode) {
+      try {
+        String? token = await FirebaseMessaging.instance.getToken();
+        print("Token device: $token");
+      } catch (e) {
+        print("Error getting token: $e");
+      }
+    }
     // TODO: kirim token ke backend Laravel
   }
 

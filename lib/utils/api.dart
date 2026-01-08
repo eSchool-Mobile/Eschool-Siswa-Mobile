@@ -207,12 +207,10 @@ class Api {
   static String getContactStats = "${databaseUrl}contacts/stats";
 
   // Extracurricular endpoints
-  static String getExtracurriculars = "${databaseUrl}student/extracurricular/show";
+  static String getExtracurriculars =
+      "${databaseUrl}student/extracurricular/show";
   static String getMyExtracurriculars = "${databaseUrl}student/my-eskul";
   static String joinExtracurricular = "${databaseUrl}student/join-eskul";
-
-
-
 
   // static Future<Map<String, dynamic>> post({
   //   required Map<String, dynamic> body,
@@ -376,7 +374,6 @@ class Api {
       }
 
       if (e.response?.statusCode == 429) {
-        print("AMAN BOZ");
         throw ApiException(ErrorMessageKeysAndCode.tooManyAttemps);
       }
 
@@ -394,9 +391,9 @@ class Api {
     } on ApiException catch (e) {
       throw ApiException(e.errorMessage.toString());
     } catch (e) {
-      print(e);
-      print("DEBUG ERRORRR");
       if (kDebugMode) {
+        print(e);
+        print("DEBUG ERRORRR");
         print(e.toString());
       }
       throw ApiException(ErrorMessageKeysAndCode.defaultErrorMessageKey);

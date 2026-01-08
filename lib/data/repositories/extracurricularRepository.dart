@@ -2,9 +2,9 @@ import 'package:eschool/data/models/extracurricular.dart';
 import 'package:eschool/data/models/joinExtracurricularResponse.dart';
 import 'package:eschool/data/models/studentExtracurricular.dart';
 import 'package:eschool/utils/api.dart';
+import 'package:flutter/foundation.dart';
 
 class ExtracurricularRepository {
-  
   // Fetch all available extracurricular activities
   Future<Map<String, dynamic>> fetchExtracurriculars({
     int? offset,
@@ -15,12 +15,13 @@ class ExtracurricularRepository {
   }) async {
     try {
       Map<String, dynamic> queryParameters = {};
-      
+
       if (offset != null) queryParameters['offset'] = offset;
       if (limit != null) queryParameters['limit'] = limit;
       if (sort != null) queryParameters['sort'] = sort;
       if (order != null) queryParameters['order'] = order;
-      if (search != null && search.isNotEmpty) queryParameters['search'] = search;
+      if (search != null && search.isNotEmpty)
+        queryParameters['search'] = search;
 
       final result = await Api.get(
         url: Api.getExtracurriculars,
@@ -60,35 +61,48 @@ class ExtracurricularRepository {
         },
       );
 
-      print('DEBUG: API Result - $result');
+      if (kDebugMode) {
+        print('DEBUG: API Result - $result');
+      }
 
       JoinExtracurricularResponse? responseData;
       if (result['data'] != null) {
         try {
           responseData = JoinExtracurricularResponse.fromJson(result['data']);
-          print('DEBUG: Response data parsed successfully - $responseData');
+          if (kDebugMode) {
+            print('DEBUG: Response data parsed successfully - $responseData');
+          }
         } catch (parseError) {
-          print('DEBUG: Error parsing response data - $parseError');
-          print('DEBUG: Raw data - ${result['data']}');
+          if (kDebugMode) {
+            print('DEBUG: Error parsing response data - $parseError');
+            print('DEBUG: Raw data - ${result['data']}');
+          }
           // Continue without responseData if parsing fails
         }
       }
 
       final response = {
         'success': result['success'] ?? false,
-        'message': result['message'] ?? 'Pendaftaran ekstrakurikuler berhasil dikirim, menunggu persetujuan.',
+        'message': result['message'] ??
+            'Pendaftaran ekstrakurikuler berhasil dikirim, menunggu persetujuan.',
         'data': responseData,
       };
 
-      print('DEBUG: Final response - $response');
+      if (kDebugMode) {
+        print('DEBUG: Final response - $response');
+      }
       return response;
     } catch (e) {
-      print('DEBUG: Exception caught in joinExtracurricular - $e');
+      if (kDebugMode) {
+        print('DEBUG: Exception caught in joinExtracurricular - $e');
+      }
       if (e is ApiException) {
-        if (e.errorMessage.contains('302') || e.errorMessage.toLowerCase().contains('redirected')) {
+        if (e.errorMessage.contains('302') ||
+            e.errorMessage.toLowerCase().contains('redirected')) {
           return {
             'success': true,
-            'message': 'Pendaftaran ekstrakurikuler berhasil dikirim, menunggu persetujuan.',
+            'message':
+                'Pendaftaran ekstrakurikuler berhasil dikirim, menunggu persetujuan.',
             'data': null,
           };
         }
@@ -103,7 +117,7 @@ class ExtracurricularRepository {
   }) async {
     try {
       Map<String, dynamic>? queryParameters;
-      
+
       if (search != null && search.isNotEmpty) {
         queryParameters = {'search': search};
       }
@@ -119,7 +133,6 @@ class ExtracurricularRepository {
       final studentExtracurriculars = (dataList as List)
           .map((e) => StudentExtracurricular.fromJson(Map.from(e)))
           .toList();
-
 
       return {
         'extracurriculars': studentExtracurriculars,
@@ -159,5 +172,4 @@ class ExtracurricularRepository {
       throw ApiException(e.toString());
     }
   }
-
 }

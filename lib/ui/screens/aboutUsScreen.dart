@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,51 +61,6 @@ class _AboutUsScreenState extends State<AboutUsScreen>
     setState(() {
       cachedData = prefs.getString(aboutUsType);
     });
-  }
-
-  String generateRandomString(int length) {
-    const chars =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    final random = Random();
-    return List.generate(length, (index) => chars[random.nextInt(chars.length)])
-        .join();
-  }
-
-  String parseCustomHtml(String input) {
-    String placeholderBold = generateRandomString(10);
-    String placeholderItalic = generateRandomString(10);
-
-    while (placeholderItalic == placeholderBold) {
-      placeholderItalic = generateRandomString(10);
-      placeholderBold = generateRandomString(10);
-    }
-
-    input = input
-        .replaceAll('\\*', placeholderBold)
-        .replaceAll('\\/', placeholderItalic);
-
-    bool isBold = false;
-    bool isItalic = false;
-    String output = '';
-
-    for (int i = 0; i < input.length; i++) {
-      if (input[i] == '*') {
-        isBold = !isBold;
-        output += isBold ? '<b>' : '</b>';
-      } else if (input[i] == '/') {
-        isItalic = !isItalic;
-        output += isItalic ? '<i>' : '</i>';
-      } else {
-        output += input[i];
-      }
-    }
-
-    output = output
-        .replaceAll(placeholderBold, '*')
-        .replaceAll(placeholderItalic, '/')
-        .replaceAll("\n", "<br/>");
-
-    return output;
   }
 
   Widget _buildAppBar() {
@@ -304,7 +258,7 @@ class _AboutUsScreenState extends State<AboutUsScreen>
                       child: state is AppSettingsFetchSuccess
                           ? FadeIn(
                               child: HtmlWidget(
-                                parseCustomHtml(state.appSettingsResult),
+                                Utils.parseCustomHtml(state.appSettingsResult),
                                 textStyle: GoogleFonts.poppins(
                                   fontSize: 15,
                                   height: 1.6,
