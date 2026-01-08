@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="extracurricular_icon" transform="translate(0 0)">
+    <!-- Basketball main circle outline -->
+    <circle cx="15" cy="15" r="12" fill="none" stroke="#c62828" stroke-width="2"/>
+    
+    <!-- Basketball lines -->
+    <path d="M3 15 C3 15, 8 8, 15 8 C22 8, 27 15, 27 15" stroke="#c62828" stroke-width="2" fill="none"/>
+    <path d="M3 15 C3 15, 8 22, 15 22 C22 22, 27 15, 27 15" stroke="#c62828" stroke-width="2" fill="none"/>
+    <line x1="15" y1="3" x2="15" y2="27" stroke="#c62828" stroke-width="2"/>
+    
+    <!-- Center dot -->
+    <circle cx="15" cy="15" r="1.5" fill="none" stroke="#c62828" stroke-width="2"/>
+  </g>
+</svg>

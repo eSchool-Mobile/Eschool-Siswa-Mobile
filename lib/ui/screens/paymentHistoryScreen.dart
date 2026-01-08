@@ -1,0 +1,653 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:eschool/ui/widgets/customBackButton.dart';
+import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
+import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/labelKeys.dart';
+import 'package:eschool/utils/imageUtils.dart';
+import 'package:eschool/data/models/childFeeDetails.dart';
+import 'dart:convert';
+
+class PaymentHistoryScreen extends StatefulWidget {
+  final Bill bill;
+  final String billName;
+
+  const PaymentHistoryScreen({
+    Key? key,
+    required this.bill,
+    required this.billName,
+  }) : super(key: key);
+
+  @override
+  State<PaymentHistoryScreen> createState() => _PaymentHistoryScreenState();
+}
+
+class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  List<Map<String, dynamic>> paymentHistory = [];
+
+  // String variables with Key suffix
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 800),
+    );
+    _animationController.forward();
+
+    // Extract payment history from bill data
+    // Convert PaymentHistory objects to Maps
+    paymentHistory = widget.bill.paymentHistory.map((payment) {
+      return <String, dynamic>{
+        'status': payment.status ?? 'unknown',
+        'amount': payment.amount?.toString() ?? '0',
+        'date': payment.date ?? '',
+        'payment_method': payment.paymentMethod ?? '',
+        'proof_image': payment.proofImage ?? '',
+      };
+    }).toList();
+
+    // Sort by date (newest first)
+    paymentHistory.sort((a, b) {
+      final dateA = DateTime.tryParse(a['date'] ?? '');
+      final dateB = DateTime.tryParse(b['date'] ?? '');
+
+      if (dateA == null && dateB == null) return 0;
+      if (dateA == null) return 1;
+      if (dateB == null) return -1;
+
+      return dateB.compareTo(dateA);
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  String _formatCurrency(String amountStr) {
+    try {
+      final amount = double.parse(amountStr);
+      final formatter = NumberFormat.currency(
+        locale: 'id_ID',
+        symbol: 'Rp ',
+        decimalDigits: 0,
+      );
+      return formatter.format(amount);
+    } catch (e) {
+      return 'Rp $amountStr';
+    }
+  }
+
+  String _formatDate(String dateString) {
+    try {
+      final date = DateTime.parse(dateString);
+      return DateFormat('dd MMM yyyy, HH:mm', 'id_ID').format(date);
+    } catch (e) {
+      return dateString;
+    }
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'approved':
+      case 'success':
+        return Colors.green.shade600;
+      case 'pending':
+        return Colors.orange.shade600;
+      case 'rejected':
+      case 'failed':
+        return Colors.red.shade600;
+      default:
+        return Colors.grey.shade600;
+    }
+  }
+
+  IconData _getStatusIcon(String status) {
+    switch (status.toLowerCase()) {
+      case 'approved':
+      case 'success':
+        return Icons.check_circle_rounded;
+      case 'pending':
+        return Icons.hourglass_top_rounded;
+      case 'rejected':
+      case 'failed':
+        return Icons.cancel_rounded;
+      default:
+        return Icons.info_rounded;
+    }
+  }
+
+  Widget _buildPaymentHistoryItem(Map<String, dynamic> payment, int index) {
+    final String status =
+        payment['status'] ?? Utils.getTranslatedLabel(unknownKey);
+    final String amount = payment['amount'] ?? '0';
+    final String date = payment['date'] ?? '';
+    final String paymentMethod = payment['payment_method'] ?? '';
+    final String proofImage = payment['proof_image'] ?? '';
+
+    // Convert payment to JSON with 2-space indentation and split by lines
+    final jsonEncoder = JsonEncoder.withIndent('  ');
+    final jsonString = jsonEncoder.convert(payment);
+    final jsonLines = jsonString.split('\n');
+
+    final statusColor = _getStatusColor(status);
+    final statusIcon = _getStatusIcon(status);
+    final primaryColor = Theme.of(context).colorScheme.primary;
+
+    return Animate(
+        effects: [
+          FadeEffect(
+            duration: Duration(milliseconds: 600),
+            delay: Duration(milliseconds: 100 * index),
+          ),
+          SlideEffect(
+            begin: Offset(0.3, 0),
+            end: Offset.zero,
+            duration: Duration(milliseconds: 700),
+            delay: Duration(milliseconds: 100 * index),
+            curve: Curves.easeOutCubic,
+          ),
+        ],
+        child: Container(
+            margin: EdgeInsets.only(bottom: 16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: statusColor.withOpacity(0.2),
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: statusColor.withOpacity(0.1),
+                  blurRadius: 8,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header with status and date
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: statusColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(
+                            statusIcon,
+                            color: statusColor,
+                            size: 20,
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                status.toLowerCase() == "pending"
+                                    ? Utils.getTranslatedLabel(pendingKey)
+                                    : status.toLowerCase() == "approved"
+                                        ? Utils.getTranslatedLabel(approvedKey)
+                                        : status.toLowerCase() == "rejected"
+                                            ? Utils.getTranslatedLabel(
+                                                rejectedKey)
+                                            : Utils.getTranslatedLabel(
+                                                unknownKey),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: statusColor,
+                                ),
+                              ),
+                              Text(
+                                date.isNotEmpty
+                                    ? _formatDate(date)
+                                    : Utils.getTranslatedLabel(noDateKey),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 16),
+
+                    // Payment details
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: primaryColor.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: primaryColor.withOpacity(0.2),
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          // Amount
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.account_balance_wallet_rounded,
+                                size: 16,
+                                color: primaryColor.withOpacity(0.8),
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                Utils.getTranslatedLabel(amountKey),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
+                              Spacer(),
+                              Text(
+                                _formatCurrency(amount),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: primaryColor.withOpacity(0.9),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          // Payment Method
+                          SizedBox(height: 12),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // KIRI: ikon + label (label boleh wrap)
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.payment_rounded,
+                                      size: 16,
+                                      color: primaryColor.withOpacity(0.8),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        Utils.getTranslatedLabel(
+                                            paymentMethodKey), // "Metode Pembayaran"
+                                        softWrap: true,
+                                        maxLines:
+                                            null, // biar bisa lebih dari 1 baris
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey.shade700,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+
+                              // KANAN: chip nama bank (wrap & rata kanan)
+                              Expanded(
+                                child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                    return Align(
+                                      alignment: Alignment.centerRight,
+                                      child: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                            maxWidth: constraints.maxWidth),
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                primaryColor.withOpacity(0.1),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Text(
+                                            paymentMethod.isNotEmpty
+                                                ? paymentMethod // contoh: "Bank Syariah Indonesia"
+                                                : Utils.getTranslatedLabel(
+                                                    notSpecifiedKey),
+                                            softWrap: true,
+                                            maxLines:
+                                                null, // boleh lebih dari 1 baris
+                                            textAlign: TextAlign
+                                                .right, // tetap “menempel” ke kanan
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                              color: paymentMethod.isNotEmpty
+                                                  ? primaryColor
+                                                      .withOpacity(0.9)
+                                                  : Colors.grey.shade500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+
+                    // Payment Proof Section with Image Display
+                    SizedBox(height: 20),
+
+                    if (proofImage.isNotEmpty) ...[
+                      // Enhanced Image Preview Container
+                      GestureDetector(
+                        onTap: () => _showImageDialog(proofImage),
+                        child: Container(
+                          width: double.infinity,
+                          height: 240,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: primaryColor.withOpacity(0.4),
+                              width: 2,
+                            ),
+                          ),
+                          child: Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(18),
+                                child: Image.network(
+                                  proofImage,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: 240,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Container(
+                                      height: 240,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            primaryColor.withOpacity(0.1),
+                                            primaryColor.withOpacity(0.05),
+                                          ],
+                                        ),
+                                        borderRadius: BorderRadius.circular(18),
+                                      ),
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                              color:
+                                                  primaryColor.withOpacity(0.8),
+                                              strokeWidth: 3,
+                                            ),
+                                            SizedBox(height: 16),
+                                            Text(
+                                              Utils.getTranslatedLabel(
+                                                  loadingImageKey),
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                color: primaryColor
+                                                    .withOpacity(0.8),
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      height: 240,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            Colors.red.shade50,
+                                            Colors.red,
+                                          ],
+                                        ),
+                                        borderRadius: BorderRadius.circular(18),
+                                      ),
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(16),
+                                              decoration: BoxDecoration(
+                                                color: Colors.red.shade100,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Icon(
+                                                Icons.error_outline_rounded,
+                                                size: 40,
+                                                color: Colors.red.shade600,
+                                              ),
+                                            ),
+                                            SizedBox(height: 16),
+                                            Text(
+                                              Utils.getTranslatedLabel(
+                                                  failedToLoadImageKey),
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.red.shade700,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text(
+                                              Utils.getTranslatedLabel(
+                                                  tapToRetryKey),
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                color: Colors.red.shade600,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+
+                              // Overlay gradient for better text visibility
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Colors.transparent,
+                                      Colors.black.withOpacity(0.3),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                          .animate(onPlay: (controller) => controller.repeat())
+                          .shimmer(
+                              duration: 3000.ms,
+                              color: primaryColor.withOpacity(0.1)),
+                    ],
+                  ],
+                ))));
+  }
+
+  void _showImageDialog(String imageUrl) {
+    // Use the new ImageUtils for a better full-screen experience
+    ImageUtils.showSingleImage(
+      context: context,
+      imageUrl: imageUrl,
+      // imageName: "Payment Proof",
+      showDownload: true,
+      heroTag: "payment_proof",
+    );
+  }
+
+  Widget _buildEmptyState() {
+    final primaryColor = Theme.of(context).colorScheme.primary;
+
+    return Center(
+      child: Animate(
+        effects: [
+          FadeEffect(duration: Duration(milliseconds: 600)),
+          ScaleEffect(duration: Duration(milliseconds: 600)),
+        ],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: primaryColor.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.history_rounded,
+                size: 48,
+                color: primaryColor.withOpacity(0.8),
+              ),
+            ),
+            SizedBox(height: 24),
+            Text(
+              Utils.getTranslatedLabel(noPaymentHistoryKey),
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: primaryColor.withOpacity(0.9),
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              Utils.getTranslatedLabel(noPaymentsMadeKey),
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                color: Colors.grey.shade500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey.shade50,
+      body: Stack(
+        children: [
+          // Content
+          paymentHistory.isEmpty
+              ? _buildEmptyState()
+              : ListView.builder(
+                  padding: EdgeInsets.only(
+                    top: Utils.getScrollViewTopPadding(
+                          context: context,
+                          appBarHeightPercentage:
+                              Utils.appBarSmallerHeightPercentage,
+                        ) +
+                        20,
+                    bottom: 30,
+                    left: 20,
+                    right: 20,
+                  ),
+                  itemCount: paymentHistory.length,
+                  itemBuilder: (context, index) {
+                    return _buildPaymentHistoryItem(
+                        paymentHistory[index], index);
+                  },
+                ),
+
+          // App bar
+          ScreenTopBackgroundContainer(
+            heightPercentage: Utils.appBarSmallerHeightPercentage,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.topCenter,
+                children: [
+                  Positioned(
+                    left: 10,
+                    top: -2,
+                    child: const CustomBackButton(),
+                  ),
+                  Text(
+                    Utils.getTranslatedLabel(paymentHistoryTitleKey),
+                    style: TextStyle(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      fontSize: Utils.screenTitleFontSize,
+                    ),
+                  ),
+                  Positioned(
+                    top: 15,
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Text(
+                        widget.billName,
+                        style: TextStyle(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          fontSize: Utils.screenSubTitleFontSize,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

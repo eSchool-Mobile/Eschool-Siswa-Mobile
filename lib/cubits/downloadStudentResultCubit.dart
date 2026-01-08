@@ -1,0 +1,86 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:eschool/data/repositories/resultRepository.dart';
+import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+
+abstract class DownloadStudentResultState {}
+
+class DownloadStudentResultInitial extends DownloadStudentResultState {}
+
+class DownloadStudentResultInProgress extends DownloadStudentResultState {}
+
+class DownloadStudentResultSuccess extends DownloadStudentResultState {
+  final String downloadedFilePath;
+
+  DownloadStudentResultSuccess({required this.downloadedFilePath});
+}
+
+class DownloadStudentResultFailure extends DownloadStudentResultState {
+  final String errorMessage;
+
+  DownloadStudentResultFailure(this.errorMessage);
+}
+
+class DownloadStudentResultCubit extends Cubit<DownloadStudentResultState> {
+  final ResultRepository _resultRepository;
+
+  DownloadStudentResultCubit(this._resultRepository)
+      : super(DownloadStudentResultInitial());
+
+  void downloadStudentResult({required int childId, required int examId}) async {
+    try {
+      emit(DownloadStudentResultInProgress());
+
+      // String filePath = "";
+      // final path = (await getApplicationDocumentsDirectory()).path;
+      // filePath = "$path/Results/${childId}-${examId}.pdf";
+
+      // final File file = File(filePath);
+
+      // Get external storage directory instead of app directory - Galang
+      final directory = await getExternalStorageDirectory();
+      if (directory == null) {
+        throw Exception("Could not access external storage");
+      }
+
+      // Create results directory
+      final resultDir = Directory('${directory.path}/Results');
+      if (!await resultDir.exists()) {
+        await resultDir.create(recursive: true);
+      }
+
+      final filePath = '${resultDir.path}/$childId-$examId.pdf';
+      final file = File(filePath);
+      //
+
+
+      final receiptContent = await _resultRepository.downloadResult(
+          studentId: childId, examId: examId);
+          
+      // await file.create(recursive: true);
+
+      // Galang
+      if (!await file.exists()) {
+        await file.create(recursive: true);
+      }
+
+      // Write decoded content
+      await file.writeAsBytes(base64Decode(receiptContent));
+
+      // emit(DownloadStudentResultSuccess(downloadedFilePath: filePath));
+      // Verify file exists after writing
+      if (await file.exists()) {
+        emit(DownloadStudentResultSuccess(downloadedFilePath: filePath));
+      } else {
+        throw Exception("File failed to save");
+      }
+    } catch (e) {
+      emit(DownloadStudentResultFailure(
+          ErrorMessageKeysAndCode.defaultErrorMessageKey));
+    }
+  }
+}
