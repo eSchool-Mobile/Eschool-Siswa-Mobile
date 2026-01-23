@@ -33,12 +33,13 @@ class StudyMaterial {
   });
 
   StudyMaterial.fromJson(Map<String, dynamic> json) {
-    studyMaterialType = getStudyMaterialType(int.parse(json['type'] ?? "0"));
+    studyMaterialType = getStudyMaterialType(
+        int.tryParse(json['type']?.toString() ?? "0") ?? 0);
 
-    id = json['id'] ?? 0;
+    id = int.tryParse(json['id']?.toString() ?? '') ?? 0;
     fileName = json['file_name'] ?? "";
     fileThumbnail = json['file_thumbnail'] ?? "";
-    fileUrl = extract(json['file_url']);
+    fileUrl = extract(json['file_url']?.toString() ?? "");
     fileExtension = json['file_extension'] ?? "";
   }
 

@@ -92,12 +92,44 @@ class AssignmentRepository {
         print(line);
       }
 
+      final data = result['data'];
+
+      // If data is String (empty response), return empty list
+      if (data is String) {
+        return {
+          "assignments": <Assignment>[],
+          "totalPage": 0,
+          "currentPage": 0,
+        };
+      }
+
+      // If data is a List (because Api.get wrapped it)
+      if (data is List) {
+        return {
+          "assignments": data.map((e) {
+            return Assignment.fromJson(Map.from(e));
+          }).toList(),
+          "totalPage": 0, // No pagination info in list
+          "currentPage": 0,
+        };
+      }
+
+      // If data is Map (standard paginated response)
+      if (data is Map && data.containsKey('data')) {
+        return {
+          "assignments": (data['data'] as List).map((e) {
+            return Assignment.fromJson(Map.from(e));
+          }).toList(),
+          "totalPage": data['last_page'] as int,
+          "currentPage": data['current_page'] as int,
+        };
+      }
+
+      // Fallback or empty if structure is unknown
       return {
-        "assignments": (result['data']['data'] as List).map((e) {
-          return Assignment.fromJson(Map.from(e));
-        }).toList(),
-        "totalPage": result['data']['last_page'] as int,
-        "currentPage": result['data']['current_page'] as int,
+        "assignments": <Assignment>[],
+        "totalPage": 0,
+        "currentPage": 0,
       };
     } catch (e) {
       throw ApiException(e.toString());

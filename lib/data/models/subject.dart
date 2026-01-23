@@ -93,18 +93,19 @@ class Subject {
   }
 
   Subject.fromJson(Map<String, dynamic> json)
-      : id = json['id'] as int?,
+      : id = int.tryParse(json['id']?.toString() ?? ''),
         name = json['name'] as String?,
         code = json['code'] as String?,
         bgColor = json['bg_color'] as String?,
         image = json['image'] as String?,
-        mediumId = json['medium_id'] as int?,
+        mediumId = int.tryParse(json['medium_id']?.toString() ?? ''),
         type = json['type'] as String?,
-        schoolId = json['school_id'] as int?,
+        schoolId = int.tryParse(json['school_id']?.toString() ?? ''),
         createdAt = json['created_at'] as String?,
         updatedAt = json['updated_at'] as String?,
         deletedAt = json['deleted_at'],
-        classSubjectId = json['class_subject_id'] as int?,
+        classSubjectId =
+            int.tryParse(json['class_subject_id']?.toString() ?? ''),
         nameWithType = json['name_with_type'] as String?;
 
   Map<String, dynamic> toJson() => {

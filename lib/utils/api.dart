@@ -356,7 +356,9 @@ class Api {
         options: useAuthToken ? Options(headers: headers()) : null,
       );
 
-      if (response.data['error'] != null && response.data['error']) {
+      if (response.data is Map &&
+          response.data['error'] != null &&
+          response.data['error']) {
         if (kDebugMode) {
           print("Url $url");
           print(response.data);
@@ -365,7 +367,10 @@ class Api {
             response.data['message'] ?? response.data['code'].toString());
       }
 
-      return Map.from(response.data);
+      if (response.data is Map) {
+        return Map.from(response.data);
+      }
+      return {"data": response.data};
     } on DioException catch (e) {
       if (kDebugMode) {
         print("Url is $url");

@@ -67,11 +67,12 @@ class Assignment {
   }
 
   Assignment.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
+    id = int.tryParse(json['id']?.toString() ?? '') ?? 0;
 
-    classSectionId = json['class_section_id'] ?? 0;
+    classSectionId =
+        int.tryParse(json['class_section_id']?.toString() ?? '') ?? 0;
 
-    subjectId = json['subject_id'] ?? 0;
+    subjectId = int.tryParse(json['subject_id']?.toString() ?? '') ?? 0;
 
     name = json['name'] ?? "";
 
@@ -81,13 +82,16 @@ class Assignment {
         ? DateTime.now()
         : DateTime.parse(json['due_date']);
 
-    points = json['points'] ?? 0;
+    points = int.tryParse(json['points']?.toString() ?? '') ?? 0;
 
-    resubmission = json['resubmission'] ?? -1;
+    resubmission = int.tryParse(json['resubmission']?.toString() ?? '') ?? -1;
 
-    extraDaysForResubmission = json['extra_days_for_resubmission'] ?? 0;
+    extraDaysForResubmission =
+        int.tryParse(json['extra_days_for_resubmission']?.toString() ?? '') ??
+            0;
 
-    sessionYearId = json['session_year_id'] ?? 0;
+    sessionYearId =
+        int.tryParse(json['session_year_id']?.toString() ?? '') ?? 0;
 
     referenceMaterials = ((json['file'] ?? []) as List)
         .map((file) => StudyMaterial.fromJson(Map.from(file)))
@@ -103,12 +107,12 @@ class Assignment {
         ? DateTime.now()
         : DateTime.parse(json['created_at'].toString());
 
-    schoolId = json['school_id'] ?? 0;
+    schoolId = int.tryParse(json['school_id']?.toString() ?? '') ?? 0;
 
     filetypes = List<String>.from(
         (json['filetypes'] ?? []).where((element) => element != null));
 
-    max_file = json['max_file'] ?? 1;
+    max_file = int.tryParse(json['max_file']?.toString() ?? '') ?? 1;
 
     var textValue = json['text'];
 
@@ -149,13 +153,14 @@ class AssignmentSubmission {
   late final String content;
 
   AssignmentSubmission.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    points = json['points'] ?? 0;
-    assignmentId = json['assignment_id'] ?? 0;
-    studentId = json['student_id'] ?? 0;
-    sessionYearId = json['session_year_id'] ?? 0;
+    id = int.tryParse(json['id']?.toString() ?? '') ?? 0;
+    points = int.tryParse(json['points']?.toString() ?? '') ?? 0;
+    assignmentId = int.tryParse(json['assignment_id']?.toString() ?? '') ?? 0;
+    studentId = int.tryParse(json['student_id']?.toString() ?? '') ?? 0;
+    sessionYearId =
+        int.tryParse(json['session_year_id']?.toString() ?? '') ?? 0;
     feedback = json['feedback'] ?? "";
-    status = json['status'] ?? -1;
+    status = int.tryParse(json['status']?.toString() ?? '') ?? -1;
     createdAt = json['created_at'] == null
         ? DateTime.now()
         : DateTime.parse(json['created_at']);

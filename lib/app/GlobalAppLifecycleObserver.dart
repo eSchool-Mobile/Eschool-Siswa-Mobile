@@ -1,4 +1,3 @@
-import 'package:eschool/utils/ExamSubmitSyncService.dart';
 import 'package:flutter/widgets.dart';
 
 class GlobalAppLifecycleObserver with WidgetsBindingObserver {
