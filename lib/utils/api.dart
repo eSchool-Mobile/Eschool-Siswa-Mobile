@@ -178,7 +178,7 @@ class Api {
       "${databaseUrl}parent/fees/compulsory/pay";
 
   static String payChildOptionalFees = "${databaseUrl}parent/fees/optional/pay";
-  static String confirmPayment = "${databaseUrl}payment-confirmation";
+  static String confirmPayment = "${databaseUrl}parent/payment-confirmation";
   static String getTransactions = "${databaseUrl}payment-transactions";
   static String downloadFeeReceipt = "${databaseUrl}parent/fees/receipt";
   static String downloadStudentResult = "${databaseUrl}student-exan-result-pdf";

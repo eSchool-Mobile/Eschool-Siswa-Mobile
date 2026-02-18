@@ -162,7 +162,8 @@ class _ChildDetailsScreenState extends State<ChildDetailsScreen> {
                   child: Padding(
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).padding.top +
-                          Utils.appBarContentTopPadding - 10 ,
+                          Utils.appBarContentTopPadding -
+                          10,
                       left: 10,
                       right: 10.0,
                     ),
@@ -221,24 +222,43 @@ class _ChildDetailsScreenState extends State<ChildDetailsScreen> {
                     if (state is StudentSubjectsAndSlidersFetchSuccess) {
                       return Align(
                         alignment: AlignmentDirectional.topEnd,
-                        child: IconButton(
-                          color: Theme.of(context).colorScheme.surface,
+                        child: Padding(
                           padding: EdgeInsets.only(
                             top: MediaQuery.of(context).padding.top +
                                 Utils.appBarContentTopPadding,
+                            right: 8.0,
                           ),
-                          onPressed: () {
-                            Get.toNamed(
-                              Routes.parentMenu,
-                              arguments: {
-                                "student": widget.student,
-                                "subjectsForFilter": context
-                                    .read<StudentSubjectsAndSlidersCubit>()
-                                    .getSubjectsForAssignmentContainer()
+                          child: Material(
+                            color: Colors.transparent,
+                            shape: const RoundedRectangleBorder(),
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              customBorder: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(12),
+                                ),
+                              ),
+                              onTap: () {
+                                Get.toNamed(
+                                  Routes.parentMenu,
+                                  arguments: {
+                                    "student": widget.student,
+                                    "subjectsForFilter": context
+                                        .read<StudentSubjectsAndSlidersCubit>()
+                                        .getSubjectsForAssignmentContainer()
+                                  },
+                                );
                               },
-                            );
-                          },
-                          icon: const Icon(Icons.grid_view_rounded),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Icon(
+                                  Icons.grid_view_rounded,
+                                  color: Theme.of(context).colorScheme.surface,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     }
@@ -293,7 +313,7 @@ class _ChildDetailsScreenState extends State<ChildDetailsScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height * (0.025),
           ),
-           const SubjectsShimmerLoadingContainer(),
+          const SubjectsShimmerLoadingContainer(),
         ],
       ),
     );

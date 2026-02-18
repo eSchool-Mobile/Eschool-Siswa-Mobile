@@ -1,28 +1,34 @@
 import 'package:eschool/data/models/studyMaterial.dart';
 
 class Announcement {
-  Announcement(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.createdAt,});
-  late final int id;
-  late final creator;
-  late final DateTime createdAt;
-  late final String title;
-  late final String description;
-  late final List<StudyMaterial> files;
+  Announcement({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.createdAt,
+    this.creator = "",
+    this.files = const [],
+  });
 
-  Announcement.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    title = json['title'] ?? "";
-    createdAt = json['created_at'] == null
-        ? DateTime.now()
-        : DateTime.parse(json['created_at']);
-    description = json['description'] ?? "";
-    creator = json['creator'] ?? "";
-    files = ((json['file'] ?? []) as List)
-        .map((file) => StudyMaterial.fromJson(Map.from(file)))
-        .toList();
+  final int id;
+  final String title;
+  final String description;
+  final DateTime createdAt;
+  final String creator;
+  final List<StudyMaterial> files;
+
+  factory Announcement.fromJson(Map<String, dynamic> json) {
+    return Announcement(
+      id: json['id'] ?? 0,
+      title: json['title'] ?? "",
+      description: json['description'] ?? "",
+      createdAt: json['created_at'] == null
+          ? DateTime.now()
+          : DateTime.parse(json['created_at']),
+      creator: json['creator'] ?? "",
+      files: ((json['file'] ?? []) as List)
+          .map((file) => StudyMaterial.fromJson(Map.from(file)))
+          .toList(),
+    );
   }
 }

@@ -225,7 +225,7 @@ class PaymentMethod {
         'account_number': accountNumber,
         'account_holder': accountHolder,
         'image': image,
-        'description' : description,
+        'description': description,
         'created_at': createdAt,
         'updated_at': updatedAt,
         'image_url': imageUrl,
@@ -506,16 +506,18 @@ class ChildFeeDetails {
         case 'paid':
           return paidKey;
         case 'partially_paid':
+        case 'partial': // ✅ Support both 'partial' and 'partially_paid' from backend
           return partiallyPaidKey;
         case 'unpaid':
+          return unpaidKey; // ✅ Fixed: return unpaidKey instead of pendingKey
         default:
-          return pendingKey;
+          return unpaidKey; // ✅ Fixed: default to unpaidKey for unknown status
       }
     }
 
     // Fallback to old format
     if (paidFees?.isEmpty ?? true) {
-      return pendingKey;
+      return unpaidKey; // ✅ Fixed: return unpaidKey instead of pendingKey
     }
     return paidFees!.first.isFullyPaid == 1 ? paidKey : partiallyPaidKey;
   }

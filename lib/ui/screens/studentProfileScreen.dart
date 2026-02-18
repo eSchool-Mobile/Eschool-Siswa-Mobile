@@ -679,7 +679,8 @@ class _StudentProfileScreenState extends State<StudentProfileScreen>
                     duration: const Duration(milliseconds: 800),
                     tween: Tween<double>(begin: 0, end: 1),
                     // Stagger the animations
-                    curve: Interval(0.1 * index, 0.1 * index + 0.6,
+                    curve: Interval(
+                        0.1 * index, (0.1 * index + 0.6).clamp(0.0, 1.0),
                         curve: Curves.easeOut),
                     builder: (context, value, child) {
                       return Transform.translate(

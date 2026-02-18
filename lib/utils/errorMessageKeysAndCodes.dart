@@ -45,7 +45,8 @@ class ErrorMessageKeysAndCode {
   static const String failedDeleteAssigment = "103";
 
   //Visit here to watch error message keys and codes
-  static String getErrorMessageKeyFromCode(String errorCode,{String source = ""}) {
+  static String getErrorMessageKeyFromCode(String errorCode,
+      {String source = ""}) {
     //
     if (errorCode == "101") {
       return invalidLogInCredentialsKey;
@@ -77,12 +78,11 @@ class ErrorMessageKeysAndCode {
     }
     if (errorCode == "103") {
       print(source);
-      if(source == "tugas") {
+      if (source == "tugas") {
         return failedDeleteAssigmentKey;
-      }else if (source == "ujian") {
+      } else if (source == "ujian") {
         return pleaseAnswerAllQuestionsKey;
       }
-      
     }
     if (errorCode == notAllowedInDemoVersionCode) {
       return notAllowedInDemoVersionKey;
@@ -117,5 +117,69 @@ class ErrorMessageKeysAndCode {
     } else {
       return defaultErrorMessageKey;
     }
+  }
+}
+
+/// Utility class to convert technical errors to user-friendly Indonesian messages
+///
+/// This mapper provides improved UX by translating technical error messages
+/// (exceptions, HTTP codes, network errors) into clear, actionable messages
+/// that users can understand and act upon.
+class ErrorMessageMapper {
+  /// Converts technical error messages to user-friendly Indonesian messages
+  ///
+  /// Examples:
+  /// - SocketException → "Koneksi internet bermasalah..."
+  /// - 401 Unauthenticated → "Sesi Anda habis. Silakan login kembali."
+  /// - Timeout → "Server tidak merespons..."
+  static String getUserFriendlyMessage(Object error) {
+    final errorStr = error.toString().toLowerCase();
+
+    // Network/Connection errors
+    if (errorStr.contains('connection') ||
+        errorStr.contains('network') ||
+        errorStr.contains('socket')) {
+      return 'Koneksi internet bermasalah. Periksa koneksi Anda dan coba lagi.';
+    }
+
+    // Timeout errors
+    if (errorStr.contains('timeout') || errorStr.contains('timed out')) {
+      return 'Server tidak merespons. Silakan coba beberapa saat lagi.';
+    }
+
+    // Authentication errors (401)
+    if (errorStr.contains('unauthenticated') || errorStr.contains('401')) {
+      return 'Sesi Anda habis. Silakan login kembali.';
+    }
+
+    // Forbidden errors (403)
+    if (errorStr.contains('403') || errorStr.contains('forbidden')) {
+      return 'Anda tidak memiliki akses untuk melakukan aksi ini.';
+    }
+
+    // Not found errors (404)
+    if (errorStr.contains('404') || errorStr.contains('not found')) {
+      return 'Data tidak ditemukan. Hubungi admin sekolah.';
+    }
+
+    // Validation errors (422)
+    if (errorStr.contains('422') || errorStr.contains('validation')) {
+      return 'Data yang Anda kirim tidak valid. Periksa kembali data Anda.';
+    }
+
+    // Server errors (500)
+    if (errorStr.contains('500') ||
+        errorStr.contains('server error') ||
+        errorStr.contains('internal server')) {
+      return 'Server sedang bermasalah. Coba lagi nanti.';
+    }
+
+    // Service unavailable (503)
+    if (errorStr.contains('503') || errorStr.contains('service unavailable')) {
+      return 'Layanan sedang maintenance. Coba lagi nanti.';
+    }
+
+    // Default fallback
+    return 'Terjadi kesalahan. Silakan coba lagi atau hubungi admin.';
   }
 }

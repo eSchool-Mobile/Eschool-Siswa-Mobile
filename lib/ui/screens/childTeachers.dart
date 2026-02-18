@@ -105,7 +105,8 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
               child: Row(
                 children: [
                   Hero(
-                    tag: 'teacher_${subjectTeacher.teacher?.id}',
+                    tag:
+                        'teacher_${subjectTeacher.teacher?.id}_${subjectTeacher.subject?.id}',
                     child: Container(
                       width: 70,
                       height: 70,
@@ -295,7 +296,8 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Hero(
-                      tag: 'teacher_${subjectTeacher.teacher?.id}',
+                      tag:
+                          'teacher_${subjectTeacher.teacher?.id}_${subjectTeacher.subject?.id}',
                       child: Container(
                         width: 120,
                         height: 120,

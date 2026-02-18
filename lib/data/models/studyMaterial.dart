@@ -15,13 +15,13 @@ StudyMaterialType getStudyMaterialType(int type) {
 }
 
 class StudyMaterial {
-  late final StudyMaterialType studyMaterialType;
+  final StudyMaterialType studyMaterialType;
 
-  late final int id;
-  late final String fileName;
-  late final String fileThumbnail;
-  late final String fileUrl;
-  late final String fileExtension;
+  final int id;
+  final String fileName;
+  final String fileThumbnail;
+  final String fileUrl;
+  final String fileExtension;
 
   StudyMaterial({
     required this.fileExtension,
@@ -32,18 +32,19 @@ class StudyMaterial {
     required this.studyMaterialType,
   });
 
-  StudyMaterial.fromJson(Map<String, dynamic> json) {
-    studyMaterialType = getStudyMaterialType(
-        int.tryParse(json['type']?.toString() ?? "0") ?? 0);
-
-    id = int.tryParse(json['id']?.toString() ?? '') ?? 0;
-    fileName = json['file_name'] ?? "";
-    fileThumbnail = json['file_thumbnail'] ?? "";
-    fileUrl = extract(json['file_url']?.toString() ?? "");
-    fileExtension = json['file_extension'] ?? "";
+  factory StudyMaterial.fromJson(Map<String, dynamic> json) {
+    return StudyMaterial(
+      studyMaterialType: getStudyMaterialType(
+          int.tryParse(json['type']?.toString() ?? "0") ?? 0),
+      id: int.tryParse(json['id']?.toString() ?? '') ?? 0,
+      fileName: json['file_name'] ?? "",
+      fileThumbnail: json['file_thumbnail'] ?? "",
+      fileUrl: extract(json['file_url']?.toString() ?? ""),
+      fileExtension: json['file_extension'] ?? "",
+    );
   }
 
-  String extract(String input) {
+  static String extract(String input) {
     List<String> parts = input.split(RegExp(r'(?=https?://)'));
     return parts.isNotEmpty ? parts.last.trim() : '';
   }

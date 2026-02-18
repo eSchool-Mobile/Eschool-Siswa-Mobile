@@ -10,6 +10,7 @@
 .svn/
 key.properties
 upload-store.jks
+docs/
 
 # IntelliJ related
 *.iml

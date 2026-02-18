@@ -130,7 +130,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     _buttonAnimationController.dispose();
     _floatingParticlesController.dispose();
     _pulseAnimationController.dispose();
-    super.dispose();
+    super.  dispose();
   }
 
   Widget _buildAnimatedBackground() {

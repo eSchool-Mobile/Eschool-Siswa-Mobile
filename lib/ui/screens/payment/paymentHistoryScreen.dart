@@ -9,7 +9,6 @@ import 'package:eschool/utils/utils.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/imageUtils.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
-import 'dart:convert';
 
 class PaymentHistoryScreen extends StatefulWidget {
   final Bill bill;
@@ -132,11 +131,6 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
     final String date = payment['date'] ?? '';
     final String paymentMethod = payment['payment_method'] ?? '';
     final String proofImage = payment['proof_image'] ?? '';
-
-    // Convert payment to JSON with 2-space indentation and split by lines
-    final jsonEncoder = JsonEncoder.withIndent('  ');
-    final jsonString = jsonEncoder.convert(payment);
-    final jsonLines = jsonString.split('\n');
 
     final statusColor = _getStatusColor(status);
     final statusIcon = _getStatusIcon(status);

@@ -36,12 +36,7 @@ class PaymentHistoryTabScreen extends StatefulWidget {
 // ===== enums =====
 enum _TimePreset { all, today, last7, last30, thisMonth, custom }
 
-enum _StatusFilter {
-  all,
-  pending,
-  approved,
-  rejected
-} // dari API: tertunda, disetujui, ditolak
+enum _StatusFilter { all, approved, rejected } // dari API: disetujui, ditolak
 
 // ===== helper class untuk item chip (top-level, bukan di dalam State) =====
 class _ChipItem {
@@ -201,9 +196,6 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
         if (payments.isEmpty) return false;
         final st = (payments.first['status']?.toString() ?? '').toLowerCase();
         switch (_status) {
-          case _StatusFilter.pending:
-            // API: "tertunda"
-            return st == 'tertunda' || st == 'pending';
           case _StatusFilter.approved:
             // API: "disetujui"
             return st == 'disetujui' || st == 'approved';
@@ -458,9 +450,6 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
       _ChipItem('Semua', Icons.checklist_rtl_rounded,
           selected: _status == _StatusFilter.all,
           onTap: () => setState(() => _status = _StatusFilter.all)),
-      _ChipItem('Tertunda', Icons.hourglass_top_rounded,
-          selected: _status == _StatusFilter.pending,
-          onTap: () => setState(() => _status = _StatusFilter.pending)),
       _ChipItem('Disetujui', Icons.check_circle_rounded,
           selected: _status == _StatusFilter.approved,
           onTap: () => setState(() => _status = _StatusFilter.approved)),
@@ -611,9 +600,6 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
   Color _getStatusColor(String status) {
     final s = status.toLowerCase();
     switch (s) {
-      case 'tertunda':
-      case 'pending':
-        return Colors.orange;
       case 'disetujui':
       case 'approved':
         return Colors.green;
@@ -637,7 +623,6 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
     }
 
     bool hasRejected = false;
-    bool hasPending = false;
     final paymentIds = <String>[];
 
     // Debug & validasi status + kumpulkan ID
@@ -658,31 +643,20 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
           print('Payment ID: $id, Status: <empty/invalid>');
         }
 
-        // Prioritas status: rejected > pending > lainnya
+        // Check for rejected status
         if (st == 'rejected' || st == 'failed' || st == 'declined') {
           hasRejected = true;
-        } else if (st == 'pending' || st == 'processing' || st == 'waiting') {
-          hasPending = true;
         }
       } else {
         print('Invalid payment element (bukan Map): $element');
       }
     }
 
-    // Early return sesuai ketentuan
+    // Early return if rejected
     if (hasRejected) {
       Utils.showCustomSnackBar(
         context: context,
         errorMessage: 'Pembayaran ditolak. Struk tidak tersedia.',
-        backgroundColor: Theme.of(context).colorScheme.error,
-      );
-      return;
-    }
-    if (hasPending) {
-      Utils.showCustomSnackBar(
-        context: context,
-        errorMessage:
-            'Pembayaran masih diproses. Silakan unduh struk setelah status berhasil.',
         backgroundColor: Theme.of(context).colorScheme.error,
       );
       return;
@@ -960,9 +934,6 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
 
   String _getStatusText(String status) {
     switch (status.toLowerCase()) {
-      case 'tertunda':
-      case 'pending':
-        return 'Tertunda';
       case 'disetujui':
       case 'approved':
         return 'Disetujui';

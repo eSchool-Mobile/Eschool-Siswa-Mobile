@@ -11,7 +11,7 @@ import 'package:eschool/cubits/xenditInvoiceCubit.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/data/models/xenditInvoice.dart';
-import 'package:eschool/ui/screens/xenditPaymentScreen.dart';
+import 'package:eschool/ui/screens/payment/xenditPaymentScreen.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';

@@ -18,7 +18,8 @@ class PaymentRepository {
     }
   }
 
-  Future<List<dynamic>> getTransactions({bool? fetchLatest, int? studentId}) async {
+  Future<List<dynamic>> getTransactions(
+      {bool? fetchLatest, int? studentId}) async {
     try {
       final result = await Api.get(
           url: Api.getTransactions,
@@ -34,7 +35,7 @@ class PaymentRepository {
       for (String line in lines) {
         print(line);
       }
-      
+
       // Return the raw data array for the new grouped payment structure
       return (result['data'] ?? []) as List;
     } catch (e) {

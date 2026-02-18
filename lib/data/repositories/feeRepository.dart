@@ -28,18 +28,17 @@ class FeeRepository {
 
       // Handle both old and new API response format
       List<ChildFeeDetails> feeDetailsList = [];
-      
+
       // Check if it's the new format with error, message, data structure
-      if (result.containsKey('error') && 
-          result.containsKey('message') && 
+      if (result.containsKey('error') &&
+          result.containsKey('message') &&
           result.containsKey('data')) {
-        
         // Check if data is valid and contains bills
         final data = result['data'];
         if (data != null && data is Map<String, dynamic>) {
           final bills = data['bills'];
           final paymentMethods = data['payment_method'];
-          
+
           // Create one ChildFeeDetails per bill
           if (bills != null && bills is List && bills.isNotEmpty) {
             for (var bill in bills) {
@@ -60,16 +59,28 @@ class FeeRepository {
                   'total_compulsory_fees': bill['total_amount'],
                   'is_overdue': bill['status'] == 'overdue'
                 };
-                
-                final childFeeDetails = ChildFeeDetails.fromJson(feeDetailsJson);
+
+                final childFeeDetails =
+                    ChildFeeDetails.fromJson(feeDetailsJson);
+
+                // 🔍 DEBUG: Log bill status and getFeePaymentStatus result
+                if (kDebugMode) {
+                  print('🔍 [DEBUG] Bill parsed from API:');
+                  print('   Bill ID: ${bill['id']}');
+                  print('   Bill Name: ${bill['name']}');
+                  print('   Bill Status from JSON: ${bill['status']}');
+                  print(
+                      '   getFeePaymentStatus() returns: ${childFeeDetails.getFeePaymentStatus()}');
+                  print(
+                      '   Remaining Amount: ${childFeeDetails.remainingFeeAmountToPay()}');
+                }
+
                 feeDetailsList.add(childFeeDetails);
               }
             }
           }
         }
-        
       } else if (result.containsKey('data') && result['data'] is List) {
-        
         // Old format: array of fee details
         final rawList = (result['data'] ?? []) as List;
         for (var item in rawList) {
@@ -78,7 +89,7 @@ class FeeRepository {
             final name = item['name']?.toString().trim();
             final totalAmount = item['total_compulsory_fees'];
             final bills = item['bills'];
-            
+
             // Only include items that have valid data
             if ((name != null && name.isNotEmpty) ||
                 (totalAmount != null && totalAmount > 0) ||
@@ -87,22 +98,19 @@ class FeeRepository {
             }
           }
         }
-            
       } else {
-        
         // Fallback: try to parse as single object only if it has valid data
         if (result is Map<String, dynamic>) {
           final name = result['name']?.toString().trim();
           final totalAmount = result['total_compulsory_fees'];
           final bills = result['bills'];
-          
+
           if ((name != null && name.isNotEmpty) ||
               (totalAmount != null && totalAmount > 0) ||
               (bills != null && bills is List && bills.isNotEmpty)) {
             feeDetailsList = [ChildFeeDetails.fromJson(result)];
           }
         }
-        
       }
 
       // Final filter to remove any invalid entries
@@ -110,13 +118,23 @@ class FeeRepository {
         // Check if fee has meaningful data
         final hasValidName = fee.name?.trim().isNotEmpty == true;
         final hasValidBills = fee.bills?.isNotEmpty == true;
-        final hasValidAmount = (fee.getTotalAmount() > 0) || (fee.totalCompulsoryFees != null && fee.totalCompulsoryFees! > 0);
-        
+        final hasValidAmount = (fee.getTotalAmount() > 0) ||
+            (fee.totalCompulsoryFees != null && fee.totalCompulsoryFees! > 0);
+
         return hasValidName || hasValidBills || hasValidAmount;
       }).toList();
 
+      // 🔍 DEBUG: Log summary of fees
+      if (kDebugMode) {
+        print('📊 [DEBUG] Fee Summary:');
+        print('   Total fees fetched: ${feeDetailsList.length}');
+        print(
+            '   Paid fees: ${feeDetailsList.where((f) => f.getFeePaymentStatus() == 'paid').length}');
+        print(
+            '   Unpaid fees: ${feeDetailsList.where((f) => f.getFeePaymentStatus() == 'unpaid').length}');
+      }
+
       return feeDetailsList;
-      
     } catch (e) {
       print("----");
       if (kDebugMode) {

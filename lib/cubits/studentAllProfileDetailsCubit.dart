@@ -30,14 +30,16 @@ class StudentAllProfileDetailsCubit
   StudentAllProfileDetailsCubit(this._studentRepository)
       : super(StudentAllProfileDetailsInitial());
 
-  void getStudentAllProfileDetails(
+  Future<void> getStudentAllProfileDetails(
       {required bool useParentApi, int? childId}) async {
     emit(StudentAllProfileDetailsFetchInProgress());
     try {
-      emit(StudentAllProfileDetailsFetchSuccess(
-          student: await _studentRepository.fetchStudentFullProfileDetails(
-              useParentApi: useParentApi, childId: childId)));
+      final result = await _studentRepository.fetchStudentFullProfileDetails(
+          useParentApi: useParentApi, childId: childId);
+      if (isClosed) return;
+      emit(StudentAllProfileDetailsFetchSuccess(student: result));
     } catch (e) {
+      if (isClosed) return;
       emit(StudentAllProfileDetailsFetchFailure(e.toString()));
     }
   }

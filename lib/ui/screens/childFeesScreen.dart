@@ -10,7 +10,7 @@ import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
 // import 'package:eschool/data/models/studyMaterial.dart';
 // import 'package:eschool/ui/screens/PaymentHistoryTabScreen.dart';
-import 'package:eschool/ui/screens/paymentHistoryScreen.dart';
+import 'package:eschool/ui/screens/payment/paymentHistoryScreen.dart';
 import 'package:eschool/ui/styles/colors.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';
@@ -18,8 +18,8 @@ import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/noDataContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
-import 'package:eschool/ui/screens/xenditOnlyPaymentScreen.dart';
-import 'package:eschool/ui/screens/xenditInstallmentPaymentScreen.dart';
+import 'package:eschool/ui/screens/payment/xenditOnlyPaymentScreen.dart';
+import 'package:eschool/ui/screens/payment/xenditInstallmentPaymentScreen.dart';
 import 'package:eschool/cubits/xenditInvoiceCubit.dart';
 import 'package:eschool/data/repositories/xenditRepository.dart';
 import 'package:eschool/utils/labelKeys.dart';
@@ -67,11 +67,10 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
   bool _hasInitialized = false;
 
   // Tab selection state - Default: Unpaid (Belum Dibayar)
-  String selectedTab = 'unpaid'; // 'paid', 'pending', 'unpaid'
+  String selectedTab = 'unpaid'; // 'paid', 'unpaid'
 
   // String variables for display text
   String get paidTab => 'Sudah Dibayar';
-  String get pendingTab => 'Menunggu Konfirmasi';
   String get unpaidTab => 'Belum Dibayar';
 
   @override
@@ -288,7 +287,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
     double total = 0;
     for (var fee in fees) {
       if (selectedFeeIds.contains(fee.id) &&
-          fee.getFeePaymentStatus() == pendingKey) {
+          fee.getFeePaymentStatus() == unpaidKey) {
+        // ✅ Fixed: check unpaidKey
         total += fee.remainingFeeAmountToPay();
       }
     }
@@ -761,7 +761,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                   ],
 
                   // Due date section
-                  if (feePaymentStatusKey == pendingKey ||
+                  if (feePaymentStatusKey ==
+                          unpaidKey || // ✅ Fixed: check unpaidKey
                       isOverdue ||
                       hasPendingPayment) ...[
                     Container(
@@ -1317,7 +1318,9 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         return hasPendingPayment;
       } else {
         // unpaid
-        return (feeStatus == pendingKey || fee.remainingFeeAmountToPay() > 0) &&
+        return (feeStatus == unpaidKey ||
+                fee.remainingFeeAmountToPay() >
+                    0) && // ✅ Fixed: check unpaidKey
             !(feeStatus == paidKey || fee.remainingFeeAmountToPay() == 0) &&
             !hasPendingPayment;
       }
@@ -1913,22 +1916,12 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           fee.getFeePaymentStatus() == paidKey ||
                           fee.remainingFeeAmountToPay() == 0)
                       .toList();
-                } else if (selectedTab == 'pending') {
-                  filteredFees = state.fees.where((fee) {
-                    final bill =
-                        fee.bills?.isNotEmpty == true ? fee.bills!.first : null;
-                    final hasPendingPayment =
-                        bill != null && bill.paymentHistory.isNotEmpty
-                            ? bill.paymentHistory.any((payment) =>
-                                payment.status?.toLowerCase() == 'pending')
-                            : false;
-                    return hasPendingPayment;
-                  }).toList();
                 } else {
                   // unpaid
                   filteredFees = state.fees
                       .where((fee) =>
-                          (fee.getFeePaymentStatus() == pendingKey ||
+                          (fee.getFeePaymentStatus() ==
+                                  unpaidKey || // ✅ Fixed: check unpaidKey
                               fee.remainingFeeAmountToPay() > 0) &&
                           !(fee.getFeePaymentStatus() == paidKey ||
                               fee.remainingFeeAmountToPay() == 0))
@@ -2067,7 +2060,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                     final selectedFeesData = state.fees
                         .where((fee) =>
                             selectedFeeIds.contains(fee.id) &&
-                            (fee.getFeePaymentStatus() == pendingKey ||
+                            (fee.getFeePaymentStatus() ==
+                                    unpaidKey || // ✅ Fixed: check unpaidKey
                                 fee.remainingFeeAmountToPay() > 0) &&
                             !(fee.getFeePaymentStatus() == paidKey ||
                                 fee.remainingFeeAmountToPay() == 0))
@@ -2142,7 +2136,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
               ),
               const SizedBox(height: 24),
               _buildStatusOption(context, 'paid', paidTab),
-              _buildStatusOption(context, 'pending', pendingTab),
               _buildStatusOption(context, 'unpaid', unpaidTab),
               const SizedBox(height: 24),
             ],
@@ -2197,8 +2190,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
     switch (tab) {
       case 'paid':
         return 'Sudah Dibayar';
-      case 'pending':
-        return 'Menunggu Konfirmasi';
       case 'unpaid':
         return 'Belum Dibayar';
       default:
@@ -2585,8 +2576,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
   Color _getStatusColor(String status) {
     final softRedColor = Color(0xFFE57373);
     switch (status.toLowerCase()) {
-      case 'pending':
-        return Colors.orange;
       case 'approved':
       case 'disetujui':
         return Colors.green;
@@ -2604,8 +2593,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
 
   String _getStatusText(String status) {
     switch (status.toLowerCase()) {
-      case 'pending':
-        return 'Tertunda';
       case 'approved':
         return 'Disetujui';
       case 'rejected':

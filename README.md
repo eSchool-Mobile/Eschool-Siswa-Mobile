@@ -10,7 +10,7 @@
 
 ## 🌟 Tentang Aplikasi
 
-E-School Management System adalah aplikasi mobile yang dikembangkan dengan Flutter untuk mempermudah pengelolaan aktivitas akademik di sekolah. Aplikasi ini menyediakan platform terintegrasi untuk **siswa**, **orang tua**, dan **guru** dalam mengelola berbagai aspek pendidikan.
+E-School Management System adalah aplikasi mobile yang dikembangkan dengan Flutter untuk mempermudah `pengelolaan aktivitas akademik di sekolah. Aplikasi ini menyediakan platform terintegrasi untuk **siswa**, **orang tua**, dan **guru** dalam mengelola berbagai aspek pendidikan.
 
 ### 📊 Versi Aplikasi
 - **Versi:** 1.0.7+7

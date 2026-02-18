@@ -125,7 +125,7 @@ class XenditRepository {
   }) {
     final now = DateTime.now();
     final expiryDate = now.add(Duration(hours: 24));
-
+    
     return XenditInvoice(
       id: 'demo_invoice_${now.millisecondsSinceEpoch}',
       externalId: 'SCHOOL_DEMO_${now.millisecondsSinceEpoch}',

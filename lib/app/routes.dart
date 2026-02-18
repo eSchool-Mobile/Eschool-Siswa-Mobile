@@ -1,5 +1,5 @@
 import 'package:eschool/data/models/student.dart';
-import 'package:eschool/ui/screens/PaymentHistoryTabScreen.dart';
+import 'package:eschool/ui/screens/payment/paymentHistoryTabScreen.dart';
 import 'package:eschool/utils/hiveBoxKeys.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:eschool/ui/screens/aboutUsScreen.dart';
@@ -23,7 +23,7 @@ import 'package:eschool/ui/screens/childResultsScreen.dart';
 import 'package:eschool/ui/screens/childSubjectAttendanceScreen.dart';
 import 'package:eschool/ui/screens/childTeachers.dart';
 import 'package:eschool/ui/screens/childTimeTableScreen.dart';
-import 'package:eschool/ui/screens/confirmPaymentScreen.dart';
+import 'package:eschool/ui/screens/payment/confirmPaymentScreen.dart';
 import 'package:eschool/ui/screens/contactUsScreen.dart';
 import 'package:eschool/ui/screens/exam/examTimeTableScreen.dart';
 import 'package:eschool/ui/screens/exam/onlineExam/examOnlineScreen.dart';
@@ -136,9 +136,9 @@ class Routes {
   static const String childLeaves = "/childLeaves";
 
   // Contact/Support routes
-    static const String contacts = "/contacts";
-    static const String contactDetails = "/contact-details";
-    static const String submitContact = "/submit-contact";
+  static const String contacts = "/contacts";
+  static const String contactDetails = "/contact-details";
+  static const String submitContact = "/submit-contact";
 
   static List<GetPage> getPages = [
     GetPage(name: splash, page: () => SplashScreen.routeInstance()),
@@ -229,10 +229,12 @@ class Routes {
       name: newChatContacts,
       page: () => NewChatContactsScreen.routeInstance(),
     ),
-        // Contact/Support routes
+    // Contact/Support routes
     GetPage(name: contacts, page: () => ContactScreen.routeInstance()),
-    GetPage(name: contactDetails, page: () => ContactDetailScreen.routeInstance()),
-    GetPage(name: submitContact, page: () => SubmitContactScreen.routeInstance()),
+    GetPage(
+        name: contactDetails, page: () => ContactDetailScreen.routeInstance()),
+    GetPage(
+        name: submitContact, page: () => SubmitContactScreen.routeInstance()),
 
     // Fitur baru Eschool 1.3.3 - Galang
     GetPage(
@@ -248,40 +250,43 @@ class Routes {
       page: () {
         final args = Get.arguments;
         Student child;
-        
+
         if (args is Student) {
           // Direct Student object
           child = args;
         } else if (args is Map<String, dynamic>) {
           // From notification or other sources with childId
           final childId = args['childId'];
-          
+
           if (childId != null) {
             // Try to get Student from Hive
             final authBox = Hive.box(authBoxKey);
             final isStudent = authBox.get(isStudentLogInKey) ?? false;
-            
+
             if (isStudent) {
               // For student login, use their own data
               final studentData = authBox.get(studentDetailsKey);
-              child = Student.fromJson(Map<String, dynamic>.from(studentData ?? {}));
+              child = Student.fromJson(
+                  Map<String, dynamic>.from(studentData ?? {}));
             } else {
               // For parent login, get child from children list
               final childrenData = authBox.get(childrenDataKey) ?? [];
-              
+
               if (childrenData is List && childrenData.isNotEmpty) {
                 // Find the specific child by ID
-                final targetId = childId is int ? childId : int.tryParse(childId.toString());
-                
+                final targetId =
+                    childId is int ? childId : int.tryParse(childId.toString());
+
                 // Find matching child or use first child as fallback
                 dynamic childData;
                 try {
-                  childData = childrenData.firstWhere((c) => c['id'] == targetId);
+                  childData =
+                      childrenData.firstWhere((c) => c['id'] == targetId);
                 } catch (e) {
                   // If not found, use first child
                   childData = childrenData.first;
                 }
-                
+
                 child = Student.fromJson(Map<String, dynamic>.from(childData));
               } else {
                 child = Student.fromJson({});
@@ -298,13 +303,9 @@ class Routes {
         } else {
           child = Student.fromJson({});
         }
-        
+
         return PaymentHistoryTabScreen.routeInstance(child: child);
       },
     ),
   ];
 }
-
-
-
-
