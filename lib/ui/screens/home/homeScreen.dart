@@ -12,6 +12,7 @@ import 'package:eschool/cubits/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/schoolGalleryCubit.dart';
 import 'package:eschool/cubits/schoolSessionYearsCubit.dart';
 import 'package:eschool/cubits/socketSettingCubit.dart';
+import 'package:eschool/data/repositories/authRepository.dart';
 import 'package:eschool/cubits/studentGuardianDetailsCubit.dart';
 import 'package:eschool/cubits/subjectAttendanceCubit.dart';
 import 'package:eschool/cubits/timeTableCubit.dart';
@@ -170,6 +171,8 @@ class HomeScreenState extends State<HomeScreen>
 
     Future.delayed(Duration.zero, () {
       loadTemporarilyStoredNotifications();
+      debugPrint(
+          "DEBUG HomeScreen: schoolCode before fetchSchoolConfiguration = '${AuthRepository().schoolCode}'");
       context
           .read<SchoolConfigurationCubit>()
           .fetchSchoolConfiguration(useParentApi: false);
