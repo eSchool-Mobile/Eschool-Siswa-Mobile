@@ -147,7 +147,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -159,7 +159,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
           Text(
             Utils.getTranslatedLabel(obtainedMarksKey),
             style: _textStyle(
-              color: textColor.withOpacity(0.7),
+              color: textColor.withValues(alpha: 0.7),
               size: 14,
             ),
           ),
@@ -178,7 +178,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
               Text(
                 "/ ${result.totalMarks}",
                 style: _textStyle(
-                  color: textColor.withOpacity(0.7),
+                  color: textColor.withValues(alpha: 0.7),
                   size: 20,
                 ),
               ),
@@ -222,7 +222,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
                 borderRadius: BorderRadius.circular(10),
                 child: LinearProgressIndicator(
                   value: percentage / 100,
-                  backgroundColor: Colors.grey.withOpacity(0.2),
+                  backgroundColor: Colors.grey.withValues(alpha: 0.2),
                   valueColor: AlwaysStoppedAnimation<Color>(progressColor),
                   minHeight: 8,
                 ),
@@ -248,7 +248,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -295,7 +295,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
                       Text(
                         Utils.getTranslatedLabel(correctAnswersKey),
                         style: _textStyle(
-                          color: textColor.withOpacity(0.7),
+                          color: textColor.withValues(alpha: 0.7),
                           size: 14,
                         ),
                       )
@@ -343,7 +343,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
         Text(
           "$text ($count)",
           style: _textStyle(
-            color: textColor.withOpacity(0.8),
+            color: textColor.withValues(alpha: 0.8),
             size: 14,
           ),
         ),
@@ -360,7 +360,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -421,10 +421,10 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: color.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -463,7 +463,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
               value: percentage / 100,
-              backgroundColor: Colors.grey.withOpacity(0.2),
+              backgroundColor: Colors.grey.withValues(alpha: 0.2),
               valueColor: AlwaysStoppedAnimation<Color>(color),
               minHeight: 8,
             ),
@@ -472,7 +472,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
           Text(
             "${percentage.toStringAsFixed(1)}%",
             style: _textStyle(
-              color: textColor.withOpacity(0.7),
+              color: textColor.withValues(alpha: 0.7),
               size: 14,
             ),
           ),
@@ -490,7 +490,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -548,10 +548,10 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: lightColor.withOpacity(0.5),
+        color: lightColor.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: primaryColor.withOpacity(0.2),
+          color: primaryColor.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -575,7 +575,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: accentColor.withOpacity(0.1),
+                  color: accentColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -603,7 +603,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
               Container(
                 height: 40,
                 width: 1,
-                color: Colors.grey.withOpacity(0.3),
+                color: Colors.grey.withValues(alpha: 0.3),
                 margin: const EdgeInsets.symmetric(horizontal: 16),
               ),
               Expanded(
@@ -652,7 +652,7 @@ class ResultOnlineScreenState extends State<ResultOnlineScreen> {
         Text(
           label,
           style: _textStyle(
-            color: textColor.withOpacity(0.7),
+            color: textColor.withValues(alpha: 0.7),
             size: 12,
           ),
           textAlign: TextAlign.center,
@@ -832,7 +832,7 @@ class DonutChartPainter extends CustomPainter {
 
     // Background circle
     final backgroundPaint = Paint()
-      ..color = Colors.grey.withOpacity(0.2)
+      ..color = Colors.grey.withValues(alpha: 0.2)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 20;
 

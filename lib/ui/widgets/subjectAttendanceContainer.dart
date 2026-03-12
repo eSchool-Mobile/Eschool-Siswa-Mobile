@@ -6,7 +6,6 @@ import 'package:eschool/ui/widgets/changeCalendarMonthButton.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainerNoRadius.dart';
 import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
 import 'package:eschool/ui/widgets/subjectImageContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';
@@ -188,7 +187,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(Icons.close,
@@ -226,7 +225,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 15,
               spreadRadius: 2,
               offset: Offset(0, 5),
@@ -290,7 +289,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 15,
             spreadRadius: 2,
             offset: Offset(0, 5),
@@ -355,12 +354,11 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                 primary: Theme.of(context)
                                     .colorScheme
                                     .primary
-                                    .withOpacity(0.8),
+                                    .withValues(alpha: 0.8),
                                 onPrimary: Colors.white,
                                 surface: surfaceColor,
                                 onSurface: Colors.grey[800] ?? Colors.grey,
                               ),
-                              dialogBackgroundColor: Colors.transparent,
                               textButtonTheme: TextButtonThemeData(
                                 style: TextButton.styleFrom(
                                   foregroundColor: primaryColor,
@@ -384,7 +382,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                     WidgetStateProperty.resolveWith(
                                   (states) =>
                                       states.contains(WidgetState.selected)
-                                          ? primaryColor.withOpacity(0.2)
+                                          ? primaryColor.withValues(alpha: 0.2)
                                           : null,
                                 ),
                                 dayStyle:
@@ -392,26 +390,26 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                 todayForegroundColor:
                                     WidgetStateProperty.all(primaryColor),
                                 todayBackgroundColor: WidgetStateProperty.all(
-                                    lightColor.withOpacity(0.7)),
+                                    lightColor.withValues(alpha: 0.7)),
                                 yearOverlayColor:
                                     WidgetStateProperty.resolveWith(
                                   (states) =>
                                       states.contains(WidgetState.selected)
-                                          ? primaryColor.withOpacity(0.2)
+                                          ? primaryColor.withValues(alpha: 0.2)
                                           : null,
                                 ),
                                 yearStyle:
                                     TextStyle(fontWeight: FontWeight.w500),
                                 surfaceTintColor: Colors.transparent,
                                 backgroundColor: Colors.white,
-                                shadowColor: Colors.black.withOpacity(0.1),
+                                shadowColor: Colors.black.withValues(alpha: 0.1),
                                 dividerColor: Colors.transparent,
                                 // Move buttons higher with button bar theme
                                 rangePickerBackgroundColor: Colors.white,
                                 rangeSelectionBackgroundColor: lightColor,
                                 rangeSelectionOverlayColor:
                                     WidgetStateProperty.all(
-                                        primaryColor.withOpacity(0.1)),
+                                        primaryColor.withValues(alpha: 0.1)),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16)),
                                 // Adjust the input decoration theme
@@ -425,7 +423,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
                                     borderSide: BorderSide(
-                                        color: Colors.grey.withOpacity(0.3)),
+                                        color: Colors.grey.withValues(alpha: 0.3)),
                                   ),
                                   filled: true,
                                   fillColor: Colors.white,
@@ -434,11 +432,11 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                     height: 0.8,
                                   ),
                                 ),
-                              ),
+                              ), dialogTheme: DialogThemeData(backgroundColor: Colors.transparent),
                             ),
                             child: MediaQuery(
                               data: MediaQuery.of(context).copyWith(
-                                textScaleFactor: 1.0,
+                                textScaler: TextScaler.linear(1.0),
                               ),
                               child: Builder(
                                 builder: (context) => Dialog(
@@ -513,13 +511,13 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: primaryColor.withOpacity(0.1),
+                                  color: primaryColor.withValues(alpha: 0.1),
                                   blurRadius: 8,
                                   offset: Offset(0, 2),
                                 ),
                               ],
                               border: Border.all(
-                                  color: primaryColor.withOpacity(0.15)),
+                                  color: primaryColor.withValues(alpha: 0.15)),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -527,7 +525,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                 Container(
                                   padding: EdgeInsets.all(4),
                                   decoration: BoxDecoration(
-                                    color: primaryColor.withOpacity(0.1),
+                                    color: primaryColor.withValues(alpha: 0.1),
                                     shape: BoxShape.circle,
                                   ),
                                   child: Icon(
@@ -587,12 +585,12 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
         child: Container(
           padding: EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: isEnabled ? lightColor : Colors.grey.withOpacity(0.1),
+            color: isEnabled ? lightColor : Colors.grey.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: isEnabled
-                  ? primaryColor.withOpacity(0.2)
-                  : Colors.grey.withOpacity(0.2),
+                  ? primaryColor.withValues(alpha: 0.2)
+                  : Colors.grey.withValues(alpha: 0.2),
             ),
           ),
           child: Icon(
@@ -615,7 +613,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
           child: Card(
             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             elevation: 4,
-            shadowColor: Colors.black.withOpacity(0.1),
+            shadowColor: Colors.black.withValues(alpha: 0.1),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: Container(
@@ -623,7 +621,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 8,
                     spreadRadius: 1,
                     offset: Offset(0, 2),
@@ -650,7 +648,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                             borderRadius: BorderRadius.circular(12),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
+                                color: Colors.black.withValues(alpha: 0.2),
                                 blurRadius: 10,
                                 spreadRadius: 1,
                                 offset: Offset(0, 3),
@@ -737,7 +735,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
           Padding(
             padding: EdgeInsets.symmetric(vertical: 8),
             child: Divider(
-                height: 1, thickness: 1, color: Colors.grey.withOpacity(0.1)),
+                height: 1, thickness: 1, color: Colors.grey.withValues(alpha: 0.1)),
           ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8),
@@ -805,7 +803,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: lightColor,
-              border: Border.all(color: primaryColor.withOpacity(0.3)),
+              border: Border.all(color: primaryColor.withValues(alpha: 0.3)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -864,9 +862,9 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.3), width: 1),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -899,7 +897,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 20,
                 spreadRadius: 2,
                 offset: Offset(0, 6),
@@ -916,7 +914,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: primaryColor.withOpacity(0.2),
+                        color: primaryColor.withValues(alpha: 0.2),
                         blurRadius: 12,
                         spreadRadius: 1,
                         offset: Offset(0, 3),
@@ -1028,7 +1026,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color: Colors.black.withValues(alpha: 0.1),
                                     blurRadius: 10,
                                     spreadRadius: 1,
                                     offset: Offset(0, 4),
@@ -1165,7 +1163,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                     color: Theme.of(context)
                         .colorScheme
                         .secondary
-                        .withOpacity(0.075),
+                        .withValues(alpha: 0.075),
                     offset: const Offset(2.5, 2.5),
                     blurRadius: 5,
                   )
@@ -1193,7 +1191,6 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                   surface: surfaceColor,
                                   onSurface: Colors.grey[800] ?? Colors.grey,
                                 ),
-                                dialogBackgroundColor: Colors.transparent,
                                 textButtonTheme: TextButtonThemeData(
                                   style: TextButton.styleFrom(
                                     foregroundColor: primaryColor,
@@ -1217,7 +1214,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                       WidgetStateProperty.resolveWith(
                                     (states) =>
                                         states.contains(WidgetState.selected)
-                                            ? primaryColor.withOpacity(0.2)
+                                            ? primaryColor.withValues(alpha: 0.2)
                                             : null,
                                   ),
                                   dayStyle:
@@ -1225,26 +1222,26 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                   todayForegroundColor:
                                       WidgetStateProperty.all(primaryColor),
                                   todayBackgroundColor: WidgetStateProperty.all(
-                                      lightColor.withOpacity(0.7)),
+                                      lightColor.withValues(alpha: 0.7)),
                                   yearOverlayColor:
                                       WidgetStateProperty.resolveWith(
                                     (states) =>
                                         states.contains(WidgetState.selected)
-                                            ? primaryColor.withOpacity(0.2)
+                                            ? primaryColor.withValues(alpha: 0.2)
                                             : null,
                                   ),
                                   yearStyle:
                                       TextStyle(fontWeight: FontWeight.w500),
                                   surfaceTintColor: Colors.transparent,
                                   backgroundColor: Colors.white,
-                                  shadowColor: Colors.black.withOpacity(0.1),
+                                  shadowColor: Colors.black.withValues(alpha: 0.1),
                                   dividerColor: Colors.transparent,
                                   // Move buttons higher with button bar theme
                                   rangePickerBackgroundColor: Colors.white,
                                   rangeSelectionBackgroundColor: lightColor,
                                   rangeSelectionOverlayColor:
                                       WidgetStateProperty.all(
-                                          primaryColor.withOpacity(0.1)),
+                                          primaryColor.withValues(alpha: 0.1)),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16)),
                                   // Adjust the input decoration theme
@@ -1259,7 +1256,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: BorderSide(
-                                          color: Colors.grey.withOpacity(0.3)),
+                                          color: Colors.grey.withValues(alpha: 0.3)),
                                     ),
                                     filled: true,
                                     fillColor: Colors.white,
@@ -1268,11 +1265,11 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                       height: 0.8,
                                     ),
                                   ),
-                                ),
+                                ), dialogTheme: DialogThemeData(backgroundColor: Colors.transparent),
                               ),
                               child: MediaQuery(
                                 data: MediaQuery.of(context).copyWith(
-                                  textScaleFactor: 1.0,
+                                  textScaler: TextScaler.linear(1.0),
                                 ),
                                 child: Builder(
                                   builder: (context) => Dialog(
@@ -1389,7 +1386,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             elevation: 3,
-            shadowColor: Colors.black.withOpacity(0.1),
+            shadowColor: Colors.black.withValues(alpha: 0.1),
             child: Container(
               height: 140,
               padding: EdgeInsets.all(16),

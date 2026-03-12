@@ -82,7 +82,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                   "Hubungi tim support dan lihat riwayat pesan Anda",
                   style: TextStyle(
                     fontSize: 14.0,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                 ),
                 const SizedBox(height: 24.0),
@@ -172,10 +172,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
           child: Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.05),
+              color: color.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
               ),
             ),
             child: Row(
@@ -183,7 +183,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 Container(
                   padding: const EdgeInsets.all(12.0),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: Icon(
@@ -210,7 +210,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                         subtitle,
                         style: TextStyle(
                           fontSize: 13.0,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -218,7 +218,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 ),
                 Icon(
                   Icons.chevron_right,
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
                 ),
               ],
             ),
@@ -291,7 +291,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                     Utils.getTranslatedLabel(notificationSettingsDescKey),
                     style: TextStyle(
                       fontSize: 14.0,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                   const SizedBox(height: 24.0),
@@ -416,7 +416,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
-                    Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -452,7 +452,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                       fontSize: 12,
                     ),
                   ),
@@ -462,7 +462,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
             Switch(
               value: value,
               onChanged: onChanged,
-              activeColor: Theme.of(context).colorScheme.primary,
+              activeThumbColor: Theme.of(context).colorScheme.primary,
             ),
           ],
         ),
@@ -498,7 +498,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                   gradient: LinearGradient(
                     colors: [
                       Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -528,7 +528,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
               ),
               Icon(
                 Icons.chevron_right,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
               ),
             ],
           ),

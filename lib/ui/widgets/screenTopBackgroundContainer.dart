@@ -46,13 +46,13 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
       ),
       child: Center(
         child: Icon(
           icon,
           size: size * 0.6,
-          color: Colors.white.withOpacity(0.7),
+          color: Colors.white.withValues(alpha: 0.7),
         ),
       ),
     );
@@ -86,8 +86,8 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              primaryColor.withOpacity(0.9), // Exactly 0.9 opacity as requested
-              primaryColor.withOpacity(0.8), // Exactly 0.8 opacity as requested
+              primaryColor.withValues(alpha: 0.9), // Exactly 0.9 opacity as requested
+              primaryColor.withValues(alpha: 0.8), // Exactly 0.8 opacity as requested
             ],
           ),
           borderRadius: const BorderRadius.only(
@@ -96,7 +96,7 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: primaryColor.withOpacity(0.3),
+              color: primaryColor.withValues(alpha: 0.3),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -134,17 +134,17 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
         Positioned(
           top: -20,
           left: -20,
-          child: _buildDecorativeCircle(100, Colors.white.withOpacity(0.05)),
+          child: _buildDecorativeCircle(100, Colors.white.withValues(alpha: 0.05)),
         ),
         Positioned(
           top: 60,
           left: 130,
-          child: _buildDecorativeCircle(30, Colors.white.withOpacity(0.08)),
+          child: _buildDecorativeCircle(30, Colors.white.withValues(alpha: 0.08)),
         ),
         Positioned(
           bottom: 15,
           right: 20,
-          child: _buildDecorativeSquare(40, Colors.white.withOpacity(0.05)),
+          child: _buildDecorativeSquare(40, Colors.white.withValues(alpha: 0.05)),
         ),
         
         // Education themed icons (if we have enough height)
@@ -171,7 +171,7 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
         left: left,
         child: _FloatingParticle(
           size: size,
-          color: Colors.white.withOpacity(0.4 + random.nextDouble() * 0.3),
+          color: Colors.white.withValues(alpha: 0.4 + random.nextDouble() * 0.3),
         ),
       );
     });
@@ -231,7 +231,7 @@ class _FloatingParticleState extends State<_FloatingParticle>
                 color: widget.color,
                 boxShadow: [
                   BoxShadow(
-                    color: widget.color.withOpacity(0.5),
+                    color: widget.color.withValues(alpha: 0.5),
                     blurRadius: widget.size * 1.5,
                     spreadRadius: widget.size / 3,
                   ),

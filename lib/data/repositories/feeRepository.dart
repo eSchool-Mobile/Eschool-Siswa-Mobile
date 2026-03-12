@@ -100,18 +100,16 @@ class FeeRepository {
         }
       } else {
         // Fallback: try to parse as single object only if it has valid data
-        if (result is Map<String, dynamic>) {
-          final name = result['name']?.toString().trim();
-          final totalAmount = result['total_compulsory_fees'];
-          final bills = result['bills'];
+        final name = result['name']?.toString().trim();
+        final totalAmount = result['total_compulsory_fees'];
+        final bills = result['bills'];
 
-          if ((name != null && name.isNotEmpty) ||
-              (totalAmount != null && totalAmount > 0) ||
-              (bills != null && bills is List && bills.isNotEmpty)) {
-            feeDetailsList = [ChildFeeDetails.fromJson(result)];
-          }
+        if ((name != null && name.isNotEmpty) ||
+            (totalAmount != null && totalAmount > 0) ||
+            (bills != null && bills is List && bills.isNotEmpty)) {
+          feeDetailsList = [ChildFeeDetails.fromJson(result)];
         }
-      }
+            }
 
       // Final filter to remove any invalid entries
       feeDetailsList = feeDetailsList.where((fee) {

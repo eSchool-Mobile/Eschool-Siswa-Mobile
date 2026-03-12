@@ -229,7 +229,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: const SizedBox(
@@ -273,7 +273,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -340,7 +340,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -424,7 +424,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                       Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           shape: BoxShape.circle,
                         ),
                         child: const SizedBox(
@@ -480,7 +480,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                         const BorderRadius.vertical(top: Radius.circular(28)),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
+                        color: Colors.black.withValues(alpha: 0.15),
                         blurRadius: 20,
                         offset: const Offset(0, -4),
                       ),
@@ -530,7 +530,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                                         boxShadow: [
                                           BoxShadow(
                                             color:
-                                                primaryColor.withOpacity(0.25),
+                                                primaryColor.withValues(alpha: 0.25),
                                             blurRadius: 16,
                                             offset: const Offset(0, 6),
                                           ),
@@ -558,7 +558,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                                                       boxShadow: [
                                                         BoxShadow(
                                                           color: Colors.black
-                                                              .withOpacity(
+                                                              .withValues(alpha: 
                                                                   0.15),
                                                           blurRadius: 6,
                                                           offset: const Offset(
@@ -760,7 +760,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                                 top: Radius.circular(20)),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.07),
+                                color: Colors.black.withValues(alpha: 0.07),
                                 blurRadius: 12,
                                 offset: const Offset(0, -2),
                               ),
@@ -838,8 +838,8 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                   base.textTheme.headlineMedium?.copyWith(color: textCol),
               headerHelpStyle:
                   base.textTheme.labelMedium?.copyWith(color: textCol),
-              dayForegroundColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.selected))
+              dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected))
                   return Colors.white;
                 return null;
               }),
@@ -910,13 +910,13 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
           boxShadow: isFocused
               ? [
                   BoxShadow(
-                      color: _primaryRed.withOpacity(0.25),
+                      color: _primaryRed.withValues(alpha: 0.25),
                       blurRadius: 15,
                       offset: const Offset(0, 5))
                 ]
               : [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: const Offset(0, 3))
                 ],
@@ -1018,13 +1018,13 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
           boxShadow: isFocused
               ? [
                   BoxShadow(
-                      color: _primaryRed.withOpacity(0.25),
+                      color: _primaryRed.withValues(alpha: 0.25),
                       blurRadius: 15,
                       offset: const Offset(0, 5))
                 ]
               : [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: const Offset(0, 3))
                 ],
@@ -1049,7 +1049,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
               padding: const EdgeInsets.fromLTRB(16, 0, 12, 12),
               child: DropdownButtonFormField<T>(
                 focusNode: focusNode,
-                value: value,
+                initialValue: value,
                 isExpanded: true,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -1097,7 +1097,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withValues(alpha: 0.2),
                 spreadRadius: 1,
                 blurRadius: 5,
                 offset: const Offset(0, 2))
@@ -1126,9 +1126,9 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
   // ====== Email badge ======
   Widget _emailBadge({String? email, bool onDarkBg = false}) {
     final txt = Utils.formatEmptyValue(email ?? '');
-    final bg = onDarkBg ? Colors.white.withOpacity(.15) : Colors.grey.shade100;
+    final bg = onDarkBg ? Colors.white.withValues(alpha: .15) : Colors.grey.shade100;
     final border =
-        onDarkBg ? Colors.white.withOpacity(.35) : Colors.grey.shade300;
+        onDarkBg ? Colors.white.withValues(alpha: .35) : Colors.grey.shade300;
     final iconCol = onDarkBg ? Colors.white : Colors.grey.shade600;
     final textCol = onDarkBg ? Colors.white : Colors.grey.shade800;
 
@@ -1182,7 +1182,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -1253,7 +1253,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -1304,7 +1304,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                       color: containerColor,
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.grey.withOpacity(0.15),
+                            color: Colors.grey.withValues(alpha: 0.15),
                             spreadRadius: 2,
                             blurRadius: 12,
                             offset: const Offset(0, 5))
@@ -1342,7 +1342,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                                         boxShadow: [
                                           BoxShadow(
                                               color: primaryColor
-                                                  .withOpacity(0.25),
+                                                  .withValues(alpha: 0.25),
                                               spreadRadius: 2,
                                               blurRadius: 10,
                                               offset: const Offset(0, 3))
@@ -1388,13 +1388,13 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                                             boxShadow: [
                                               BoxShadow(
                                                   color: Colors.black
-                                                      .withOpacity(0.15),
+                                                      .withValues(alpha: 0.15),
                                                   blurRadius: 6,
                                                   offset: const Offset(0, 2))
                                             ],
                                             border: Border.all(
                                                 color: primaryColor
-                                                    .withOpacity(0.2),
+                                                    .withValues(alpha: 0.2),
                                                 width: 1),
                                           ),
                                           child: Center(
@@ -1481,7 +1481,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Divider(
-                              color: primaryColor.withOpacity(0.15),
+                              color: primaryColor.withValues(alpha: 0.15),
                               thickness: 1.5),
                         ),
 
@@ -1578,7 +1578,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: primaryColor.withOpacity(.18),
+                      color: primaryColor.withValues(alpha: .18),
                       blurRadius: 14,
                       offset: const Offset(0, 6),
                     ),
@@ -1706,10 +1706,10 @@ class _QuickActionCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: accent.withOpacity(.18), width: 1.2),
+          border: Border.all(color: accent.withValues(alpha: .18), width: 1.2),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(.05),
+              color: Colors.black.withValues(alpha: .05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -1725,7 +1725,7 @@ class _QuickActionCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
-                    colors: [accent, accent.withOpacity(.75)],
+                    colors: [accent, accent.withValues(alpha: .75)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

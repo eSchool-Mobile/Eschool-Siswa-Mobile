@@ -1,7 +1,5 @@
 import 'package:eschool/data/models/leave.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/downloadFileBottomsheetContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 // import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/utils.dart';
@@ -59,7 +57,7 @@ class _LeavesDetailScreenState extends State<LeavesDetailScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
-        // color: color.withOpacity(0.1),
+        // color: color.withValues(alpha: 0.1),
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(4),
       ),

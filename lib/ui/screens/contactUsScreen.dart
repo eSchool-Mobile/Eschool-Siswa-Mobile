@@ -1,17 +1,12 @@
-import 'dart:ui';
 
 import 'package:eschool/cubits/appSettingsCubit.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
-import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -94,7 +89,7 @@ class _ContactUsScreenState extends State<ContactUsScreen>
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
-    final backgroundColor = Theme.of(context).colorScheme.background;
+    final backgroundColor = Theme.of(context).colorScheme.surface;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -149,14 +144,14 @@ class _ContactUsScreenState extends State<ContactUsScreen>
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            primaryColor.withOpacity(0.9),
-                            primaryColor.withOpacity(1),
+                            primaryColor.withValues(alpha: 0.9),
+                            primaryColor.withValues(alpha: 1),
                           ],
                         ),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: primaryColor.withOpacity(0.2),
+                            color: primaryColor.withValues(alpha: 0.2),
                             blurRadius: 10,
                             offset: const Offset(0, 5),
                           ),
@@ -191,7 +186,7 @@ class _ContactUsScreenState extends State<ContactUsScreen>
                             Utils.getTranslatedLabel(howWeCanHelpDescKey),
                             style: GoogleFonts.poppins(
                               fontSize: 14,
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                             ),
                           ),
                         ],
@@ -334,7 +329,7 @@ class _ContactUsScreenState extends State<ContactUsScreen>
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -345,7 +340,7 @@ class _ContactUsScreenState extends State<ContactUsScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: primaryColor.withOpacity(0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, size: 30, color: primaryColor),

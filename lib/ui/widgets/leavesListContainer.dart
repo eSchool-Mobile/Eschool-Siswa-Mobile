@@ -1,10 +1,7 @@
-import 'package:eschool/cubits/downloadFileCubit.dart';
 import 'package:eschool/cubits/leavesCubit.dart';
 import 'package:eschool/data/models/leave.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
-import 'package:eschool/data/repositories/subjectRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/downloadFileBottomsheetContainer.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';
@@ -13,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/ui/widgets/svgButton.dart';
 import 'package:eschool/ui/widgets/applyLeavesContainer.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/ui/widgets/expandableText.dart';
@@ -286,7 +282,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.7),
+                                  color: Colors.white.withValues(alpha: 0.7),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(Icons.download,
@@ -299,7 +295,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.7),
+                                  color: Colors.white.withValues(alpha: 0.7),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(Icons.close,
@@ -318,7 +314,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.7),
+                              color: Colors.black.withValues(alpha: 0.7),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: const Text(
@@ -371,14 +367,14 @@ class _LeavesListContainerState extends State<LeavesListContainer>
     }
 
     try {
-      if (leaveDetail.length == 1 && leaveDetail[0].date != null) {
+      if (leaveDetail.length == 1) {
         final date = DateTime.tryParse(leaveDetail[0].date) ?? DateTime.now();
         final formattedDate = DateFormat("dd MMM yyyy", 'id').format(date);
         return Text(
           formattedDate,
           style: TextStyle(
             fontSize: 13,
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.7),
             fontWeight: FontWeight.w500,
           ),
         );
@@ -392,7 +388,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
           formattedFromDate,
           style: TextStyle(
             fontSize: 13,
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.7),
           ),
         );
       } else {
@@ -558,7 +554,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
+              color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.08),
               blurRadius: 15,
               offset: const Offset(0, 5),
             )
@@ -599,7 +595,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                               width: 40,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: typeColor.withOpacity(0.1),
+                                color: typeColor.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Icon(
@@ -630,7 +626,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8, vertical: 3),
                                         decoration: BoxDecoration(
-                                          color: typeColor.withOpacity(0.1),
+                                          color: typeColor.withValues(alpha: 0.1),
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
@@ -724,7 +720,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.6),
+                              .withValues(alpha: 0.6),
                         ),
                         const SizedBox(width: 6),
                         Text(
@@ -734,7 +730,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondary
-                                .withOpacity(0.6),
+                                .withValues(alpha: 0.6),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -749,7 +745,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                           icon: const Icon(Icons.visibility_rounded, size: 16),
                           label: const Text("Lihat"),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: typeColor.withOpacity(0.1),
+                            backgroundColor: typeColor.withValues(alpha: 0.1),
                             foregroundColor: typeColor,
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(
@@ -913,7 +909,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.5),
+                                        .withValues(alpha: 0.5),
                                   ),
                                   const SizedBox(height: 24),
                                   Text(
@@ -923,7 +919,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                                       color: Theme.of(context)
                                           .colorScheme
                                           .secondary
-                                          .withOpacity(0.8),
+                                          .withValues(alpha: 0.8),
                                       fontWeight: FontWeight.w600,
                                     ),
                                     textAlign: TextAlign.center,
@@ -936,7 +932,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                                       color: Theme.of(context)
                                           .colorScheme
                                           .secondary
-                                          .withOpacity(0.6),
+                                          .withValues(alpha: 0.6),
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -1040,7 +1036,7 @@ class ReasonSection extends StatelessWidget {
       margin: margin ?? const EdgeInsets.only(top: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: accent.withOpacity(0.06),
+        color: accent.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(12),
         border: Border(left: BorderSide(color: accent, width: 3)),
       ),
@@ -1053,7 +1049,7 @@ class ReasonSection extends StatelessWidget {
                 width: 28,
                 height: 28,
                 decoration: BoxDecoration(
-                  color: accent.withOpacity(0.12),
+                  color: accent.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, size: 16, color: accent),
@@ -1072,7 +1068,7 @@ class ReasonSection extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: cs.surface,
                   borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: accent.withOpacity(0.3)),
+                  border: Border.all(color: accent.withValues(alpha: 0.3)),
                 ),
                 child: Text(
                   sourceLabel,
@@ -1090,7 +1086,7 @@ class ReasonSection extends StatelessWidget {
             text: text,
             style: TextStyle(
               height: 1.35,
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.85),
+              color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.85),
               fontWeight: FontWeight.w400,
               fontSize: 14,
             ),

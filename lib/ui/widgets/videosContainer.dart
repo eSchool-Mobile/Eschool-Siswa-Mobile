@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eschool/app/routes.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
 import 'package:eschool/ui/widgets/noDataContainer.dart';
-import 'package:eschool/utils/animationConfiguration.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -45,7 +43,7 @@ class VideosContainer extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 offset: const Offset(0, 4),
                 blurRadius: 12,
               )
@@ -55,7 +53,7 @@ class VideosContainer extends StatelessWidget {
               end: Alignment.bottomLeft,
               colors: [
                 Theme.of(context).cardColor,
-                Theme.of(context).cardColor.withOpacity(0.95),
+                Theme.of(context).cardColor.withValues(alpha: 0.95),
               ],
             ),
           ),
@@ -65,8 +63,8 @@ class VideosContainer extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () => _startDirectVideoPlay(context, studyMaterial),
-                splashColor: accentColorFaded.withOpacity(0.1),
-                highlightColor: accentColorFaded.withOpacity(0.05),
+                splashColor: accentColorFaded.withValues(alpha: 0.1),
+                highlightColor: accentColorFaded.withValues(alpha: 0.05),
                 child: Stack(
                   children: [
                     Column(
@@ -99,7 +97,7 @@ class VideosContainer extends StatelessWidget {
                                     end: Alignment.bottomCenter,
                                     colors: [
                                       Colors.transparent,
-                                      Colors.black.withOpacity(0.7),
+                                      Colors.black.withValues(alpha: 0.7),
                                     ],
                                   ),
                                 ),
@@ -113,7 +111,7 @@ class VideosContainer extends StatelessWidget {
                                 height: 60,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: accentColor.withOpacity(0.9),
+                                  color: accentColor.withValues(alpha: 0.9),
                                 ),
                                 child: const Icon(
                                   Icons.play_arrow_rounded,

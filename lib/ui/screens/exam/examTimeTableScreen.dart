@@ -64,7 +64,7 @@ class _ExamTimeTableState extends State<ExamTimeTableScreen> {
         boxShadow: [
           BoxShadow(
             color: Colors.black
-                .withOpacity(0.1), // Changed to lighter black shadow
+                .withValues(alpha: 0.1), // Changed to lighter black shadow
             blurRadius: 12, // Reduced blur
             spreadRadius: 1,
             offset: const Offset(0, 4), // Smaller offset
@@ -79,9 +79,9 @@ class _ExamTimeTableState extends State<ExamTimeTableScreen> {
             onTap: () {
               // Ripple effect on tap
             },
-            // splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+            // splashColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
             // highlightColor:
-            //     Theme.of(context).colorScheme.primary.withOpacity(0.05),
+            //     Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -125,7 +125,7 @@ class _ExamTimeTableState extends State<ExamTimeTableScreen> {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .primary
-                                    .withOpacity(0.1),
+                                    .withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
@@ -149,7 +149,7 @@ class _ExamTimeTableState extends State<ExamTimeTableScreen> {
                               color: Theme.of(context)
                                   .colorScheme
                                   .secondary
-                                  .withOpacity(0.8),
+                                  .withValues(alpha: 0.8),
                               fontSize: 14.0,
                             ),
                           ),
@@ -164,7 +164,7 @@ class _ExamTimeTableState extends State<ExamTimeTableScreen> {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .secondary
-                                    .withOpacity(0.7),
+                                    .withValues(alpha: 0.7),
                               ),
                               const SizedBox(width: 4),
                               Text(
@@ -174,7 +174,7 @@ class _ExamTimeTableState extends State<ExamTimeTableScreen> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .secondary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                   fontSize: 14.0,
                                 ),
                               ),
@@ -192,7 +192,7 @@ class _ExamTimeTableState extends State<ExamTimeTableScreen> {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .secondary
-                                    .withOpacity(0.7),
+                                    .withValues(alpha: 0.7),
                               ),
                               const SizedBox(width: 4),
                               Text(
@@ -201,7 +201,7 @@ class _ExamTimeTableState extends State<ExamTimeTableScreen> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .secondary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                   fontSize: 14.0,
                                 ),
                               ),
@@ -370,7 +370,7 @@ class _ExamTimeTableState extends State<ExamTimeTableScreen> {
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.075),
+                            .withValues(alpha: 0.075),
                         offset: const Offset(2.5, 2.5),
                         blurRadius: 5,
                       )

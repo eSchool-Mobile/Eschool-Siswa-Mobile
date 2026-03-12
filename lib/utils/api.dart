@@ -1,15 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:eschool/data/repositories/authRepository.dart';
-import 'package:eschool/utils/DownloadHelper.dart';
 import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:open_filex/open_filex.dart';
 
 class ApiException implements Exception {
   String errorMessage;
@@ -24,15 +19,16 @@ class ApiException implements Exception {
 
 // ignore: avoid_classes_with_only_static_members
 class Api {
-  static Map<String, dynamic> appendSchoolCode(
-      Map<String, dynamic>? queryParameters) {
-    Map<String, dynamic> params = Map.from(queryParameters ?? {});
-    final schoolCode = AuthRepository().schoolCode;
-    if (schoolCode.isNotEmpty) {
-      params['school_code'] = schoolCode;
-    }
-    return params;
-  }
+  // Bypass disable
+  // static Map<String, dynamic> appendSchoolCode(
+  //     Map<String, dynamic>? queryParameters) {
+  //   Map<String, dynamic> params = Map.from(queryParameters ?? {});
+  //   final schoolCode = AuthRepository().schoolCode;
+  //   if (schoolCode.isNotEmpty) {
+  //     params['school_code'] = schoolCode;
+  //   }
+  //   return params;
+  // }
 
   static Map<String, dynamic> headers() {
     final String jwtToken = AuthRepository().getJwtToken();
@@ -311,7 +307,9 @@ class Api {
       final response = await dio.post(
         url,
         data: dataToSend,
-        queryParameters: appendSchoolCode(queryParameters),
+        // Bypass disable
+        // queryParameters: appendSchoolCode(queryParameters),
+        queryParameters: queryParameters,
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
         onSendProgress: onSendProgress,
@@ -366,7 +364,9 @@ class Api {
 
       final response = await dio.get(
         url,
-        queryParameters: appendSchoolCode(queryParameters),
+        // Bypass disable
+        // queryParameters: appendSchoolCode(queryParameters),
+        queryParameters: queryParameters,
         options: useAuthToken ? Options(headers: headers()) : null,
       );
 
@@ -429,14 +429,15 @@ class Api {
         updateDownloadedPercentage, // kirim 0..100 atau -1
   }) async {
     try {
-      Uri uri = Uri.parse(url);
-      final schoolCode = AuthRepository().schoolCode;
-      if (schoolCode.isNotEmpty) {
-        final Map<String, dynamic> newParams = Map.from(uri.queryParameters);
-        newParams['school_code'] = schoolCode;
-        uri = uri.replace(queryParameters: newParams);
-        url = uri.toString();
-      }
+      // Bypass disable
+      // Uri uri = Uri.parse(url);
+      // final schoolCode = AuthRepository().schoolCode;
+      // if (schoolCode.isNotEmpty) {
+      //   final Map<String, dynamic> newParams = Map.from(uri.queryParameters);
+      //   newParams['school_code'] = schoolCode;
+      //   uri = uri.replace(queryParameters: newParams);
+      //   url = uri.toString();
+      // }
       final dio = Dio(
         BaseOptions(
           followRedirects: true,
@@ -544,7 +545,9 @@ class Api {
 
       final response = await dio.delete(
         url,
-        queryParameters: appendSchoolCode(queryParameters),
+        // Bypass disable
+        // queryParameters: appendSchoolCode(queryParameters),
+        queryParameters: queryParameters,
         options: useAuthToken ? Options(headers: headers()) : null,
       );
 

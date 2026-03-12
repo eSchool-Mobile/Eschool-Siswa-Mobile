@@ -9,7 +9,6 @@ import 'package:eschool/data/repositories/classRepository.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/ui/widgets/customAppbar.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
-import 'package:eschool/ui/widgets/customRoundedButton.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
@@ -156,7 +155,7 @@ class _SelectSubjectsScreenState extends State<SelectSubjectsScreen> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.05),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.05),
             offset: const Offset(3.5, 3.5),
             blurRadius: 10,
           )
@@ -359,8 +358,8 @@ class _SelectSubjectsScreenState extends State<SelectSubjectsScreen> {
                   elevation: 2,
                   backgroundColor: Colors.transparent,
                 ).copyWith(
-                  backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  backgroundColor: WidgetStateProperty.all(Colors.transparent),
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
                 ),
                 child: Ink(
                   decoration: BoxDecoration(
@@ -368,14 +367,14 @@ class _SelectSubjectsScreenState extends State<SelectSubjectsScreen> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Theme.of(context).colorScheme.primary.withOpacity(0.9),
-                        Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                         blurRadius: 4,
                         offset: Offset(0, 2),
                       ),

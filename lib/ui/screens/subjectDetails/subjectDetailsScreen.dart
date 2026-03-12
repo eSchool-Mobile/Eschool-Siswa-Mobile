@@ -8,9 +8,7 @@ import 'package:eschool/ui/screens/subjectDetails/widgets/announcementContainer.
 import 'package:eschool/ui/screens/subjectDetails/widgets/chaptersContainer.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customRefreshIndicator.dart';
-import 'package:eschool/ui/widgets/customTabBarContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/ui/widgets/tabBarBackgroundContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/systemModules.dart';
 import 'package:eschool/utils/utils.dart';
@@ -171,7 +169,7 @@ class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
                     width: boxConstraints.maxWidth * (0.7),
                     height: 45,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEEEEEE).withOpacity(0.3),
+                      color: const Color(0xFFEEEEEE).withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Row(
@@ -252,7 +250,7 @@ class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
                     width: boxConstraints.maxWidth * (0.7),
                     height: 45,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEEEEEE).withOpacity(0.3),
+                      color: const Color(0xFFEEEEEE).withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     alignment: Alignment.center,

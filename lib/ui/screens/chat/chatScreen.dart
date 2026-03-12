@@ -3,7 +3,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/cubits/chatDeleteMessageCubit.dart';
@@ -12,7 +11,6 @@ import 'package:eschool/cubits/chatReadMessageCubit.dart';
 import 'package:eschool/cubits/sendMessageCubit.dart';
 import 'package:eschool/cubits/socketSettingCubit.dart';
 import 'package:eschool/data/models/chatMessage.dart';
-import 'package:eschool/ui/screens/chat/localMessageStatus.dart';
 import 'package:eschool/ui/screens/chat/widgets/selectAttachmentBottomsheet.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
 import 'package:eschool/ui/widgets/customTextButton.dart';
@@ -27,7 +25,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //
@@ -979,7 +976,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   //               child: Container(
                                   //             decoration: BoxDecoration(
                                   //               color: Colors.black
-                                  //                   .withOpacity(0.3),
+                                  //                   .withValues(alpha: 0.3),
                                   //               borderRadius:
                                   //                   BorderRadius.circular(8),
                                   //             ),
@@ -1072,7 +1069,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       .format(message.createdAt.toLocal()),
                   style: TextStyle(
                     fontSize: 12.0,
-                    color: colorScheme.secondary.withOpacity(0.75),
+                    color: colorScheme.secondary.withValues(alpha: 0.75),
                   ),
                 ),
                 const SizedBox(width: 2.5),
@@ -1221,7 +1218,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     color: Theme.of(context)
                         .colorScheme
                         .secondary
-                        .withOpacity(0.75),
+                        .withValues(alpha: 0.75),
                   ),
                 ),
               ),
@@ -1235,7 +1232,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Icon(
                   Icons.send,
                   color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.75),
+                      Theme.of(context).colorScheme.secondary.withValues(alpha: 0.75),
                 ),
               ),
             ),

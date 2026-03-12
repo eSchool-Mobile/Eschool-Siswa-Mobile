@@ -215,7 +215,7 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
 
   @override
   void dispose() {
-    _audioPlayer?.dispose();
+    _audioPlayer.dispose();
     Future.microtask(() async {
       await SecureScreen.disableSecure();
     });
@@ -451,7 +451,7 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
-                value: localFamily,
+                initialValue: localFamily,
                 isExpanded: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -506,14 +506,14 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
                           inactiveTrackColor: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.3), // warna track non-aktif
+                              .withValues(alpha: 0.3), // warna track non-aktif
                           thumbColor: Theme.of(context)
                               .colorScheme
                               .primary, // warna bulatan
                           overlayColor: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.2), // efek saat ditekan
+                              .withValues(alpha: 0.2), // efek saat ditekan
                           valueIndicatorColor: Theme.of(context)
                               .colorScheme
                               .primary, // background value label
@@ -720,7 +720,6 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
     // Simpan jawaban secara lokal setiap kali jawaban diperbarui
     _saveLocalExamData();
   }
-
 
   Future<void> submitExamAnswers({bool forced = false}) async {
     FocusScope.of(context).unfocus();
@@ -1180,7 +1179,7 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
     isExamCompleted = true;
     return Container(
       alignment: Alignment.center,
-      color: Utils.getColorScheme(context).secondary.withOpacity(0.5),
+      color: Utils.getColorScheme(context).secondary.withValues(alpha: 0.5),
       child: AlertDialog(
         content: Column(
           mainAxisSize: MainAxisSize.min,

@@ -1,5 +1,4 @@
 import 'package:eschool/cubits/changePasswordCubit.dart';
-import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
@@ -193,10 +192,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
             duration: const Duration(milliseconds: 300),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-                color: _passwordStrengthColor.withOpacity(0.05),
+                color: _passwordStrengthColor.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                    color: _passwordStrengthColor.withOpacity(0.2),
+                    color: _passwordStrengthColor.withValues(alpha: 0.2),
                     width: 1,
                 ),
             ),
@@ -211,7 +210,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                     Container(
                                         padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
-                                            color: _passwordStrengthColor.withOpacity(0.1),
+                                            color: _passwordStrengthColor.withValues(alpha: 0.1),
                                             borderRadius: BorderRadius.circular(8),
                                         ),
                                         child: Icon(
@@ -281,14 +280,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                                 gradient: LinearGradient(
                                                     colors: [
                                                         _passwordStrengthColor,
-                                                        _passwordStrengthColor.withOpacity(0.8),
+                                                        _passwordStrengthColor.withValues(alpha: 0.8),
                                                     ],
                                                     begin: Alignment.centerLeft,
                                                     end: Alignment.centerRight,
                                                 ),
                                                 boxShadow: [
                                                     BoxShadow(
-                                                        color: _passwordStrengthColor.withOpacity(0.3),
+                                                        color: _passwordStrengthColor.withValues(alpha: 0.3),
                                                         blurRadius: 4,
                                                         offset: const Offset(0, 2),
                                                     ),
@@ -310,7 +309,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                                     borderRadius: BorderRadius.circular(4),
                                                     gradient: LinearGradient(
                                                         colors: [
-                                                            _passwordStrengthColor.withOpacity(
+                                                            _passwordStrengthColor.withValues(alpha: 
                                                                 0.3 * _pulseAnimController.value
                                                             ),
                                                             Colors.transparent,
@@ -421,7 +420,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                         shape: BoxShape.circle,
                         boxShadow: isActive ? [
                             BoxShadow(
-                                color: _passwordStrengthColor.withOpacity(0.4),
+                                color: _passwordStrengthColor.withValues(alpha: 0.4),
                                 blurRadius: 4,
                                 offset: const Offset(0, 1),
                             ),
@@ -536,11 +535,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                             child: Container(
                                                 padding: const EdgeInsets.all(16),
                                                 decoration: BoxDecoration(
-                                                    color: colorScheme.primary.withOpacity(0.1),
+                                                    color: colorScheme.primary.withValues(alpha: 0.1),
                                                     shape: BoxShape.circle,
                                                     boxShadow: [
                                                         BoxShadow(
-                                                            color: colorScheme.primary.withOpacity(0.1),
+                                                            color: colorScheme.primary.withValues(alpha: 0.1),
                                                             blurRadius: 20,
                                                             offset: const Offset(0, 5),
                                                         ),
@@ -581,7 +580,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                                         'Tingkatkan keamanan akun Anda dengan kata sandi yang lebih kuat',
                                                         style: GoogleFonts.inter(
                                                             fontSize: 14,
-                                                            color: colorScheme.onSurface.withOpacity(0.6),
+                                                            color: colorScheme.onSurface.withValues(alpha: 0.6),
                                                             fontWeight: FontWeight.w400,
                                                         ),
                                                         textAlign: TextAlign.center,
@@ -600,12 +599,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                                     borderRadius: BorderRadius.circular(20),
                                                     boxShadow: [
                                                         BoxShadow(
-                                                            color: Colors.black.withOpacity(0.05),
+                                                            color: Colors.black.withValues(alpha: 0.05),
                                                             blurRadius: 20,
                                                             offset: const Offset(0, 10),
                                                         ),
                                                         BoxShadow(
-                                                            color: colorScheme.primary.withOpacity(0.05),
+                                                            color: colorScheme.primary.withValues(alpha: 0.05),
                                                             blurRadius: 30,
                                                             offset: const Offset(0, 15),
                                                         ),
@@ -769,7 +768,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                                                                             ? [Colors.grey.shade400, Colors.grey.shade500]
                                                                                             : [
                                                                                                     colorScheme.primary,
-                                                                                                    colorScheme.primary.withOpacity(0.8),
+                                                                                                    colorScheme.primary.withValues(alpha: 0.8),
                                                                                                 ],
                                                                                     begin: Alignment.topLeft,
                                                                                     end: Alignment.bottomRight,
@@ -777,7 +776,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                                                                 borderRadius: BorderRadius.circular(16),
                                                                                 boxShadow: isButtonEnabled ? [
                                                                                     BoxShadow(
-                                                                                        color: colorScheme.primary.withOpacity(0.25),
+                                                                                        color: colorScheme.primary.withValues(alpha: 0.25),
                                                                                         blurRadius: 15,
                                                                                         offset: const Offset(0, 8),
                                                                                     ),
@@ -852,7 +851,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                     style: GoogleFonts.inter(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: colorScheme.onSurface.withOpacity(0.8),
+                        color: colorScheme.onSurface.withValues(alpha: 0.8),
                     ),
                 ),
                 const SizedBox(height: 8),
@@ -866,12 +865,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                             color: Colors.grey.shade50,
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
-                                color: colorScheme.primary.withOpacity(0.2),
+                                color: colorScheme.primary.withValues(alpha: 0.2),
                                 width: 1.5,
                             ),
                             boxShadow: [
                                 BoxShadow(
-                                    color: Colors.black.withOpacity(0.02),
+                                    color: Colors.black.withValues(alpha: 0.02),
                                     blurRadius: 8,
                                     offset: const Offset(0, 2),
                                 ),
@@ -889,7 +888,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                 hintText: Utils.getTranslatedLabel(hintKey),
                                 hintStyle: GoogleFonts.inter(
                                     fontSize: 14,
-                                    color: colorScheme.onSurface.withOpacity(0.5),
+                                    color: colorScheme.onSurface.withValues(alpha: 0.5),
                                 ),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(14),
@@ -903,7 +902,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                     margin: const EdgeInsets.only(left: 12, right: 8),
                                     child: Icon(
                                         icon,
-                                        color: colorScheme.primary.withOpacity(0.7),
+                                        color: colorScheme.primary.withValues(alpha: 0.7),
                                         size: 20,
                                     ),
                                 ),
@@ -913,7 +912,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> with Ticker
                                         child: Icon(
                                             hideText ? Icons.visibility_off_rounded : Icons.visibility_rounded,
                                             key: ValueKey(hideText),
-                                            color: colorScheme.primary.withOpacity(0.6),
+                                            color: colorScheme.primary.withValues(alpha: 0.6),
                                             size: 18,
                                         ),
                                     ),

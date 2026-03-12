@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/data/models/subject.dart';
-import 'package:eschool/ui/widgets/noDataContainer.dart';
 import 'package:eschool/ui/widgets/subjectImageContainer.dart';
 import 'package:eschool/utils/systemModules.dart';
 import 'package:eschool/utils/utils.dart';
@@ -59,7 +58,7 @@ class StudentSubjectsContainer extends StatelessWidget {
                 // Menambahkan ikon untuk memperjelas bagian
                 Icon(
                   FontAwesomeIcons.bookOpen,
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                   size: 22.0,
                 ),
                 SizedBox(width: 10),
@@ -80,7 +79,7 @@ class StudentSubjectsContainer extends StatelessWidget {
             children: [
               Icon(
                 FontAwesomeIcons.bookOpen,
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                 size: 22.0,
               ),
               SizedBox(width: 10),
@@ -169,7 +168,7 @@ class StudentSubjectsContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
+                    color: Colors.black.withValues(alpha: 0.25),
                     blurRadius: 7,
                     spreadRadius: 1,
                     offset: const Offset(0, 1),
@@ -193,7 +192,7 @@ class StudentSubjectsContainer extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: Utils.getColorScheme(context).onBackground,
+                color: Utils.getColorScheme(context).onSurface,
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
               ),

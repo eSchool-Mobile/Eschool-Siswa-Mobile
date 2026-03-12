@@ -1,10 +1,7 @@
 import 'package:eschool/cubits/paymentTransactionsCubit.dart';
 import 'package:eschool/data/repositories/paymentRepository.dart';
-import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/noDataContainer.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
@@ -13,11 +10,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eschool/ui/widgets/downloadFileBottomsheetContainer.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
 import 'package:eschool/utils/api.dart';
-import 'package:eschool/data/repositories/subjectRepository.dart';
-import 'package:eschool/cubits/downloadFileCubit.dart';
 
 class TransactionsScreen extends StatefulWidget {
   const TransactionsScreen({Key? key}) : super(key: key);
@@ -77,7 +71,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
       case 'failed':
         return softRedColor;
       default:
-        return Theme.of(context).colorScheme.secondary.withOpacity(0.5);
+        return Theme.of(context).colorScheme.secondary.withValues(alpha: 0.5);
     }
   }
 
@@ -115,7 +109,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
+              color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.08),
               blurRadius: 15,
               offset: const Offset(0, 5),
             )
@@ -144,7 +138,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -165,7 +159,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                           color: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.6),
+                              .withValues(alpha: 0.6),
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -175,7 +169,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondary
-                                .withOpacity(0.6),
+                                .withValues(alpha: 0.6),
                           ),
                         ),
                         const SizedBox(width: 5.0),
@@ -188,7 +182,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondary
-                                .withOpacity(0.6),
+                                .withValues(alpha: 0.6),
                           ),
                         ),
                       ],
@@ -226,7 +220,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                               color: Theme.of(context)
                                   .colorScheme
                                   .secondary
-                                  .withOpacity(0.7),
+                                  .withValues(alpha: 0.7),
                             ),
                           ),
                         ),
@@ -243,7 +237,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                       color: Theme.of(context)
                           .colorScheme
                           .secondary
-                          .withOpacity(0.8),
+                          .withValues(alpha: 0.8),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -267,7 +261,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
-                          color: statusColor.withOpacity(0.1),
+                          color: statusColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Text(
@@ -295,7 +289,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.6),
+                            .withValues(alpha: 0.6),
                       ),
                       const SizedBox(width: 6),
                       Text(
@@ -305,7 +299,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                           color: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.6),
+                              .withValues(alpha: 0.6),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -324,7 +318,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                         Container(
                           padding: EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(0.1),
+                            color: Colors.green.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Icon(
@@ -531,7 +525,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 4),
                               decoration: BoxDecoration(
-                                color: statusColor.withOpacity(0.1),
+                                color: statusColor.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -681,7 +675,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.08),
             blurRadius: 15,
             offset: const Offset(0, 5),
           )
@@ -700,7 +694,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                   height: 16,
                   width: 80,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -708,7 +702,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                   height: 12,
                   width: 120,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
@@ -718,7 +712,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
               height: 20,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
@@ -729,7 +723,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                   height: 20,
                   width: 100,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
@@ -737,7 +731,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                   height: 24,
                   width: 80,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
@@ -746,13 +740,13 @@ class _TransactionsScreenState extends State<TransactionsScreen>
             Container(
               height: 1,
               width: double.infinity,
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.grey.withValues(alpha: 0.2),
             ),
             Container(
               height: 16,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(6),
               ),
             ),

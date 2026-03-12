@@ -155,7 +155,7 @@ class _TimeTableContainerState extends State<TimeTableContainer>
                     color: Theme.of(context)
                         .colorScheme
                         .secondary
-                        .withOpacity(0.075),
+                        .withValues(alpha: 0.075),
                     offset: const Offset(2.5, 2.5),
                     blurRadius: 5,
                   )
@@ -264,7 +264,7 @@ class _TimeTableContainerState extends State<TimeTableContainer>
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: cs.secondary.withOpacity(0.075),
+            color: cs.secondary.withValues(alpha: 0.075),
             offset: const Offset(4, 4),
             blurRadius: 10,
           )
@@ -287,9 +287,9 @@ class _TimeTableContainerState extends State<TimeTableContainer>
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7.5),
                     color: (isActive
-                        ? cs.primary.withOpacity(0.18)
+                        ? cs.primary.withValues(alpha: 0.18)
                         : cs.primary
-                            .withOpacity(0.10)), // bg icon break aktif/nonaktif
+                            .withValues(alpha: 0.10)), // bg icon break aktif/nonaktif
                   ),
                   padding: EdgeInsets.symmetric(
                     horizontal: imageWidth * 0.15,

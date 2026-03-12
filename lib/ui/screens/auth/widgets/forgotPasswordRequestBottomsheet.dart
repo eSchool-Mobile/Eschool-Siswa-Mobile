@@ -1,14 +1,9 @@
 import 'package:eschool/cubits/forgotPasswordRequestCubit.dart';
-import 'package:eschool/ui/widgets/bottomsheetTopTitleAndCloseButton.dart';
-import 'package:eschool/ui/widgets/customRoundedButton.dart';
-import 'package:eschool/ui/widgets/customTextFieldContainer.dart';
-import 'package:eschool/utils/hiveBoxKeys.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/route_manager.dart';
-import 'package:lottie/lottie.dart';
 import 'package:flutter/services.dart';
 
 class ForgotPasswordRequestBottomsheet extends StatefulWidget {
@@ -79,7 +74,7 @@ class _ForgotPasswordRequestBottomsheetState
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             spreadRadius: 1,
             blurRadius: 10,
             offset: const Offset(0, -2),
@@ -275,12 +270,12 @@ class _ForgotPasswordRequestBottomsheetState
                   icon: Icon(
                     Icons.arrow_back_rounded,
                     size: 18,
-                    color: _primaryRed.withOpacity(0.8),
+                    color: _primaryRed.withValues(alpha: 0.8),
                   ),
                   label: Text(
                     "Kembali",
                     style: TextStyle(
-                      color: _primaryRed.withOpacity(0.8),
+                      color: _primaryRed.withValues(alpha: 0.8),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -317,7 +312,7 @@ class _ForgotPasswordRequestBottomsheetState
         boxShadow: isFocused
             ? [
                 BoxShadow(
-                  color: _primaryRed.withOpacity(0.2),
+                  color: _primaryRed.withValues(alpha: 0.2),
                   spreadRadius: 2,
                   blurRadius: 8,
                   offset: const Offset(0, 2),
@@ -325,7 +320,7 @@ class _ForgotPasswordRequestBottomsheetState
               ]
             : [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withValues(alpha: 0.1),
                   spreadRadius: 1,
                   blurRadius: 3,
                   offset: const Offset(0, 1),
@@ -420,7 +415,7 @@ class _ForgotPasswordRequestBottomsheetState
           borderRadius: BorderRadius.circular(50),
         ),
         elevation: isLoading ? 0 : 5,
-        shadowColor: _primaryRed.withOpacity(0.5),
+        shadowColor: _primaryRed.withValues(alpha: 0.5),
         minimumSize: const Size(200, 55),
       ),
       child: isLoading

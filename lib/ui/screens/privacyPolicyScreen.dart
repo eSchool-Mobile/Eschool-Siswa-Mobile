@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:eschool/cubits/appSettingsCubit.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';
@@ -195,7 +194,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen>
   Widget _buildHeroSection() {
     final primaryColor = Theme.of(context).colorScheme.primary;
     final secondaryColor =
-        Theme.of(context).colorScheme.primary.withOpacity(0.9);
+        Theme.of(context).colorScheme.primary.withValues(alpha: 0.9);
 
     return Container(
       height: MediaQuery.of(context).size.height * 0.3, // Responsive height
@@ -210,7 +209,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen>
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: primaryColor.withOpacity(0.3),
+            color: primaryColor.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -224,7 +223,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen>
             child: Icon(
               Icons.security,
               size: 200,
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           Padding(
@@ -260,7 +259,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen>
                       Utils.getTranslatedLabel(privacyPolicyDescKey),
                       style: GoogleFonts.poppins(
                         fontSize: 15,
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                       ),
                     ),
                   ),
@@ -290,7 +289,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: primaryColor.withOpacity(0.1),
+              color: primaryColor.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -342,7 +341,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen>
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: primaryColor.withOpacity(0.1),
+            color: primaryColor.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),

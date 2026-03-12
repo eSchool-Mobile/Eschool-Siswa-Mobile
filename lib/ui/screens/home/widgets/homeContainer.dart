@@ -5,7 +5,6 @@ import 'package:eschool/cubits/noticeBoardCubit.dart';
 import 'package:eschool/cubits/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/studentSubjectAndSlidersCubit.dart';
 import 'package:eschool/data/models/student.dart';
-import 'package:eschool/ui/screens/home/widgets/homeContainerTopProfileContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/homeScreenDataLoadingContainer.dart';
 import 'package:eschool/ui/widgets/borderedProfilePictureContainer.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
@@ -24,10 +23,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:icons_plus/icons_plus.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:lottie/lottie.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class HomeContainer extends StatefulWidget {
   final bool isForBottomMenuBackground;
@@ -117,7 +112,7 @@ class _HomeContainerState extends State<HomeContainer>
       margin: EdgeInsets.only(
           top: (spaces! > 0 && offsets != null) ? offsets : spaces),
       elevation: 10.0,
-      shadowColor: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+      shadowColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
       color: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -424,7 +419,7 @@ class _HomeContainerState extends State<HomeContainer>
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400,
                 color:
-                    Theme.of(context).scaffoldBackgroundColor.withOpacity(0.95),
+                    Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.95),
               ),
             ),
             const SizedBox(height: 4),
@@ -594,8 +589,8 @@ class _HomeContainerState extends State<HomeContainer>
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                primaryColor.withOpacity(0.9),
-                primaryColor.withOpacity(0.8),
+                primaryColor.withValues(alpha: 0.9),
+                primaryColor.withValues(alpha: 0.8),
                 primaryColor,
               ],
               stops: [0.0, 0.5, 1.0],
@@ -607,37 +602,37 @@ class _HomeContainerState extends State<HomeContainer>
                 top: 20,
                 right: 20,
                 child:
-                    _buildDecorativeCircle(40, Colors.white.withOpacity(0.08)),
+                    _buildDecorativeCircle(40, Colors.white.withValues(alpha: 0.08)),
               ),
               Positioned(
                 top: 60,
                 left: -15,
                 child:
-                    _buildDecorativeCircle(60, Colors.white.withOpacity(0.1)),
+                    _buildDecorativeCircle(60, Colors.white.withValues(alpha: 0.1)),
               ),
               Positioned(
                 top: 90,
                 right: 60,
                 child:
-                    _buildDecorativeSquare(20, Colors.white.withOpacity(0.12)),
+                    _buildDecorativeSquare(20, Colors.white.withValues(alpha: 0.12)),
               ),
               Positioned(
                 top: 65,
                 left: 100,
                 child:
-                    _buildDecorativeSquare(15, Colors.white.withOpacity(0.09)),
+                    _buildDecorativeSquare(15, Colors.white.withValues(alpha: 0.09)),
               ),
               Positioned(
                 bottom: MediaQuery.of(context).size.height * 0.4,
                 left: 30,
                 child:
-                    _buildDecorativeCircle(25, Colors.white.withOpacity(0.06)),
+                    _buildDecorativeCircle(25, Colors.white.withValues(alpha: 0.06)),
               ),
               Positioned(
                 bottom: MediaQuery.of(context).size.height * 0.5,
                 right: 20,
                 child:
-                    _buildDecorativeSquare(30, Colors.white.withOpacity(0.07)),
+                    _buildDecorativeSquare(30, Colors.white.withValues(alpha: 0.07)),
               ),
               _buildHeaderSection(),
             ],

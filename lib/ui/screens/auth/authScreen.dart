@@ -143,9 +143,9 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                _primaryRed.withOpacity(0.9),
+                _primaryRed.withValues(alpha: 0.9),
                 _primaryRed.withRed((_primaryRed.red * 0.85).round()),
-                _secondaryRed.withOpacity(0.9),
+                _secondaryRed.withValues(alpha: 0.9),
               ],
               stops: const [0.0, 0.6, 1.0],
             ),
@@ -156,7 +156,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                 opacity: _backgroundAnimation.value * 0.7,
                 child: CustomPaint(
                   painter: ModernBackgroundPatternPainter(
-                    color: Colors.white.withOpacity(0.09),
+                    color: Colors.white.withValues(alpha: 0.09),
                   ),
                   size: Size.infinite,
                 ),
@@ -167,7 +167,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                   return CustomPaint(
                     painter: EnhancedFloatingParticlesPainter(
                       animation: _floatingParticlesController.value,
-                      particleColor: Colors.white.withOpacity(0.09),
+                      particleColor: Colors.white.withValues(alpha: 0.09),
                     ),
                     size: Size.infinite,
                   );
@@ -186,9 +186,9 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                         height: 200,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _secondaryRed.withOpacity(0.3),
+                          color: _secondaryRed.withValues(alpha: 0.3),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
+                            color: Colors.white.withValues(alpha: 0.15),
                             width: 3,
                           ),
                         ),
@@ -210,9 +210,9 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                         height: 100,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _secondaryRed.withOpacity(0.3),
+                          color: _secondaryRed.withValues(alpha: 0.3),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
+                            color: Colors.white.withValues(alpha: 0.15),
                             width: 3,
                           ),
                         ),
@@ -245,13 +245,13 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: _primaryRed.withOpacity(0.3),
+                      color: _primaryRed.withValues(alpha: 0.3),
                       blurRadius: 35,
                       spreadRadius: 7,
                     )
                   ],
                   border: Border.all(
-                    color: _secondaryRed.withOpacity(0.5),
+                    color: _secondaryRed.withValues(alpha: 0.5),
                     width: 5,
                   ),
                 ),
@@ -293,7 +293,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
+                    color: Colors.black.withValues(alpha: 0.15),
                     blurRadius: 25,
                     offset: const Offset(0, -8),
                   ),
@@ -332,7 +332,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                       width: 60,
                                       height: 6,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.withOpacity(0.3),
+                                        color: Colors.grey.withValues(alpha: 0.3),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -418,7 +418,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,
-                  color: _textDark.withOpacity(0.7),
+                  color: _textDark.withValues(alpha: 0.7),
                   height: 1.4,
                   letterSpacing: 0.3,
                 ),
@@ -558,7 +558,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                     boxShadow: isPrimary
                         ? [
                             BoxShadow(
-                              color: _primaryRed.withOpacity(0.4),
+                              color: _primaryRed.withValues(alpha: 0.4),
                               blurRadius: 15,
                               offset: const Offset(0, 8),
                             )
@@ -646,7 +646,7 @@ class ModernBackgroundPatternPainter extends CustomPainter {
       final double radius = 25 + (i % 3) * 15;
 
       final circlePaint = Paint()
-        ..color = color.withOpacity(0.08)
+        ..color = color.withValues(alpha: 0.08)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 0.8;
 
@@ -688,14 +688,14 @@ class EnhancedFloatingParticlesPainter extends CustomPainter {
       final opacity = randomSize.nextDouble() * 0.5 + 0.3;
 
       final paint = Paint()
-        ..color = particleColor.withOpacity(opacity)
+        ..color = particleColor.withValues(alpha: opacity)
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(Offset(x, y), radius, paint);
 
       if (i % 3 == 0) {
         final glowPaint = Paint()
-          ..color = particleColor.withOpacity(opacity * 0.3)
+          ..color = particleColor.withValues(alpha: opacity * 0.3)
           ..style = PaintingStyle.fill
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
 

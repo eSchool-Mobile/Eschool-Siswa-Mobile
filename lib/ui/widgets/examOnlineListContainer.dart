@@ -19,8 +19,6 @@ import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ExamOnlineListContainer extends StatefulWidget {
   final int? childId;
@@ -156,7 +154,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
           icon,
           color: isSelected
               ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.secondary.withOpacity(0.6),
+              : Theme.of(context).colorScheme.secondary.withValues(alpha: 0.6),
           size: 20,
         ),
         const SizedBox(width: 8),
@@ -167,7 +165,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
             fontWeight: FontWeight.w500,
             color: isSelected
                 ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.secondary.withOpacity(0.6),
+                : Theme.of(context).colorScheme.secondary.withValues(alpha: 0.6),
           ),
         ),
       ],
@@ -290,7 +288,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Divider(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
                     ),
                   ),
                   GridView.count(
@@ -361,7 +359,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Divider(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
                     ),
                   ),
                   GridView.count(
@@ -480,12 +478,12 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
         border: Border.all(
           color: isSelected
               ? Colors.red
-              : Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              : Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -537,12 +535,12 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
         border: Border.all(
           color: isSelected
               ? Colors.red
-              : Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              : Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -677,7 +675,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.5),
+                            .withValues(alpha: 0.5),
                       )
                     : Icon(
                         Icons.event_busy_rounded,
@@ -685,7 +683,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.5),
+                            .withValues(alpha: 0.5),
                       );
 
                 return [
@@ -943,7 +941,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.3),
+                              .withValues(alpha: 0.3),
                           width: 1.5,
                         ),
                         boxShadow: [
@@ -951,7 +949,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.08),
+                                .withValues(alpha: 0.08),
                             blurRadius: _isSearchFocused ? 8 : 4,
                             offset: const Offset(0, 3),
                           ),
@@ -988,7 +986,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                   fontSize: 14,
                                 ),
                                 border: InputBorder.none,
@@ -1022,7 +1020,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                                           color: Theme.of(context)
                                               .colorScheme
                                               .primary
-                                              .withOpacity(0.1),
+                                              .withValues(alpha: 0.1),
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
@@ -1051,7 +1049,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.3),
+                            .withValues(alpha: 0.3),
                         width: 1.5,
                       ),
                       boxShadow: [
@@ -1059,7 +1057,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.08),
+                              .withValues(alpha: 0.08),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),

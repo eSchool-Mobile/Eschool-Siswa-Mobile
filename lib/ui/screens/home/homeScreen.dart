@@ -11,7 +11,6 @@ import 'package:eschool/cubits/resultsCubit.dart';
 import 'package:eschool/cubits/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/schoolGalleryCubit.dart';
 import 'package:eschool/cubits/schoolSessionYearsCubit.dart';
-import 'package:eschool/cubits/socketSettingCubit.dart';
 import 'package:eschool/data/repositories/authRepository.dart';
 import 'package:eschool/cubits/studentGuardianDetailsCubit.dart';
 import 'package:eschool/cubits/subjectAttendanceCubit.dart';
@@ -27,7 +26,6 @@ import 'package:eschool/ui/screens/home/cubits/assignmentsTabSelectionCubit.dart
 import 'package:eschool/ui/screens/home/widgets/bottomNavigationItemContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/examContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/homeContainer.dart';
-import 'package:eschool/ui/screens/home/widgets/homeContainerTopProfileContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/homeScreenDataLoadingContainer.dart';
 import 'package:eschool/ui/widgets/shimmerLoaders/profileHeaderShimmerLoadingContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/moreMenuBottomsheetContainer.dart';
@@ -58,14 +56,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 // Tambahan import untuk redesain
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:animate_do/animate_do.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:icons_plus/icons_plus.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:simple_animations/simple_animations.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../widgets/resultsContainer.dart';
 
@@ -417,7 +407,7 @@ class HomeScreenState extends State<HomeScreen>
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 offset: const Offset(0, 3),
                 blurRadius: 15,
                 spreadRadius: 1,
@@ -426,7 +416,7 @@ class HomeScreenState extends State<HomeScreen>
             gradient: LinearGradient(
               colors: [
                 Colors.white,
-                Theme.of(context).colorScheme.surface.withOpacity(0.9),
+                Theme.of(context).colorScheme.surface.withValues(alpha: 0.9),
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -540,7 +530,7 @@ class HomeScreenState extends State<HomeScreen>
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.3),
+                                        .withValues(alpha: 0.3),
                                     blurRadius: 12,
                                     spreadRadius: 0,
                                     offset: const Offset(0, 4),
@@ -560,11 +550,11 @@ class HomeScreenState extends State<HomeScreen>
                                     Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.75),
+                                        .withValues(alpha: 0.75),
                                     Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.9),
+                                        .withValues(alpha: 0.9),
                                   ],
                                 ),
                                 shape: BoxShape.circle,
@@ -605,7 +595,7 @@ class HomeScreenState extends State<HomeScreen>
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: Theme.of(context).colorScheme.secondary.withOpacity(0.75),
+        color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.75),
       ),
     );
   }
@@ -901,8 +891,8 @@ class HomeScreenState extends State<HomeScreen>
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
-                              primaryColor.withOpacity(0.9),
-                              primaryColor.withOpacity(0.8),
+                              primaryColor.withValues(alpha: 0.9),
+                              primaryColor.withValues(alpha: 0.8),
                               primaryColor,
                             ],
                             stops: [0.0, 0.5, 1.0],
@@ -922,7 +912,7 @@ class HomeScreenState extends State<HomeScreen>
                           shadowColor: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.3),
+                              .withValues(alpha: 0.3),
                           color: Theme.of(context).scaffoldBackgroundColor,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(

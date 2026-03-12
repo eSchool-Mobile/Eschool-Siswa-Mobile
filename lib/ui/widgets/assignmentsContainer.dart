@@ -8,15 +8,12 @@ import 'package:eschool/ui/widgets/assignmentFilterBottomsheetContainer.dart';
 import 'package:eschool/ui/widgets/assignmentListContainer.dart';
 import 'package:eschool/ui/widgets/assignmentsSubjectsContainer.dart';
 import 'package:eschool/ui/widgets/customRefreshIndicator.dart';
-import 'package:eschool/ui/widgets/customTabBarContainer.dart';
 import 'package:eschool/ui/widgets/svgButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/ui/widgets/tabBarBackgroundContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/ui/widgets/assignmentStatusBadge.dart';
 
 enum AssignmentFilters {
   assignedDateLatest,
@@ -195,7 +192,7 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
                   width: boxConstraints.maxWidth * (0.7),
                   height: 45,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEEEEEE).withOpacity(0.3),
+                    color: const Color(0xFFEEEEEE).withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: Row(
@@ -295,7 +292,7 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Row(
@@ -322,7 +319,7 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         decoration: BoxDecoration(
-          color: Colors.amber.withOpacity(0.1),
+          color: Colors.amber.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Row(
@@ -349,7 +346,7 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         decoration: BoxDecoration(
-          color: Colors.red.withOpacity(0.1),
+          color: Colors.red.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Row(

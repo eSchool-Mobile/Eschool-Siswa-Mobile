@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/ui/widgets/borderedProfilePictureContainer.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
 
 class ChildSelectorWidget extends StatelessWidget {
   const ChildSelectorWidget({Key? key}) : super(key: key);
@@ -90,7 +88,7 @@ class ChildSelectorWidget extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: isSelected 
-                ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
                 : Colors.grey.shade50,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
@@ -169,10 +167,10 @@ class ChildSelectorWidget extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                     ),
                   ),
                   child: Row(

@@ -162,7 +162,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.5),
+                            .withValues(alpha: 0.5),
                       )
                     : Icon(
                         Icons.event_busy_rounded,
@@ -170,7 +170,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.5),
+                            .withValues(alpha: 0.5),
                       );
 
                 String message = _searchQuery.isNotEmpty
@@ -498,7 +498,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.3),
+                              .withValues(alpha: 0.3),
                           width: 1.5,
                         ),
                         boxShadow: [
@@ -506,7 +506,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.08),
+                                .withValues(alpha: 0.08),
                             blurRadius: _isSearchFocused ? 8 : 4,
                             offset: const Offset(0, 3),
                           ),
@@ -543,7 +543,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                   fontSize: 14,
                                 ),
                                 border: InputBorder.none,
@@ -577,7 +577,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                                           color: Theme.of(context)
                                               .colorScheme
                                               .primary
-                                              .withOpacity(0.1),
+                                              .withValues(alpha: 0.1),
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
@@ -606,7 +606,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                   //       color: Theme.of(context)
                   //           .colorScheme
                   //           .primary
-                  //           .withOpacity(0.3),
+                  //           .withValues(alpha: 0.3),
                   //       width: 1.5,
                   //     ),
                   //     boxShadow: [
@@ -614,7 +614,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                   //         color: Theme.of(context)
                   //             .colorScheme
                   //             .primary
-                  //             .withOpacity(0.08),
+                  //             .withValues(alpha: 0.08),
                   //         blurRadius: 4,
                   //         offset: const Offset(0, 2),
                   //       ),

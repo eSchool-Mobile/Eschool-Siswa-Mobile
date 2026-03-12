@@ -8,12 +8,10 @@ import 'package:eschool/ui/widgets/assignmentListContainer.dart';
 import 'package:eschool/ui/widgets/assignmentsSubjectsContainer.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customRefreshIndicator.dart';
-import 'package:eschool/ui/widgets/customTabBarContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/ui/widgets/svgButton.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -212,7 +210,7 @@ class _ChildAssignmentsScreenState extends State<ChildAssignmentsScreen> {
                   width: boxConstraints.maxWidth * (0.7),
                   height: 45,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEEEEEE).withOpacity(0.3),
+                    color: const Color(0xFFEEEEEE).withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: Row(

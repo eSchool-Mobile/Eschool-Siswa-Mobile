@@ -48,7 +48,7 @@ class Result {
     totalMark = double.parse((json['result']['total_marks'] ?? 0).toString());
     obtainedMark =
         double.parse((json['result']['obtained_marks'] ?? 0).toString());
-    percentage = double.parse((json['result']['percentage'] ?? 0).toString());
+    percentage = double.parse((json['result']['percentage'] ?? 0).toString()); 
     grade = json['result']['grade'] ?? "";
     examId = json['result']['exam_id'] ?? 0;
   }

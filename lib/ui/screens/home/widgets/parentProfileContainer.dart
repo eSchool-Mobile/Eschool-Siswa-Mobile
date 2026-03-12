@@ -87,7 +87,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
         borderRadius: BorderRadius.circular(24.0),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
             blurRadius: 20,
             spreadRadius: 2,
             offset: const Offset(0, 10),
@@ -115,7 +115,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.2),
+                              .withValues(alpha: 0.2),
                           blurRadius: 15,
                           spreadRadius: 1,
                           offset: const Offset(0, 5),
@@ -298,7 +298,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -309,7 +309,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.12),
+                  color: iconColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -331,7 +331,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                             .textTheme
                             .bodySmall
                             ?.color
-                            ?.withOpacity(0.7),
+                            ?.withValues(alpha: 0.7),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -354,7 +354,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
               Icon(
                 Icons.copy_rounded,
                 size: 18,
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
               ),
             ],
           ),
@@ -377,7 +377,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -438,8 +438,8 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Theme.of(context).colorScheme.primary.withOpacity(0.9),
-                        Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(24),
@@ -448,7 +448,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.3),
+                            .withValues(alpha: 0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 12),
                       ),
@@ -499,7 +499,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                             vertical: 7,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.25),
+                            color: Colors.white.withValues(alpha: 0.25),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
@@ -535,7 +535,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
+                                  color: Colors.black.withValues(alpha: 0.2),
                                   blurRadius: 15,
                                   spreadRadius: 2,
                                 ),
@@ -567,11 +567,11 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                                                   Theme.of(context)
                                                       .colorScheme
                                                       .primary
-                                                      .withOpacity(0.3),
+                                                      .withValues(alpha: 0.3),
                                                   Theme.of(context)
                                                       .colorScheme
                                                       .primary
-                                                      .withOpacity(0.5),
+                                                      .withValues(alpha: 0.5),
                                                 ],
                                               ),
                                             ),
@@ -604,11 +604,11 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                                             Theme.of(context)
                                                 .colorScheme
                                                 .primary
-                                                .withOpacity(0.3),
+                                                .withValues(alpha: 0.3),
                                             Theme.of(context)
                                                 .colorScheme
                                                 .primary
-                                                .withOpacity(0.5),
+                                                .withValues(alpha: 0.5),
                                           ],
                                         ),
                                       ),

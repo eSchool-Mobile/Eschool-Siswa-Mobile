@@ -123,18 +123,18 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
             ),
             datePickerTheme: DatePickerThemeData(
               // untuk pastikan teks tanggal terpilih putih
-              dayForegroundColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.selected))
+              dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected))
                   return Colors.white;
                 return null; // default
               }),
-              dayBackgroundColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.selected)) return Colors.red;
+              dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) return Colors.red;
                 return null;
               }),
               rangeSelectionBackgroundColor: Colors.red, // area range
               rangeSelectionOverlayColor:
-                  MaterialStateProperty.all(Colors.red.withOpacity(.12)),
+                  WidgetStateProperty.all(Colors.red.withValues(alpha: .12)),
             ),
           ),
           child: child!,
@@ -486,9 +486,9 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
   }) {
     final primary = Theme.of(context).colorScheme.primary;
 
-    final Color bg = selected ? Colors.white : Colors.white.withOpacity(0.18);
+    final Color bg = selected ? Colors.white : Colors.white.withValues(alpha: 0.18);
     final Color border =
-        selected ? primary.withOpacity(0.7) : Colors.grey.shade300;
+        selected ? primary.withValues(alpha: 0.7) : Colors.grey.shade300;
     final Color text = selected ? primary : Colors.grey.shade800;
     final Color iconColor = selected ? primary : Colors.grey.shade700;
 
@@ -505,7 +505,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
           boxShadow: selected
               ? [
                   BoxShadow(
-                    color: primary.withOpacity(0.13),
+                    color: primary.withValues(alpha: 0.13),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   )
@@ -544,7 +544,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.08),
             blurRadius: 15,
             offset: const Offset(0, 5),
           )
@@ -577,7 +577,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
             Container(
                 height: 1,
                 width: double.infinity,
-                color: Colors.grey.withOpacity(0.2)),
+                color: Colors.grey.withValues(alpha: 0.2)),
             Container(
                 height: 16, width: double.infinity, decoration: _shimmerBox()),
           ],
@@ -592,7 +592,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
   }
 
   BoxDecoration _shimmerBox({double radius = 8}) => BoxDecoration(
-        color: Colors.grey.withOpacity(0.2),
+        color: Colors.grey.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(radius),
       );
 
@@ -607,7 +607,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
       case 'rejected':
         return Colors.red;
       default:
-        return Theme.of(context).colorScheme.secondary.withOpacity(0.5);
+        return Theme.of(context).colorScheme.secondary.withValues(alpha: 0.5);
     }
   }
 
@@ -855,7 +855,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 4),
                               decoration: BoxDecoration(
-                                  color: statusColor.withOpacity(0.1),
+                                  color: statusColor.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(20)),
                               child: Text(
                                 _getStatusText(status),
@@ -993,7 +993,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.04),
+                color: Colors.black.withValues(alpha: 0.04),
                 blurRadius: 18,
                 offset: const Offset(0, 8))
           ],
@@ -1017,7 +1017,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 14, vertical: 6),
                         decoration: BoxDecoration(
-                            color: statusColor.withOpacity(0.13),
+                            color: statusColor.withValues(alpha: 0.13),
                             borderRadius: BorderRadius.circular(30)),
                         child: Row(
                           children: [
@@ -1061,7 +1061,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
                           child: Container(
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                                color: Colors.green.withOpacity(0.13),
+                                color: Colors.green.withValues(alpha: 0.13),
                                 borderRadius: BorderRadius.circular(8)),
                             child: const Icon(Icons.image_rounded,
                                 size: 16, color: Colors.green),
@@ -1094,7 +1094,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.09),
+                              .withValues(alpha: 0.09),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Row(
@@ -1163,7 +1163,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .secondary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                 ),
                               ),
                             ],
@@ -1188,7 +1188,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondary
-                                .withOpacity(0.85),
+                                .withValues(alpha: 0.85),
                             fontWeight: FontWeight.w500,
                           ),
                           maxLines: 2,
@@ -1210,7 +1210,7 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.7)),
+                              .withValues(alpha: 0.7)),
                       const SizedBox(width: 7),
                       Text("Metode:",
                           style: TextStyle(

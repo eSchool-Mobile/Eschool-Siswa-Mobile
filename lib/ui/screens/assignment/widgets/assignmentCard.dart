@@ -1,6 +1,4 @@
 import 'package:eschool/data/models/assignment.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
-import 'package:eschool/ui/widgets/studyMaterialWithDownloadButtonContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +54,7 @@ class AssignmentCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: Offset(0, 4),
             ),
@@ -76,8 +74,8 @@ class AssignmentCard extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        primaryColor.withOpacity(0.9),
-                        primaryColor.withOpacity(0.8),
+                        primaryColor.withValues(alpha: 0.9),
+                        primaryColor.withValues(alpha: 0.8),
                       ],
                     ),
                     borderRadius: BorderRadius.only(
@@ -107,7 +105,7 @@ class AssignmentCard extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Row(
@@ -138,7 +136,7 @@ class AssignmentCard extends StatelessWidget {
                           assignment.subject.getSubjectName(context: context),
                           style: GoogleFonts.poppins(
                             fontSize: 14,
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                           ),
                         ),
                     ],
@@ -181,7 +179,7 @@ class AssignmentCard extends StatelessWidget {
                               margin: EdgeInsets.only(left: 8),
                               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                               decoration: BoxDecoration(
-                                color: Colors.red.withOpacity(0.1),
+                                color: Colors.red.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
@@ -250,7 +248,7 @@ class AssignmentCard extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
                     color: getAssignmentStatusKey().isNotEmpty
-                        ? _getStatusColor().withOpacity(0.1)
+                        ? _getStatusColor().withValues(alpha: 0.1)
                         : Colors.grey.shade100,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(16),
@@ -335,7 +333,7 @@ class AssignmentCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 4,
                         offset: Offset(0, 2),
                       ),

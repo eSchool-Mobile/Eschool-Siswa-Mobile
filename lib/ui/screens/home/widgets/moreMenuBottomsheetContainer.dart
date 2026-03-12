@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/ui/widgets/customUserProfileImageWidget.dart';
@@ -43,7 +42,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                 border: Border.all(
                   color: primaryRed,
                 ),
-                color: lightRed.withOpacity(0.2),
+                color: lightRed.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(15.0),
               ),
               margin: EdgeInsets.symmetric(
@@ -102,7 +101,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
             blurRadius: 10,
             offset: const Offset(0, -3),
           ),
@@ -126,7 +125,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                       color: Theme.of(context)
                           .colorScheme
                           .primary
-                          .withOpacity(0.2),
+                          .withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
@@ -141,7 +140,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                     color: Theme.of(context)
                         .colorScheme
                         .primary
-                        .withOpacity(0.05),
+                        .withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -155,7 +154,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.5),
+                                .withValues(alpha: 0.5),
                           ),
                           borderRadius: BorderRadius.circular(
                             boxConstraints.maxWidth * (0.075), // Sesuaikan dengan ukuran baru
@@ -165,7 +164,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.15),
+                                  .withValues(alpha: 0.15),
                               blurRadius: 8,
                               spreadRadius: 1,
                             ),
@@ -211,7 +210,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                 ),
                                 const SizedBox(width: 4),
                                 Flexible(
@@ -244,7 +243,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                 ),
                                 const SizedBox(width: 4),
                                 Flexible(
@@ -270,7 +269,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.1),
+                            .withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                         child: InkWell(
                           onTap: () async {

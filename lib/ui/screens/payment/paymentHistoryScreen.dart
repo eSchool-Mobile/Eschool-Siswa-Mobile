@@ -156,12 +156,12 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: statusColor.withOpacity(0.2),
+                color: statusColor.withValues(alpha: 0.2),
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: statusColor.withOpacity(0.1),
+                  color: statusColor.withValues(alpha: 0.1),
                   blurRadius: 8,
                   offset: Offset(0, 2),
                 ),
@@ -178,7 +178,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                         Container(
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: statusColor.withOpacity(0.1),
+                            color: statusColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
@@ -230,10 +230,10 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                     Container(
                       padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: primaryColor.withOpacity(0.05),
+                        color: primaryColor.withValues(alpha: 0.05),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: primaryColor.withOpacity(0.2),
+                          color: primaryColor.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -245,7 +245,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                               Icon(
                                 Icons.account_balance_wallet_rounded,
                                 size: 16,
-                                color: primaryColor.withOpacity(0.8),
+                                color: primaryColor.withValues(alpha: 0.8),
                               ),
                               SizedBox(width: 8),
                               Text(
@@ -262,7 +262,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: primaryColor.withOpacity(0.9),
+                                  color: primaryColor.withValues(alpha: 0.9),
                                 ),
                               ),
                             ],
@@ -281,7 +281,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                     Icon(
                                       Icons.payment_rounded,
                                       size: 16,
-                                      color: primaryColor.withOpacity(0.8),
+                                      color: primaryColor.withValues(alpha: 0.8),
                                     ),
                                     const SizedBox(width: 8),
                                     Expanded(
@@ -318,7 +318,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                               horizontal: 12, vertical: 4),
                                           decoration: BoxDecoration(
                                             color:
-                                                primaryColor.withOpacity(0.1),
+                                                primaryColor.withValues(alpha: 0.1),
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                           ),
@@ -337,7 +337,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                               fontWeight: FontWeight.w600,
                                               color: paymentMethod.isNotEmpty
                                                   ? primaryColor
-                                                      .withOpacity(0.9)
+                                                      .withValues(alpha: 0.9)
                                                   : Colors.grey.shade500,
                                             ),
                                           ),
@@ -366,7 +366,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: primaryColor.withOpacity(0.4),
+                              color: primaryColor.withValues(alpha: 0.4),
                               width: 2,
                             ),
                           ),
@@ -386,8 +386,8 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                         colors: [
-                                          primaryColor.withOpacity(0.1),
-                                          primaryColor.withOpacity(0.05),
+                                          primaryColor.withValues(alpha: 0.1),
+                                          primaryColor.withValues(alpha: 0.05),
                                         ],
                                       ),
                                     ),
@@ -410,7 +410,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                         Icon(
                                           Icons.broken_image_rounded,
                                           size: 64,
-                                          color: primaryColor.withOpacity(0.3),
+                                          color: primaryColor.withValues(alpha: 0.3),
                                         ),
                                         const SizedBox(height: 12),
                                         Text(
@@ -437,7 +437,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                     end: Alignment.bottomCenter,
                                     colors: [
                                       Colors.transparent,
-                                      Colors.black.withOpacity(0.3),
+                                      Colors.black.withValues(alpha: 0.3),
                                     ],
                                   ),
                                 ),
@@ -449,7 +449,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                           .animate(onPlay: (controller) => controller.repeat())
                           .shimmer(
                               duration: 3000.ms,
-                              color: primaryColor.withOpacity(0.1)),
+                              color: primaryColor.withValues(alpha: 0.1)),
                     ],
                   ],
                 ))));
@@ -481,13 +481,13 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
             Container(
               padding: EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: primaryColor.withOpacity(0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.history_rounded,
                 size: 48,
-                color: primaryColor.withOpacity(0.8),
+                color: primaryColor.withValues(alpha: 0.8),
               ),
             ),
             SizedBox(height: 24),
@@ -496,7 +496,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: primaryColor.withOpacity(0.9),
+                color: primaryColor.withValues(alpha: 0.9),
               ),
             ),
             SizedBox(height: 8),

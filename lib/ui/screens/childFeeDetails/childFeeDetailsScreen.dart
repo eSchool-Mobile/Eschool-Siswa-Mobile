@@ -97,7 +97,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
   TextStyle getPaidOnTextStyle() {
     return TextStyle(
         fontSize: 12.0,
-        color: Theme.of(context).colorScheme.secondary.withOpacity(0.75));
+        color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.75));
   }
 
   TextStyle getPaymentInfoTitleStyle() {
@@ -489,7 +489,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
             child: Icon(
               Icons.edit,
               size: 18,
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
+              color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.3),
             ),
           ),
         )
@@ -825,7 +825,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.25)))),
+                                  .withValues(alpha: 0.25)))),
                   padding: EdgeInsets.only(
                     bottom: 10,
                   ),
@@ -901,7 +901,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .secondary
-                                                .withOpacity(0.75)),
+                                                .withValues(alpha: 0.75)),
                                       ),
                                     ],
                                   )
@@ -972,7 +972,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.25)))),
+                                        .withValues(alpha: 0.25)))),
                         padding: EdgeInsets.only(
                           bottom: 10,
                         ),
@@ -1110,7 +1110,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                           color: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.85),
+                              .withValues(alpha: 0.85),
                           fontWeight: FontWeight.w600,
                         ),
                       ),

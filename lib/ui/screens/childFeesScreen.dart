@@ -1,7 +1,4 @@
-import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
 import 'package:eschool/cubits/childFeeDetailsCubit.dart';
 import 'package:eschool/cubits/paymentTransactionsCubit.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
@@ -26,16 +23,12 @@ import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:eschool/utils/constants.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:open_filex/open_filex.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 // import 'package:mime/mime.dart';
 
 class ChildFeesScreen extends StatefulWidget {
@@ -357,14 +350,14 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         case pendingKey:
           statusColor = isOverdue
               ? Theme.of(context).colorScheme.primary
-              : primaryColor.withOpacity(0.8);
+              : primaryColor.withValues(alpha: 0.8);
           statusIcon = isOverdue ? Icons.error_rounded : Icons.schedule_rounded;
           statusText = isOverdue
               ? Utils.getTranslatedLabel(overdueKey)
               : Utils.getTranslatedLabel(feePaymentStatusKey);
           break;
         default:
-          statusColor = primaryColor.withOpacity(0.8);
+          statusColor = primaryColor.withValues(alpha: 0.8);
           statusIcon = Icons.info_rounded;
           statusText = Utils.getTranslatedLabel(feePaymentStatusKey);
       }
@@ -413,16 +406,16 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           ? Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.3)
-                          : primaryColor.withOpacity(0.1),
+                              .withValues(alpha: 0.3)
+                          : primaryColor.withValues(alpha: 0.1),
               width: isSelected ? 2 : 1),
           boxShadow: [
             BoxShadow(
               color: isSelected
-                  ? Theme.of(context).colorScheme.primary.withOpacity(0.15)
+                  ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.15)
                   : hasPendingPayment
-                      ? Colors.orange.withOpacity(0.1)
-                      : primaryColor.withOpacity(0.08),
+                      ? Colors.orange.withValues(alpha: 0.1)
+                      : primaryColor.withValues(alpha: 0.08),
               blurRadius: isSelected ? 16 : 12,
               offset: const Offset(0, 6),
               spreadRadius: 0,
@@ -467,7 +460,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               border: Border.all(
                                 color: isSelected
                                     ? Theme.of(context).colorScheme.primary
-                                    : primaryColor.withOpacity(0.3),
+                                    : primaryColor.withValues(alpha: 0.3),
                                 width: 2,
                               ),
                             ),
@@ -491,27 +484,27 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           gradient: LinearGradient(
                             colors: isPaid
                                 ? [
-                                    accentGreen.withOpacity(0.9),
-                                    accentGreen.withOpacity(0.8),
+                                    accentGreen.withValues(alpha: 0.9),
+                                    accentGreen.withValues(alpha: 0.8),
                                   ]
                                 : hasPendingPayment
                                     ? [
-                                        Colors.orange.shade600.withOpacity(0.9),
-                                        Colors.orange.shade600.withOpacity(0.8),
+                                        Colors.orange.shade600.withValues(alpha: 0.9),
+                                        Colors.orange.shade600.withValues(alpha: 0.8),
                                       ]
                                     : [
-                                        primaryColor.withOpacity(0.9),
-                                        primaryColor.withOpacity(0.8),
+                                        primaryColor.withValues(alpha: 0.9),
+                                        primaryColor.withValues(alpha: 0.8),
                                       ],
                           ),
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
                               color: isPaid
-                                  ? accentGreen.withOpacity(0.3)
+                                  ? accentGreen.withValues(alpha: 0.3)
                                   : hasPendingPayment
-                                      ? Colors.orange.withOpacity(0.3)
-                                      : primaryColor.withOpacity(0.3),
+                                      ? Colors.orange.withValues(alpha: 0.3)
+                                      : primaryColor.withValues(alpha: 0.3),
                               blurRadius: 6,
                               offset: Offset(0, 3),
                             )
@@ -559,12 +552,12 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                   decoration: BoxDecoration(
                                     color: feeDetails
                                         .getFeeTypeColor()
-                                        .withOpacity(0.15),
+                                        .withValues(alpha: 0.15),
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
                                       color: feeDetails
                                           .getFeeTypeColor()
-                                          .withOpacity(0.3),
+                                          .withValues(alpha: 0.3),
                                       width: 1,
                                     ),
                                   ),
@@ -598,10 +591,10 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 4),
                                   decoration: BoxDecoration(
-                                    color: statusColor.withOpacity(0.15),
+                                    color: statusColor.withValues(alpha: 0.15),
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                      color: statusColor.withOpacity(0.3),
+                                      color: statusColor.withValues(alpha: 0.3),
                                       width: 1,
                                     ),
                                   ),
@@ -647,13 +640,13 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          primaryColor.withOpacity(0.06),
-                          primaryColor.withOpacity(0.03),
+                          primaryColor.withValues(alpha: 0.06),
+                          primaryColor.withValues(alpha: 0.03),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
-                        color: primaryColor.withOpacity(0.15),
+                        color: primaryColor.withValues(alpha: 0.15),
                         width: 1,
                       ),
                     ),
@@ -687,7 +680,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                             icon: Icons.pending_actions_rounded,
                             label: Utils.getTranslatedLabel(remainingKey),
                             amount: remainingAmount,
-                            color: primaryColor.withOpacity(0.8),
+                            color: primaryColor.withValues(alpha: 0.8),
                           ),
                         ],
 
@@ -699,7 +692,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           Container(
                             padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.1),
+                              color: Colors.grey.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Row(
@@ -742,7 +735,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                             child: _buildInfoBadge(
                               icon: Icons.class_rounded,
                               label: className,
-                              color: primaryColor.withOpacity(0.8),
+                              color: primaryColor.withValues(alpha: 0.8),
                             ),
                           ),
                         if (className != null && sessionYear != null)
@@ -752,7 +745,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                             child: _buildInfoBadge(
                               icon: Icons.calendar_today_rounded,
                               label: sessionYear,
-                              color: primaryColor.withOpacity(0.9),
+                              color: primaryColor.withValues(alpha: 0.9),
                             ),
                           ),
                       ],
@@ -774,8 +767,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                 ? Theme.of(context)
                                     .colorScheme
                                     .primary
-                                    .withOpacity(0.08)
-                                : primaryColor.withOpacity(0.06),
+                                    .withValues(alpha: 0.08)
+                                : primaryColor.withValues(alpha: 0.06),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           color: hasPendingPayment
@@ -784,8 +777,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                   ? Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.3)
-                                  : primaryColor.withOpacity(0.2),
+                                      .withValues(alpha: 0.3)
+                                  : primaryColor.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -802,8 +795,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                         ? Theme.of(context)
                                             .colorScheme
                                             .primary
-                                            .withOpacity(0.15)
-                                        : primaryColor.withOpacity(0.15),
+                                            .withValues(alpha: 0.15)
+                                        : primaryColor.withValues(alpha: 0.15),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
@@ -815,7 +808,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                     size: 14,
                                     color: isOverdue
                                         ? Theme.of(context).colorScheme.primary
-                                        : primaryColor.withOpacity(0.8),
+                                        : primaryColor.withValues(alpha: 0.8),
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -840,7 +833,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                               ? Theme.of(context)
                                                   .colorScheme
                                                   .primary
-                                              : primaryColor.withOpacity(0.8),
+                                              : primaryColor.withValues(alpha: 0.8),
                                         ),
                                       ),
                                       Text(
@@ -856,7 +849,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                                       .colorScheme
                                                       .primary
                                                   : primaryColor
-                                                      .withOpacity(0.8))
+                                                      .withValues(alpha: 0.8))
                                               : Colors.grey.shade600,
                                           fontStyle: dueDate != null
                                               ? FontStyle.normal
@@ -1038,14 +1031,14 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      primaryColor.withOpacity(0.9),
-                                      primaryColor.withOpacity(0.8),
+                                      primaryColor.withValues(alpha: 0.9),
+                                      primaryColor.withValues(alpha: 0.8),
                                     ],
                                   ),
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: primaryColor.withOpacity(0.25),
+                                      color: primaryColor.withValues(alpha: 0.25),
                                       blurRadius: 6,
                                       offset: Offset(0, 2),
                                     ),
@@ -1136,7 +1129,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         Container(
           padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.15),
+            color: color.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(
@@ -1152,7 +1145,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
             style: TextStyle(
               fontSize: isMain ? 13 : 12,
               fontWeight: isMain ? FontWeight.w600 : FontWeight.w500,
-              color: color.withOpacity(0.9),
+              color: color.withValues(alpha: 0.9),
             ),
           ),
         ),
@@ -1178,10 +1171,10 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.12),
+          color: color.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: color.withOpacity(0.25),
+            color: color.withValues(alpha: 0.25),
             width: 1,
           ),
         ),
@@ -1219,7 +1212,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
             blurRadius: 12,
             offset: const Offset(0, 6),
           )
@@ -1412,14 +1405,14 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Theme.of(context).colorScheme.primary.withOpacity(0.9),
-              Theme.of(context).colorScheme.primary.withOpacity(0.8),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
             ],
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
               blurRadius: 15,
               offset: Offset(0, 8),
             ),
@@ -1437,7 +1430,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                     Text(
                       '$selectedCount ${Utils.getTranslatedLabel(selectedCount > 1 ? itemsSelectedKey : itemSelectedKey)}',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
@@ -1582,7 +1575,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 8,
               offset: Offset(0, 2),
             ),
@@ -1602,7 +1595,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                       color: Theme.of(context)
                           .colorScheme
                           .primary
-                          .withOpacity(0.1),
+                          .withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
@@ -1702,7 +1695,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.1),
+                                  .withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
@@ -1792,10 +1785,10 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
       width: double.infinity,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.06),
+        color: color.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withOpacity(0.15),
+          color: color.withValues(alpha: 0.15),
           width: 1,
         ),
       ),
@@ -1805,7 +1798,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
           Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
@@ -1827,7 +1820,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: color.withOpacity(0.8),
+                    color: color.withValues(alpha: 0.8),
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -1897,7 +1890,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                       color: Theme.of(context)
                           .colorScheme
                           .primary
-                          .withOpacity(0.04),
+                          .withValues(alpha: 0.04),
                     ),
                   ),
                 );
@@ -2032,7 +2025,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.4),
+                                  .withValues(alpha: 0.4),
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             backgroundColor: Colors.white,
@@ -2161,7 +2154,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
               : null,
           borderRadius: BorderRadius.circular(12),
         ),
@@ -2342,7 +2335,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
+              color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.08),
               blurRadius: 15,
               offset: const Offset(0, 5),
             )
@@ -2371,7 +2364,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -2392,7 +2385,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           color: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.6),
+                              .withValues(alpha: 0.6),
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -2404,7 +2397,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondary
-                                .withOpacity(0.6),
+                                .withValues(alpha: 0.6),
                           ),
                         ),
                         const SizedBox(width: 5.0),
@@ -2417,7 +2410,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondary
-                                .withOpacity(0.6),
+                                .withValues(alpha: 0.6),
                           ),
                         ),
                       ],
@@ -2455,7 +2448,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               color: Theme.of(context)
                                   .colorScheme
                                   .secondary
-                                  .withOpacity(0.7),
+                                  .withValues(alpha: 0.7),
                             ),
                           ),
                         ),
@@ -2472,7 +2465,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                       color: Theme.of(context)
                           .colorScheme
                           .secondary
-                          .withOpacity(0.8),
+                          .withValues(alpha: 0.8),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -2496,7 +2489,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
-                          color: statusColor.withOpacity(0.1),
+                          color: statusColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Text(
@@ -2524,7 +2517,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.6),
+                            .withValues(alpha: 0.6),
                       ),
                       const SizedBox(width: 6),
                       Text(
@@ -2534,7 +2527,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           color: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.6),
+                              .withValues(alpha: 0.6),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -2553,7 +2546,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                         Container(
                           padding: EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(0.1),
+                            color: Colors.green.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Icon(
@@ -2587,7 +2580,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
       case 'failed':
         return softRedColor;
       default:
-        return Theme.of(context).colorScheme.secondary.withOpacity(0.5);
+        return Theme.of(context).colorScheme.secondary.withValues(alpha: 0.5);
     }
   }
 
@@ -2775,7 +2768,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 4),
                               decoration: BoxDecoration(
-                                color: statusColor.withOpacity(0.1),
+                                color: statusColor.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -3025,7 +3018,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.08),
             blurRadius: 15,
             offset: const Offset(0, 5),
           )
@@ -3044,7 +3037,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                   height: 16,
                   width: 80,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -3052,7 +3045,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                   height: 12,
                   width: 120,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
@@ -3062,7 +3055,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
               height: 20,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
@@ -3073,7 +3066,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                   height: 20,
                   width: 100,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
@@ -3081,7 +3074,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                   height: 24,
                   width: 80,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
@@ -3090,13 +3083,13 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
             Container(
               height: 1,
               width: double.infinity,
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.grey.withValues(alpha: 0.2),
             ),
             Container(
               height: 16,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
@@ -3166,7 +3159,7 @@ class CustomHistoryButton extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.25),
               blurRadius: 10,
               offset: Offset(0, 4),
             ),

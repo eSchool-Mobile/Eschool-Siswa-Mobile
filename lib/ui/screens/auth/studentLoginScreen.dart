@@ -411,9 +411,9 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                _primaryRed.withOpacity(0.9),
+                _primaryRed.withValues(alpha: 0.9),
                 _primaryRed.withRed((_primaryRed.red * 0.85).round()),
-                _secondaryRed.withOpacity(0.9),
+                _secondaryRed.withValues(alpha: 0.9),
               ],
               stops: const [0.0, 0.6, 1.0],
             ),
@@ -425,7 +425,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                 opacity: _backgroundFadeAnimation.value * 0.7,
                 child: CustomPaint(
                   painter: ModernBackgroundPatternPainter(
-                    color: Colors.white.withOpacity(0.09),
+                    color: Colors.white.withValues(alpha: 0.09),
                   ),
                   size: Size.infinite,
                 ),
@@ -438,7 +438,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
               //     return CustomPaint(
               //       painter: EnhancedFloatingParticlesPainter(
               //         animation: _floatingParticlesController.value,
-              //         particleColor: Colors.white.withOpacity(0.09),
+              //         particleColor: Colors.white.withValues(alpha: 0.09),
               //       ),
               //       size: Size.infinite,
               //     );
@@ -459,9 +459,9 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                         height: 200,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _secondaryRed.withOpacity(0.3),
+                          color: _secondaryRed.withValues(alpha: 0.3),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
+                            color: Colors.white.withValues(alpha: 0.15),
                             width: 3,
                           ),
                         ),
@@ -484,9 +484,9 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                         height: 100,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _secondaryRed.withOpacity(0.3),
+                          color: _secondaryRed.withValues(alpha: 0.3),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
+                            color: Colors.white.withValues(alpha: 0.15),
                             width: 3,
                           ),
                         ),
@@ -510,11 +510,11 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.85),
+            color: Colors.white.withValues(alpha: 0.85),
             borderRadius: BorderRadius.circular(24.0),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 10,
                 spreadRadius: 1,
                 offset: const Offset(0, 5),
@@ -554,7 +554,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
               color: _bgWhite,
               boxShadow: [
                 BoxShadow(
-                  color: _primaryRed.withOpacity(0.3),
+                  color: _primaryRed.withValues(alpha: 0.3),
                   blurRadius: 15,
                   spreadRadius: 3,
                   offset: const Offset(0, 5),
@@ -569,7 +569,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                   shape: BoxShape.circle,
                   gradient: RadialGradient(
                     colors: [
-                      _primaryRed.withOpacity(0.9),
+                      _primaryRed.withValues(alpha: 0.9),
                       _primaryRed,
                     ],
                     center: Alignment.topLeft,
@@ -609,17 +609,17 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                 },
                 activeColor: _primaryRed,
                 checkColor: Colors.white,
-                fillColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.selected)) {
+                fillColor: WidgetStateProperty.resolveWith<Color>(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.selected)) {
                       return _primaryRed;
                     }
                     return Colors.transparent;
                   },
                 ),
-                side: MaterialStateBorderSide.resolveWith(
+                side: WidgetStateBorderSide.resolveWith(
                   (states) => BorderSide(
-                    color: states.contains(MaterialState.selected)
+                    color: states.contains(WidgetState.selected)
                         ? _primaryRed
                         : Colors.grey.shade400,
                     width: 2,
@@ -740,7 +740,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: _primaryRed.withOpacity(0.3),
+                  color: _primaryRed.withValues(alpha: 0.3),
                   blurRadius: 15,
                   offset: const Offset(0, 8),
                   spreadRadius: 1,
@@ -873,14 +873,14 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
           boxShadow: isFocused
               ? [
                   BoxShadow(
-                    color: _primaryRed.withOpacity(0.25),
+                    color: _primaryRed.withValues(alpha: 0.25),
                     blurRadius: 15,
                     offset: const Offset(0, 5),
                   )
                 ]
               : [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 3),
                   )
@@ -1112,7 +1112,7 @@ class ModernBackgroundPatternPainter extends CustomPainter {
       final double radius = 25 + (i % 3) * 15;
 
       final circlePaint = Paint()
-        ..color = color.withOpacity(0.08)
+        ..color = color.withValues(alpha: 0.08)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 0.8;
 
@@ -1155,7 +1155,7 @@ class EnhancedFloatingParticlesPainter extends CustomPainter {
       final opacity = randomSize.nextDouble() * 0.5 + 0.3;
 
       final paint = Paint()
-        ..color = particleColor.withOpacity(opacity)
+        ..color = particleColor.withValues(alpha: opacity)
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(Offset(x, y), radius, paint);
@@ -1163,7 +1163,7 @@ class EnhancedFloatingParticlesPainter extends CustomPainter {
       // Add glow effect to some particles
       if (i % 3 == 0) {
         final glowPaint = Paint()
-          ..color = particleColor.withOpacity(opacity * 0.3)
+          ..color = particleColor.withValues(alpha: opacity * 0.3)
           ..style = PaintingStyle.fill
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
 

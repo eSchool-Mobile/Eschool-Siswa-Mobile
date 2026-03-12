@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eschool/app/routes.dart';
 import 'package:eschool/data/models/gallery.dart';
 import 'package:eschool/data/models/sessionYear.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
@@ -58,7 +57,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 5,
             // offset: Offset(0, 2),
           ),
@@ -80,7 +79,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.15),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
                 ),
               ),
             ),
@@ -271,7 +270,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(Icons.download,
@@ -285,7 +284,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(Icons.close,
@@ -305,7 +304,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.7),
+                                color: Colors.black.withValues(alpha: 0.7),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -437,7 +436,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(Icons.link,
@@ -457,7 +456,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(Icons.close,
@@ -477,7 +476,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.7),
+                                color: Colors.black.withValues(alpha: 0.7),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -545,7 +544,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
+                          color: Colors.black.withValues(alpha: 0.08),
                           blurRadius: 4,
                           offset: Offset(0, 2),
                         ),
@@ -618,7 +617,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 6,
                       offset: Offset(0, 2),
                     ),
@@ -723,7 +722,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 8,
                         offset: Offset(0, 3),
                       ),
@@ -765,7 +764,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                 ),
 
                 Divider(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
                   thickness: 1,
                 ),
 

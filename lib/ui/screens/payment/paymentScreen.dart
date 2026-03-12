@@ -7,11 +7,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:eschool/cubits/paymentSubmissionCubit.dart';
-import 'package:eschool/cubits/xenditInvoiceCubit.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
-import 'package:eschool/data/models/xenditInvoice.dart';
-import 'package:eschool/ui/screens/payment/xenditPaymentScreen.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';
@@ -324,10 +321,10 @@ class _PaymentScreenState extends State<PaymentScreen>
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.06),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.06),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -405,8 +402,8 @@ class _PaymentScreenState extends State<PaymentScreen>
             boxShadow: [
               BoxShadow(
                 color: isSelected
-                    ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                    : Colors.black.withOpacity(0.04),
+                    ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
+                    : Colors.black.withValues(alpha: 0.04),
                 blurRadius: isSelected ? 8 : 4,
                 offset: Offset(0, isSelected ? 4 : 2),
               ),
@@ -422,7 +419,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                   borderRadius: BorderRadius.circular(12),
                   color: method.hasImage
                       ? Colors.white
-                      : Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                      : Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                   border: method.hasImage
                       ? Border.all(color: Colors.grey.shade200, width: 1)
                       : null,
@@ -463,11 +460,11 @@ class _PaymentScreenState extends State<PaymentScreen>
                                     Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.9),
+                                        .withValues(alpha: 0.9),
                                     Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.7),
+                                        .withValues(alpha: 0.7),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(12),
@@ -579,7 +576,7 @@ class _PaymentScreenState extends State<PaymentScreen>
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: Offset(0, 2),
           ),
@@ -716,7 +713,7 @@ class _PaymentScreenState extends State<PaymentScreen>
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: Offset(0, 2),
           ),
@@ -793,7 +790,7 @@ class _PaymentScreenState extends State<PaymentScreen>
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
               : Colors.grey.shade50,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
@@ -850,7 +847,7 @@ class _PaymentScreenState extends State<PaymentScreen>
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: Offset(0, 2),
           ),
@@ -1023,11 +1020,11 @@ class _PaymentScreenState extends State<PaymentScreen>
                 height: 120,
                 decoration: BoxDecoration(
                   color:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.04),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.04),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                     width: 2,
                     style: BorderStyle.solid,
                   ),
@@ -1430,7 +1427,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.04),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.04),
                   ),
                 ),
               );
@@ -1573,7 +1570,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                           ? Theme.of(context)
                                               .colorScheme
                                               .primary
-                                              .withOpacity(0.3)
+                                              .withValues(alpha: 0.3)
                                           : Colors.transparent,
                                     ),
                                     child: Row(
@@ -1647,7 +1644,7 @@ class _PaymentScreenState extends State<PaymentScreen>
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: Offset(0, 2),
           ),

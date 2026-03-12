@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
-import 'package:eschool/utils/utils.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -147,7 +146,7 @@ class _QuestionContainerState extends State<QuestionContainer> {
                                       10), // Padding ikon zoom lebih besar
                                   margin: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.5),
+                                    color: Colors.black.withValues(alpha: 0.5),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: const Icon(
@@ -178,7 +177,7 @@ class _QuestionContainerState extends State<QuestionContainer> {
                   padding:
                       const EdgeInsets.all(15), // Padding catatan lebih besar
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Colors.grey.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -245,7 +244,7 @@ class _QuestionContainerState extends State<QuestionContainer> {
                       icon: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.7),
+                          color: Colors.white.withValues(alpha: 0.7),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(Icons.close, color: Colors.black),

@@ -18,7 +18,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 // custom Expandable
-import 'package:eschool/ui/widgets/expandableTextAssignment.dart';
 
 // Add this import at the top of the file
 import 'package:eschool/ui/widgets/assignmentStatusBadge.dart';
@@ -394,7 +393,7 @@ class AssignmentListContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.12),
+                    color: Colors.black.withValues(alpha: 0.12),
                     blurRadius: 12,
                     spreadRadius: 2,
                     offset: const Offset(0, 4),
@@ -467,7 +466,7 @@ class AssignmentListContainer extends StatelessWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onSurface
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12.0,
                                 ),
@@ -482,7 +481,7 @@ class AssignmentListContainer extends StatelessWidget {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.1),
+                              color: Colors.blue.withValues(alpha: 0.1),
                               // Light blue background for subject tag
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -520,7 +519,7 @@ class AssignmentListContainer extends StatelessWidget {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.9),
+                                        .withValues(alpha: 0.9),
                                     fontWeight: FontWeight.w500,
                                     fontSize: 11.0,
                                   ),

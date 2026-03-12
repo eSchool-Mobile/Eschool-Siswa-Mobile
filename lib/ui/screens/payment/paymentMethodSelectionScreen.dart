@@ -77,7 +77,7 @@ class _PaymentMethodSelectionScreenState
                           Text(
                             widget.description,
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                               fontSize: 12,
                             ),
                             textAlign: TextAlign.center,
@@ -182,7 +182,7 @@ class _PaymentMethodSelectionScreenState
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 4,
               offset: Offset(0, 2),
             ),
