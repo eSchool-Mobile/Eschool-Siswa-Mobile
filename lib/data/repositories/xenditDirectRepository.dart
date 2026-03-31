@@ -10,7 +10,8 @@ class XenditDirectRepository {
   // ⚠️ SECURITY WARNING: Never hardcode API keys in production!
   // This is ONLY for testing/demo purposes
   // In production, API keys should be stored securely on backend
-  static const String _xenditTestApiKey = 'xnd_development_fNP3jWfjIwCG544DFMPljDoLwjlQwybezqukRijnZG33CyQS4wIDTtGqa7fCK';
+  static const String _xenditTestApiKey =
+      'xnd_development_fNP3jWfjIwCG544DFMPljDoLwjlQwybezqukRijnZG33CyQS4wIDTtGqa7fCK';
   static const String _xenditBaseUrl = 'https://api.xendit.co';
 
   /// Create invoice directly via Xendit API
@@ -34,8 +35,8 @@ class XenditDirectRepository {
         'description': description,
         'invoice_duration': 86400, // 24 hours
         'currency': 'IDR',
-        'success_redirect_url': 'https://your-app.com/payment/success',
-        'failure_redirect_url': 'https://your-app.com/payment/failed',
+        'success_redirect_url': 'https://checkout.xendit.co/payment/success',
+        'failure_redirect_url': 'https://checkout.xendit.co/payment/failed',
       };
 
       // Create Basic Auth header

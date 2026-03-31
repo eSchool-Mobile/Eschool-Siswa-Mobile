@@ -82,6 +82,8 @@ const String receiptKey = "receipt";
 const String offlinePaymentMsgKey = "offlinePaymentMsg";
 
 const String payNowKey = "payNow";
+const String paymentAmountKey = "paymentAmount";
+const String cancelKey = "cancel";
 
 const String subjectNameKey = "subjectName";
 const String assignmentNameKey = "assignmentName";
@@ -100,7 +102,6 @@ const String fileDownloadingKey = "downloadingFile";
 const String downloadKey = "download";
 const String failedToDownloadKey = "failedToDownload";
 
-const String cancelKey = "cancel";
 const String totalPresentKey = "totalPresent";
 const String totalAbsentKey = "totalAbsent";
 const String pendingconfirmKey = "pendingconfirm";

@@ -7,6 +7,7 @@ import 'package:eschool/data/models/xenditInvoice.dart';
 import 'package:eschool/ui/screens/payment/xenditPaymentScreen.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
+import 'package:eschool/utils/CurencyFormater.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +32,9 @@ class XenditOnlyPaymentScreen extends StatefulWidget {
 class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  final TextEditingController _amountController = TextEditingController();
   bool _isProcessing = false;
+  String? _amountError;
 
   @override
   void initState() {
@@ -41,11 +44,16 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
       duration: const Duration(milliseconds: 800),
     );
     _animationController.forward();
+
+    // Set initial amount if provided
+    final formatter = NumberFormat.decimalPattern('id');
+    _amountController.text = formatter.format(widget.totalAmount.toInt());
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
 
@@ -58,20 +66,54 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
     return formatter.format(amount);
   }
 
+  double _parseAmount(String value) {
+    final cleanValue = value.replaceAll(RegExp(r'[^\d]'), '');
+    return double.tryParse(cleanValue) ?? 0;
+  }
+
+  void _validateAmount(String value) {
+    setState(() {
+      final amount = _parseAmount(value);
+      double maxAmount = 0;
+      for (var fee in widget.selectedFees) {
+        maxAmount += fee.remainingFeeAmountToPay();
+      }
+
+      if (value.isEmpty) {
+        _amountError = 'Masukkan nominal pembayaran';
+      } else if (amount <= 0) {
+        _amountError = 'Nominal harus lebih dari 0';
+      } else if (amount > maxAmount) {
+        _amountError =
+            'Nominal melebihi total tagihan (${_formatCurrency(maxAmount)})';
+      } else {
+        _amountError = null;
+      }
+    });
+  }
+
+  bool _canProceedPayment() {
+    final amount = _parseAmount(_amountController.text);
+    return amount > 0 && _amountError == null && !_isProcessing;
+  }
+
   Future<void> _processXenditPayment() async {
-    if (_isProcessing) return;
+    if (!_canProceedPayment()) return;
+
+    final amount = _parseAmount(_amountController.text);
 
     setState(() {
       _isProcessing = true;
     });
 
     try {
-      // Get parent/guardian email (Student model doesn't have email)
+      // Get parent/guardian email
       final email = widget.child.guardian?.email ?? 'parent@example.com';
 
       // Create description
       final feeNames = widget.selectedFees.map((f) => f.name).join(', ');
-      final description = 'Pembayaran: $feeNames';
+      final description =
+          'Pembayaran Tagihan: $feeNames - ${_formatCurrency(amount)}';
 
       // Get fee IDs
       final feeIds = widget.selectedFees.map((fee) => fee.id!).toList();
@@ -80,7 +122,7 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
       await context.read<XenditInvoiceCubit>().createInvoice(
             schoolId: 1, // TODO: Get from school data
             studentId: widget.child.id!,
-            amount: widget.totalAmount,
+            amount: amount,
             email: email,
             description: description,
             feeIds: feeIds,
@@ -102,10 +144,9 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
   }
 
   void _handleXenditSuccess(XenditInvoice invoice) async {
-    // Save child ID before navigation
     final childId = widget.child.id ?? 0;
+    final feeIds = widget.selectedFees.map((fee) => fee.id!).toList();
 
-    // ⭐ Use await to get payment result
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -113,12 +154,8 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
           value: context.read<XenditInvoiceCubit>(),
           child: XenditPaymentScreen(
             invoice: invoice,
-            feeIds: widget.selectedFees
-                .where((fee) => fee.id != null)
-                .map((fee) => fee.id!)
-                .toList(),
+            feeIds: feeIds,
             onPaymentSuccess: () {
-              // Pop back to fee list screen
               int popCount = 0;
               Navigator.of(context).popUntil((route) {
                 popCount++;
@@ -141,63 +178,38 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
       ),
     );
 
-    // ⭐ After navigation completes, check result and refresh if successful
     if (result == true && mounted) {
-      if (kDebugMode) {
-        print('💚 Payment completed successfully, triggering refresh...');
-      }
-
-      // Trigger refresh in valid context
       try {
         context
             .read<ChildFeeDetailsCubit>()
             .fetchChildFeeDetails(childId: childId);
-
-        if (kDebugMode) {
-          print('✅ Fee details refreshed after payment');
-        }
       } catch (e) {
-        if (kDebugMode) {
-          print('⚠️ Could not refresh fee details: $e');
-        }
+        if (kDebugMode) print('⚠️ Could not refresh fee details: $e');
       }
 
-      // Show success message
       if (mounted) {
-        final snackBar = SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.check_circle, color: Colors.white, size: 20),
-              SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  'Pembayaran berhasil!',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white, size: 20),
+                SizedBox(width: 12),
+                Expanded(child: Text('Pembayaran berhasil!')),
+              ],
+            ),
+            backgroundColor: Colors.green,
+            behavior: SnackBarBehavior.floating,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            margin: EdgeInsets.all(16),
           ),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 3),
-          margin: EdgeInsets.all(16),
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     }
   }
 
   void _handleXenditFailure(String errorMessage) {
-    setState(() {
-      _isProcessing = false;
-    });
-
+    setState(() => _isProcessing = false);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Gagal membuat invoice: $errorMessage'),
@@ -213,9 +225,6 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
       body: BlocListener<XenditInvoiceCubit, XenditInvoiceState>(
         listener: (context, state) {
           if (state is XenditInvoiceSuccess) {
-            setState(() {
-              _isProcessing = false;
-            });
             _handleXenditSuccess(state.invoice);
           } else if (state is XenditInvoiceFailure) {
             _handleXenditFailure(state.errorMessage);
@@ -223,24 +232,17 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
         },
         child: Stack(
           children: [
-            // Main content
             Column(
               children: [
                 ScreenTopBackgroundContainer(
                   heightPercentage: 0.12,
                   child: Stack(
                     children: [
-                      // Back button
-                      Positioned(
-                        left: 10,
-                        top: -2,
-                        child: CustomBackButton(),
-                      ),
-                      // Screen title
+                      Positioned(left: 10, top: -2, child: CustomBackButton()),
                       Align(
                         alignment: Alignment.topCenter,
                         child: Text(
-                          'Pembayaran via Xendit',
+                          'Konfirmasi Pembayaran',
                           style: TextStyle(
                             color: Theme.of(context).scaffoldBackgroundColor,
                             fontSize: 18,
@@ -257,19 +259,12 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Payment Summary Card
-                        _buildSummaryCard(),
+                        _buildFeeInfoCard(),
                         SizedBox(height: 16),
-
-                        // Fee Details Card
-                        _buildFeeDetailsCard(),
+                        _buildAmountInputCard(),
                         SizedBox(height: 16),
-
-                        // Xendit Info Card
                         _buildXenditInfoCard(),
                         SizedBox(height: 24),
-
-                        // Payment Button
                         _buildPaymentButton(),
                       ],
                     ),
@@ -277,8 +272,6 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
                 ),
               ],
             ),
-
-            // Loading overlay
             if (_isProcessing)
               Container(
                 color: Colors.black.withOpacity(0.5),
@@ -291,13 +284,8 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
                         children: [
                           CircularProgressIndicator(),
                           SizedBox(height: 16),
-                          Text(
-                            'Membuat invoice...',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          Text('Membuat invoice...',
+                              style: TextStyle(fontWeight: FontWeight.w500)),
                         ],
                       ),
                     ),
@@ -310,7 +298,12 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
     );
   }
 
-  Widget _buildSummaryCard() {
+  Widget _buildFeeInfoCard() {
+    double totalRemaining = 0;
+    for (var fee in widget.selectedFees) {
+      totalRemaining += fee.remainingFeeAmountToPay();
+    }
+
     return Container(
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -329,14 +322,11 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
         children: [
           Row(
             children: [
-              Icon(
-                Icons.receipt_long,
-                color: Theme.of(context).colorScheme.primary,
-                size: 24,
-              ),
+              Icon(Icons.receipt_long,
+                  color: Theme.of(context).colorScheme.primary, size: 24),
               SizedBox(width: 12),
               Text(
-                'Ringkasan Pembayaran',
+                'Informasi Tagihan',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -348,67 +338,47 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
           SizedBox(height: 16),
           Divider(),
           SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Siswa:',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade700,
-                ),
-              ),
-              Text(
-                '${widget.child.firstName ?? ''} ${widget.child.lastName ?? ''}'
-                    .trim(),
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
+          _buildRow(
+              'Siswa:',
+              '${widget.child.firstName ?? ''} ${widget.child.lastName ?? ''}'
+                  .trim()),
           SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Jumlah Tagihan:',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade700,
+          _buildRow('Item:', '${widget.selectedFees.length} Tagihan Terpilih'),
+          SizedBox(height: 4),
+          ...widget.selectedFees.map((fee) => Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    fee.name ?? "-",
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey.shade700,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
                 ),
-              ),
-              Text(
-                '${widget.selectedFees.length} item',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 16),
+              )),
+          SizedBox(height: 12),
           Divider(),
           SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Total Pembayaran:',
+                'Total Tagihan:',
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.secondary),
               ),
               Text(
-                _formatCurrency(widget.totalAmount),
+                _formatCurrency(totalRemaining),
                 style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary),
               ),
             ],
           ),
@@ -417,7 +387,26 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
     );
   }
 
-  Widget _buildFeeDetailsCard() {
+  Widget _buildRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label,
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade700)),
+        Flexible(
+            child: Text(value,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                textAlign: TextAlign.right)),
+      ],
+    );
+  }
+
+  Widget _buildAmountInputCard() {
+    double totalRemaining = 0;
+    for (var fee in widget.selectedFees) {
+      totalRemaining += fee.remainingFeeAmountToPay();
+    }
+
     return Container(
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -436,64 +425,86 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
         children: [
           Row(
             children: [
-              Icon(
-                Icons.list_alt,
-                color: Theme.of(context).colorScheme.primary,
-                size: 24,
-              ),
+              Icon(Icons.payments_outlined,
+                  color: Theme.of(context).colorScheme.primary, size: 24),
               SizedBox(width: 12),
-              Text(
-                'Detail Tagihan',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.secondary,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Nominal Pembayaran',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.secondary),
+                    ),
+                    Text('Masukkan jumlah yang ingin dibayar',
+                        style: TextStyle(
+                            fontSize: 11, color: Colors.grey.shade600)),
+                  ],
                 ),
               ),
             ],
           ),
           SizedBox(height: 16),
-          ...widget.selectedFees.map((fee) {
-            return Padding(
-              padding: EdgeInsets.only(bottom: 12),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 6,
-                    height: 6,
-                    margin: EdgeInsets.only(top: 6, right: 12),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      shape: BoxShape.circle,
-                    ),
+          TextField(
+            controller: _amountController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [CurrencyInputFormatter()],
+            onChanged: _validateAmount,
+            decoration: InputDecoration(
+              hintText: 'Masukkan nominal...',
+              prefixText: 'Rp ',
+              prefixStyle: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16),
+              errorText: _amountError,
+              filled: true,
+              fillColor: Colors.grey.shade50,
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300)),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary, width: 2)),
+              errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.red, width: 2)),
+            ),
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.secondary),
+          ),
+          SizedBox(height: 12),
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8)),
+            child: Row(
+              children: [
+                Icon(Icons.info_outline,
+                    size: 16, color: Theme.of(context).colorScheme.primary),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Maksimal: ${_formatCurrency(totalRemaining)}',
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.w500),
                   ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          fee.name ?? 'Biaya tidak diketahui',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          _formatCurrency(fee.remainingFeeAmountToPay()),
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey.shade600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -506,54 +517,40 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
         gradient: LinearGradient(
           colors: [
             Theme.of(context).colorScheme.primary.withOpacity(0.1),
-            Theme.of(context).colorScheme.primary.withOpacity(0.05),
+            Theme.of(context).colorScheme.primary.withOpacity(0.05)
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-        ),
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                Icons.info_outline,
-                color: Theme.of(context).colorScheme.primary,
-                size: 24,
-              ),
+              Icon(Icons.info_outline,
+                  color: Theme.of(context).colorScheme.primary, size: 24),
               SizedBox(width: 12),
-              Text(
-                'Tentang Pembayaran Xendit',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
+              Text('Tentang Pembayaran Xendit',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary)),
             ],
           ),
           SizedBox(height: 12),
           _buildInfoItem(
-            icon: Icons.account_balance_wallet,
-            text: 'Bayar dengan Virtual Account, E-wallet, atau QRIS',
-          ),
+              icon: Icons.account_balance_wallet,
+              text: 'Bayar dengan Virtual Account, E-wallet, atau QRIS'),
           _buildInfoItem(
-            icon: Icons.security,
-            text: 'Transaksi aman dan terenkripsi',
-          ),
+              icon: Icons.security, text: 'Transaksi aman dan terenkripsi'),
           _buildInfoItem(
-            icon: Icons.access_time,
-            text: 'Konfirmasi otomatis setelah pembayaran',
-          ),
-          _buildInfoItem(
-            icon: Icons.receipt,
-            text: 'Invoice berlaku 24 jam',
-          ),
+              icon: Icons.access_time,
+              text: 'Konfirmasi otomatis setelah pembayaran'),
+          _buildInfoItem(icon: Icons.receipt, text: 'Invoice berlaku 24 jam'),
         ],
       ),
     );
@@ -564,21 +561,13 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
       padding: EdgeInsets.only(top: 8),
       child: Row(
         children: [
-          Icon(
-            icon,
-            size: 18,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
-          ),
+          Icon(icon,
+              size: 18,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.7)),
           SizedBox(width: 12),
           Expanded(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 13,
-                color: Colors.grey.shade700,
-              ),
-            ),
-          ),
+              child: Text(text,
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade700))),
         ],
       ),
     );
@@ -589,13 +578,13 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
       width: double.infinity,
       height: 56,
       child: ElevatedButton(
-        onPressed: _isProcessing ? null : _processXenditPayment,
+        onPressed: _canProceedPayment() ? _processXenditPayment : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          disabledBackgroundColor: Colors.grey.shade300,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           elevation: 2,
         ),
         child: Row(
@@ -603,13 +592,8 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
           children: [
             Icon(Icons.payment, size: 24),
             SizedBox(width: 12),
-            Text(
-              'Lanjutkan ke Pembayaran',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text('Lanjutkan ke Pembayaran',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ],
         ),
       ),

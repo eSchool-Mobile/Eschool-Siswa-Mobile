@@ -43,37 +43,32 @@ class _PaymentWebViewState extends State<PaymentWebView> {
             setState(() {
               _isLoading = true;
             });
+            // Also check URL here as a fallback for onNavigationRequest
+            _handleUrlChange(url);
           },
           onPageFinished: (String url) {
             setState(() {
               _isLoading = false;
             });
+            // Some JS-based redirects might only be visible here
+            _handleUrlChange(url);
           },
           // Intercept navigation to success/failed URLs
           onNavigationRequest: (NavigationRequest request) {
             final url = request.url.toLowerCase();
 
-            // Check if navigating to success URL
-            if (url.contains('success') ||
-                url.contains('completed') ||
-                url.contains('paid')) {
-              // Prevent navigation and handle success
+            if (_isSuccessUrl(url)) {
               widget.onPaymentSuccess();
               return NavigationDecision.prevent;
             }
 
-            // Check if navigating to failure URL
-            if (url.contains('failed') ||
-                url.contains('error') ||
-                url.contains('cancel')) {
-              // Prevent navigation and handle failure
+            if (_isFailureUrl(url)) {
               if (widget.onPaymentFailed != null) {
                 widget.onPaymentFailed!();
               }
               return NavigationDecision.prevent;
             }
 
-            // Allow navigation to Xendit checkout pages
             return NavigationDecision.navigate;
           },
           onWebResourceError: (WebResourceError error) {
@@ -133,6 +128,37 @@ class _PaymentWebViewState extends State<PaymentWebView> {
       barrierDismissible: false,
       builder: (context) => const PaymentExpiredDialog(),
     );
+  }
+
+  void _handleUrlChange(String url) {
+    final lowerUrl = url.toLowerCase();
+    if (_isSuccessUrl(lowerUrl)) {
+      widget.onPaymentSuccess();
+    } else if (_isFailureUrl(lowerUrl)) {
+      if (widget.onPaymentFailed != null) {
+        widget.onPaymentFailed!();
+      }
+    }
+  }
+
+  bool _isSuccessUrl(String url) {
+    final lowerUrl = url.toLowerCase();
+    return lowerUrl.contains('success') ||
+        lowerUrl.contains('completed') ||
+        lowerUrl.contains('paid') ||
+        lowerUrl.contains('done') ||
+        lowerUrl.contains('finish') ||
+        lowerUrl.contains('status=1') ||
+        lowerUrl.contains('checkout/success');
+  }
+
+  bool _isFailureUrl(String url) {
+    final lowerUrl = url.toLowerCase();
+    return lowerUrl.contains('failed') ||
+        lowerUrl.contains('error') ||
+        lowerUrl.contains('cancel') ||
+        lowerUrl.contains('status=0') ||
+        lowerUrl.contains('checkout/error');
   }
 
   void _showErrorDialog(String message) {
