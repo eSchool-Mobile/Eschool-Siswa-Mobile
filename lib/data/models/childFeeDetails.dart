@@ -18,6 +18,7 @@ class PaymentHistory {
   final String? status;
   final String? proofImage;
   final String? paymentMethod;
+  final int? paymentMethodId;
   final double? adminFeeAmount;
   final double? totalAmount;
 
@@ -30,6 +31,7 @@ class PaymentHistory {
     this.status,
     this.proofImage,
     this.paymentMethod,
+    this.paymentMethodId,
     this.adminFeeAmount,
     this.totalAmount,
   });
@@ -50,6 +52,9 @@ class PaymentHistory {
         paymentMethod = (json['payment_method'] ??
             json['payment_gateway'] ??
             json['method']) as String?,
+        paymentMethodId = json['payment_method_id'] != null
+            ? int.tryParse(json['payment_method_id'].toString())
+            : null,
         adminFeeAmount = json['admin_fee_amount'] != null
             ? double.parse(json['admin_fee_amount'].toString())
             : null,
@@ -66,6 +71,7 @@ class PaymentHistory {
         'status': status,
         'proof_image': proofImage,
         'payment_method': paymentMethod,
+        'payment_method_id': paymentMethodId,
         'admin_fee_amount': adminFeeAmount,
         'total_amount': totalAmount,
       };

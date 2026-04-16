@@ -98,20 +98,38 @@ class _XenditInstallmentPaymentScreenState
 
     final amount = _parseAmount(_amountController.text);
 
-    // Fetch allowed methods for this school dynamically from configuration
-    final allowedMethods = context
-        .read<SchoolConfigurationCubit>()
-        .getSchoolConfiguration()
-        .getXenditAllowedMethods();
+    // Prioritize dynamic methods from backend (via ChildFeeDetails.paymentMethods)
+    List<XenditPaymentMethod>? dynamicAllowedMethods;
+    if (widget.feeDetails.paymentMethods != null &&
+        widget.feeDetails.paymentMethods!.isNotEmpty) {
+      dynamicAllowedMethods = widget.feeDetails.paymentMethods!.map((pm) {
+        return XenditPaymentMethod(
+          id: pm.id!,
+          name: pm.name ?? 'Metode ${pm.id}',
+          description: pm.description ?? '',
+          icon: '💳',
+          iconUrl: pm.fullImageUrl ?? pm.image,
+          type: XenditPaymentMethodType.virtualAccount,
+          adminFee: 0,
+        );
+      }).toList();
+    }
 
-    // Show selection sheet first
+    // Fallback to school configuration if backend doesn't provide the list yet
+    final allowedMethods = dynamicAllowedMethods ??
+        context
+            .read<SchoolConfigurationCubit>()
+            .getSchoolConfiguration()
+            .getXenditAllowedMethods();
+
+    // Show selection sheet
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => PaymentMethodSelectionSheet(
         baseAmount: amount,
-        allowedMethods: allowedMethods, // Pass the parsed list of methods
+        allowedMethods: allowedMethods,
         onSelected: (method) => _createInvoice(amount, method),
       ),
     );

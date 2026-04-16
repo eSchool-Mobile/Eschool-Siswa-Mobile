@@ -9,6 +9,7 @@ import 'package:eschool/utils/utils.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/imageUtils.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
+import 'package:eschool/data/models/paymentMethod.dart';
 
 class PaymentHistoryScreen extends StatefulWidget {
   final Bill bill;
@@ -43,11 +44,22 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
     // Extract payment history from bill data
     // Convert PaymentHistory objects to Maps
     paymentHistory = widget.bill.paymentHistory.map((payment) {
+      String finalMethodName = payment.paymentMethod ?? payment.method ?? '';
+
+      // Fallback mapping if string is empty but ID exists
+      if (finalMethodName.isEmpty && payment.paymentMethodId != null) {
+        final matchedMethod =
+            XenditPaymentMethod.getById(payment.paymentMethodId!);
+        if (matchedMethod != null) {
+          finalMethodName = matchedMethod.name;
+        }
+      }
+
       return <String, dynamic>{
         'status': payment.status ?? 'unknown',
         'amount': payment.amount?.toString() ?? '0',
         'date': payment.date ?? '',
-        'payment_method': payment.paymentMethod ?? payment.method ?? '',
+        'payment_method': finalMethodName,
         'proof_image': payment.proofImage ?? '',
       };
     }).toList();
@@ -347,7 +359,8 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                     Icon(
                                       Icons.payment_rounded,
                                       size: 16,
-                                      color: primaryColor.withValues(alpha: 0.8),
+                                      color:
+                                          primaryColor.withValues(alpha: 0.8),
                                     ),
                                     const SizedBox(width: 8),
                                     Expanded(
@@ -383,8 +396,8 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 12, vertical: 4),
                                           decoration: BoxDecoration(
-                                            color:
-                                                primaryColor.withValues(alpha: 0.1),
+                                            color: primaryColor.withValues(
+                                                alpha: 0.1),
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                           ),
@@ -402,8 +415,8 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                               fontSize: 13,
                                               fontWeight: FontWeight.w600,
                                               color: paymentMethod.isNotEmpty
-                                                  ? primaryColor
-                                                      .withValues(alpha: 0.9)
+                                                  ? primaryColor.withValues(
+                                                      alpha: 0.9)
                                                   : Colors.grey.shade500,
                                             ),
                                           ),
@@ -476,7 +489,8 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                                         Icon(
                                           Icons.broken_image_rounded,
                                           size: 64,
-                                          color: primaryColor.withValues(alpha: 0.3),
+                                          color: primaryColor.withValues(
+                                              alpha: 0.3),
                                         ),
                                         const SizedBox(height: 12),
                                         Text(

@@ -106,12 +106,32 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
 
     final amount = _parseAmount(_amountController.text);
 
+    // Fetch dynamic methods from ChildFeeDetails if provided by backend
+    List<XenditPaymentMethod>? dynamicAllowedMethods;
+    if (widget.selectedFees.isNotEmpty &&
+        widget.selectedFees.first.paymentMethods != null &&
+        widget.selectedFees.first.paymentMethods!.isNotEmpty) {
+      dynamicAllowedMethods =
+          widget.selectedFees.first.paymentMethods!.map((pm) {
+        return XenditPaymentMethod(
+          id: pm.id!,
+          name: pm.name ?? 'Metode ${pm.id}',
+          description: pm.description ?? '',
+          icon: '💳',
+          iconUrl: pm.fullImageUrl ?? pm.image,
+          type: XenditPaymentMethodType.virtualAccount, // Default fallback
+          adminFee: 0,
+        );
+      }).toList();
+    }
+
     // Show selection sheet first
-    // Fetch allowed methods for this school dynamically from configuration
-    final allowedMethods = context
-        .read<SchoolConfigurationCubit>()
-        .getSchoolConfiguration()
-        .getXenditAllowedMethods();
+    // Fetch allowed methods for this school dynamically from configuration as fallback
+    final allowedMethods = dynamicAllowedMethods ??
+        context
+            .read<SchoolConfigurationCubit>()
+            .getSchoolConfiguration()
+            .getXenditAllowedMethods();
 
     showModalBottomSheet(
       context: context,
