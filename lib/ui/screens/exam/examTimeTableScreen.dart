@@ -1,5 +1,5 @@
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/examTimeTableCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/exam/examTimeTableCubit.dart';
 import 'package:eschool/data/models/exam.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';

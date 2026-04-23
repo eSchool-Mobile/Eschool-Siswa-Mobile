@@ -189,7 +189,9 @@ class _PaymentMethodSelectionSheetState
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              width: 56,
+              height: 40,
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
@@ -203,17 +205,19 @@ class _PaymentMethodSelectionSheetState
               child: (method.assetLogo != null)
                   ? Image.asset(
                       method.assetLogo!,
-                      width: 32,
-                      height: 32,
                       fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) => Text(
-                        method.icon,
-                        style: const TextStyle(fontSize: 24),
+                      errorBuilder: (context, error, stackTrace) => Center(
+                        child: Text(
+                          method.icon,
+                          style: const TextStyle(fontSize: 20),
+                        ),
                       ),
                     )
-                  : Text(
-                      method.icon,
-                      style: const TextStyle(fontSize: 24),
+                  : Center(
+                      child: Text(
+                        method.icon,
+                        style: const TextStyle(fontSize: 20),
+                      ),
                     ),
             ),
             const SizedBox(width: 16),

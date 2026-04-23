@@ -1,6 +1,6 @@
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/holidaysCubit.dart';
-import 'package:eschool/cubits/schoolConfigurationCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/system/holidaysCubit.dart';
+import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
 import 'package:eschool/data/models/holiday.dart';
 import 'package:eschool/ui/widgets/changeCalendarMonthButton.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';

@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/childFeeDetailsCubit.dart';
+import 'package:eschool/cubits/payment/childFeeDetailsCubit.dart';
 import 'package:eschool/ui/widgets/customAppbar.dart';
 import 'package:eschool/ui/widgets/customRoundedButton.dart';
 import 'package:eschool/utils/labelKeys.dart';

@@ -1,6 +1,6 @@
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/examDetailsCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/exam/examDetailsCubit.dart';
 import 'package:eschool/data/models/exam.dart';
 import 'package:eschool/ui/widgets/customRefreshIndicator.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';

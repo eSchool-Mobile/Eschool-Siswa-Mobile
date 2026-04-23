@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/changePasswordCubit.dart';
+import 'package:eschool/cubits/auth/changePasswordCubit.dart';
 import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';

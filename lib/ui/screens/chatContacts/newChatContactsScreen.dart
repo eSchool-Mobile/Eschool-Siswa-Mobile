@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/chatUsersCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/chat/chatUsersCubit.dart';
 import 'package:eschool/data/models/chatUser.dart';
 import 'package:eschool/data/models/chatUserRole.dart';
 import 'package:eschool/data/models/student.dart';

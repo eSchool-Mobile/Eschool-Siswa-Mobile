@@ -1,7 +1,7 @@
 import 'package:eschool/data/repositories/leavesRepository.dart';
 // import 'package:eschool/data/models/leave.dart';
-import 'package:eschool/cubits/leavesCubit.dart';
-import 'package:eschool/cubits/authCubit.dart';
+import 'package:eschool/cubits/student/leavesCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
 // import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

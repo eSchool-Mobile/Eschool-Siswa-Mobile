@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/appConfigurationCubit.dart';
+import 'package:eschool/cubits/system/appConfigurationCubit.dart';
 
 import 'package:eschool/utils/env_switcher_util.dart';
 import 'package:eschool/utils/labelKeys.dart';

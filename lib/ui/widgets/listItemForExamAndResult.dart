@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/authCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/utils/animationConfiguration.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';

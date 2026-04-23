@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/forgotPasswordRequestCubit.dart';
+import 'package:eschool/cubits/auth/forgotPasswordRequestCubit.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';

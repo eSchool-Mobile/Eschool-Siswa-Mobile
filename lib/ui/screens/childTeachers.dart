@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/childTeachersCubit.dart';
+import 'package:eschool/cubits/student/childTeachersCubit.dart';
 import 'package:eschool/data/models/subjectTeacher.dart';
 import 'package:eschool/data/repositories/parentRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';

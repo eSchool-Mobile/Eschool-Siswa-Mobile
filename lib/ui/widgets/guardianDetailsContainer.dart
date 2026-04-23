@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/guardianPhotoCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/student/guardianPhotoCubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eschool/data/models/guardian.dart';
 import 'package:eschool/ui/widgets/customUserProfileImageWidget.dart';

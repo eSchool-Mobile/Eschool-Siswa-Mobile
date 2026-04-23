@@ -1,9 +1,9 @@
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/downloadFeeReceiptCubit.dart';
-import 'package:eschool/cubits/latestPaymentTransactionCubit.dart';
-import 'package:eschool/cubits/prePaymentTasksCubit.dart';
-import 'package:eschool/cubits/schoolConfigurationCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/payment/downloadFeeReceiptCubit.dart';
+import 'package:eschool/cubits/payment/latestPaymentTransactionCubit.dart';
+import 'package:eschool/cubits/payment/prePaymentTasksCubit.dart';
+import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
 import 'package:eschool/data/models/classFeeType.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/paymentGateway.dart';

@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:eschool/app/appTranslation.dart';
-import 'package:eschool/cubits/assignmentReportCubit.dart';
-import 'package:eschool/cubits/assignmentsCubit.dart';
-import 'package:eschool/cubits/childFeeDetailsCubit.dart';
-import 'package:eschool/cubits/onlineExamReportCubit.dart';
-import 'package:eschool/cubits/paymentSubmissionCubit.dart';
-import 'package:eschool/cubits/resultsOnlineCubit.dart';
-import 'package:eschool/cubits/schoolConfigurationCubit.dart';
-import 'package:eschool/cubits/socketSettingCubit.dart';
+import 'package:eschool/cubits/academic/assignmentReportCubit.dart';
+import 'package:eschool/cubits/academic/assignmentsCubit.dart';
+import 'package:eschool/cubits/payment/childFeeDetailsCubit.dart';
+import 'package:eschool/cubits/exam/onlineExamReportCubit.dart';
+import 'package:eschool/cubits/payment/paymentSubmissionCubit.dart';
+import 'package:eschool/cubits/exam/resultsOnlineCubit.dart';
+import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
+import 'package:eschool/cubits/system/socketSettingCubit.dart';
 import 'package:eschool/data/repositories/assignmentRepository.dart';
 import 'package:eschool/data/repositories/feeRepository.dart';
 import 'package:eschool/data/repositories/paymentSubmissionRepository.dart';
@@ -29,18 +29,18 @@ import 'package:eschool/app/routes.dart';
 import 'package:eschool/ui/widgets/globalEnvFab.dart';
 
 import 'package:eschool/utils/app_config.dart';
-import 'package:eschool/cubits/appConfigurationCubit.dart';
-import 'package:eschool/cubits/appLocalizationCubit.dart';
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/examDetailsCubit.dart';
-import 'package:eschool/cubits/examsOnlineCubit.dart';
-import 'package:eschool/cubits/noticeBoardCubit.dart';
-import 'package:eschool/cubits/notificationSettingsCubit.dart';
-import 'package:eschool/cubits/postFeesPaymentCubit.dart';
-import 'package:eschool/cubits/reportTabSelectionCubit.dart';
-import 'package:eschool/cubits/resultTabSelectionCubit.dart';
-import 'package:eschool/cubits/studentSubjectAndSlidersCubit.dart';
-import 'package:eschool/cubits/examTabSelectionCubit.dart';
+import 'package:eschool/cubits/system/appConfigurationCubit.dart';
+import 'package:eschool/cubits/system/appLocalizationCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/exam/examDetailsCubit.dart';
+import 'package:eschool/cubits/exam/examsOnlineCubit.dart';
+import 'package:eschool/cubits/system/noticeBoardCubit.dart';
+import 'package:eschool/cubits/system/notificationSettingsCubit.dart';
+import 'package:eschool/cubits/payment/postFeesPaymentCubit.dart';
+import 'package:eschool/cubits/exam/reportTabSelectionCubit.dart';
+import 'package:eschool/cubits/exam/resultTabSelectionCubit.dart';
+import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
+import 'package:eschool/cubits/exam/examTabSelectionCubit.dart';
 
 import 'package:eschool/data/repositories/announcementRepository.dart';
 import 'package:eschool/data/repositories/authRepository.dart';
@@ -49,7 +49,7 @@ import 'package:eschool/data/repositories/settingsRepository.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';
 
-import 'package:eschool/cubits/onlineExamQuestionsCubit.dart';
+import 'package:eschool/cubits/exam/onlineExamQuestionsCubit.dart';
 import 'package:eschool/data/repositories/reportRepository.dart';
 import 'package:eschool/ui/styles/colors.dart';
 

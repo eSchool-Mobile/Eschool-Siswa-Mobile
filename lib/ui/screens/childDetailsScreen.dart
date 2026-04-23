@@ -1,8 +1,8 @@
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/noticeBoardCubit.dart';
-import 'package:eschool/cubits/schoolConfigurationCubit.dart';
-import 'package:eschool/cubits/schoolGalleryCubit.dart';
-import 'package:eschool/cubits/studentSubjectAndSlidersCubit.dart';
+import 'package:eschool/cubits/system/noticeBoardCubit.dart';
+import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
+import 'package:eschool/cubits/system/schoolGalleryCubit.dart';
+import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/data/repositories/schoolRepository.dart';
 import 'package:eschool/ui/widgets/borderedProfilePictureContainer.dart';

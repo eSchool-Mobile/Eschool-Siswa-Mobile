@@ -1,5 +1,5 @@
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/downloadStudentResultCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/exam/downloadStudentResultCubit.dart';
 import 'package:eschool/data/models/result.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/data/models/subjectMark.dart';

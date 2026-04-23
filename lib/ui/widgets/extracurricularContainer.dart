@@ -1,8 +1,8 @@
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/extracurricularCubit.dart';
-import 'package:eschool/cubits/myExtracurricularCubit.dart';
-import 'package:eschool/cubits/joinExtracurricularCubit.dart';
-import 'package:eschool/cubits/allMyExtracurricularStatusCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/extracurricular/extracurricularCubit.dart';
+import 'package:eschool/cubits/extracurricular/myExtracurricularCubit.dart';
+import 'package:eschool/cubits/extracurricular/joinExtracurricularCubit.dart';
+import 'package:eschool/cubits/extracurricular/allMyExtracurricularStatusCubit.dart';
 import 'package:eschool/data/models/extracurricular.dart';
 import 'package:eschool/data/models/studentExtracurricular.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';

@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/subjectAttendanceCubit.dart';
+import 'package:eschool/cubits/student/subjectAttendanceCubit.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/ui/widgets/subjectAttendanceContainer.dart';
 import 'package:flutter/material.dart';

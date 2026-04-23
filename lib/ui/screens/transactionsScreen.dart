@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/paymentTransactionsCubit.dart';
+import 'package:eschool/cubits/payment/paymentTransactionsCubit.dart';
 import 'package:eschool/data/repositories/paymentRepository.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/noDataContainer.dart';

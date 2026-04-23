@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/schoolConfigurationCubit.dart';
+import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
 import 'package:eschool/data/models/advanceFee.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/ui/screens/childFeeDetails/widgets/advanceInstallmentPaidAmountBottomsheet.dart';

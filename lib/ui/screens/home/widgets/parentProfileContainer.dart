@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'package:eschool/cubits/studentGuardianDetailsCubit.dart';
+import 'package:eschool/cubits/student/studentGuardianDetailsCubit.dart';
 import 'package:eschool/ui/styles/colors.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';

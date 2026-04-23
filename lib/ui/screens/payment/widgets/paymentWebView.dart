@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/xenditInvoiceCubit.dart';
+import 'package:eschool/cubits/payment/xenditInvoiceCubit.dart';
 import 'package:eschool/data/models/xenditInvoice.dart';
 import 'package:eschool/ui/screens/payment/widgets/paymentStatusDialogs.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';

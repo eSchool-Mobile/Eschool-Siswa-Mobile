@@ -1,5 +1,5 @@
-import 'package:eschool/cubits/assignmentsCubit.dart';
-import 'package:eschool/cubits/authCubit.dart';
+import 'package:eschool/cubits/academic/assignmentsCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/data/models/subject.dart';
 import 'package:eschool/data/repositories/assignmentRepository.dart';
 import 'package:eschool/ui/widgets/assignmentFilterBottomsheetContainer.dart';

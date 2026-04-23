@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/downloadFeeReceiptCubit.dart';
+import 'package:eschool/cubits/payment/downloadFeeReceiptCubit.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';

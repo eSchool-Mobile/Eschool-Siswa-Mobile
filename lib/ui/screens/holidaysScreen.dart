@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/holidaysCubit.dart';
+import 'package:eschool/cubits/system/holidaysCubit.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';
 import 'package:eschool/ui/widgets/holidaysContainer.dart';
 import 'package:flutter/material.dart';

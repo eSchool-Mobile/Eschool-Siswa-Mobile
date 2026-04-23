@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/downloadFileCubit.dart';
+import 'package:eschool/cubits/system/downloadFileCubit.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';

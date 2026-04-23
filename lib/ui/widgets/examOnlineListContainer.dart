@@ -1,11 +1,11 @@
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/authCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/cubits/examTabSelectionCubit.dart';
-import 'package:eschool/cubits/examsOnlineCubit.dart';
-import 'package:eschool/cubits/studentSubjectAndSlidersCubit.dart';
+import 'package:eschool/cubits/exam/examTabSelectionCubit.dart';
+import 'package:eschool/cubits/exam/examsOnlineCubit.dart';
+import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
 import 'package:eschool/data/models/examOnline.dart';
 import 'package:eschool/data/models/subject.dart';
 import 'package:eschool/ui/widgets/assignmentsSubjectsContainer.dart';

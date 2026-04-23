@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/cubits/authCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/ui/widgets/borderedProfilePictureContainer.dart';
 

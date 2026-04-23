@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/timeTableCubit.dart';
+import 'package:eschool/cubits/academic/timeTableCubit.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/ui/widgets/timetableContainer.dart';
 import 'package:flutter/material.dart';

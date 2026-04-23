@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/leavesCubit.dart';
+import 'package:eschool/cubits/student/leavesCubit.dart';
 import 'package:eschool/data/models/leave.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';

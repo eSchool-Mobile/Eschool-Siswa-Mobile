@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/resetPasswordRequestCubit.dart';
+import 'package:eschool/cubits/auth/resetPasswordRequestCubit.dart';
 import 'package:eschool/utils/hiveBoxKeys.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';

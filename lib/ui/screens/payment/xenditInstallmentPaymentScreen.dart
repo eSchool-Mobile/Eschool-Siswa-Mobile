@@ -1,6 +1,6 @@
-import 'package:eschool/cubits/xenditInvoiceCubit.dart';
-import 'package:eschool/cubits/schoolConfigurationCubit.dart';
-import 'package:eschool/cubits/childFeeDetailsCubit.dart';
+import 'package:eschool/cubits/payment/xenditInvoiceCubit.dart';
+import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
+import 'package:eschool/cubits/payment/childFeeDetailsCubit.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:flutter/foundation.dart';
 import 'package:eschool/data/models/student.dart';

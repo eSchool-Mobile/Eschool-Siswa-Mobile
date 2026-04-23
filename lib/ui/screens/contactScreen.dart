@@ -1,5 +1,5 @@
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/contactCubit.dart';
+import 'package:eschool/cubits/system/contactCubit.dart';
 import 'package:eschool/data/models/contact.dart';
 import 'package:eschool/data/repositories/contactRepository.dart';
 import 'package:eschool/ui/widgets/contactCard.dart';

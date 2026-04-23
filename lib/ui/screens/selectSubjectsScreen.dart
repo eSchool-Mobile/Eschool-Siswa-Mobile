@@ -1,7 +1,7 @@
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/classElectiveSubjectsCubit.dart';
-import 'package:eschool/cubits/selectElectiveSubjectsCubit.dart';
-import 'package:eschool/cubits/studentSubjectAndSlidersCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/academic/classElectiveSubjectsCubit.dart';
+import 'package:eschool/cubits/academic/selectElectiveSubjectsCubit.dart';
+import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
 
 import 'package:eschool/data/models/electiveSubject.dart';
 import 'package:eschool/data/models/electiveSubjectGroup.dart';

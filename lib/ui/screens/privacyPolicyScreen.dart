@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/appSettingsCubit.dart';
+import 'package:eschool/cubits/system/appSettingsCubit.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';

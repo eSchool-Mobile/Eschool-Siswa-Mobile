@@ -1,5 +1,5 @@
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/guardianPhotoCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/student/guardianPhotoCubit.dart';
 import 'package:eschool/data/repositories/guardianProfileRepository.dart';
 import 'package:eschool/ui/widgets/customAppbar.dart';
 import 'package:eschool/ui/widgets/guardianDetailsContainer.dart';

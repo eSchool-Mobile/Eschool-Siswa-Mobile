@@ -1,5 +1,5 @@
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/noticeBoardCubit.dart';
+import 'package:eschool/cubits/system/noticeBoardCubit.dart';
 import 'package:eschool/ui/widgets/announcementDetailsContainer.dart';
 import 'package:eschool/ui/widgets/shimmerLoaders/announcementShimmerLoadingContainer.dart';
 import 'package:eschool/utils/constants.dart';

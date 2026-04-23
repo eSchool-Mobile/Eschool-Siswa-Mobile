@@ -1,5 +1,5 @@
-import 'package:eschool/cubits/schoolGalleryCubit.dart';
-import 'package:eschool/cubits/schoolSessionYearsCubit.dart';
+import 'package:eschool/cubits/system/schoolGalleryCubit.dart';
+import 'package:eschool/cubits/system/schoolSessionYearsCubit.dart';
 
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/data/repositories/schoolRepository.dart';

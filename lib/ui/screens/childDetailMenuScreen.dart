@@ -1,5 +1,5 @@
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/authCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/data/models/subject.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';

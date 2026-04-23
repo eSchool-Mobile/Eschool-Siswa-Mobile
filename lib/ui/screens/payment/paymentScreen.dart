@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:eschool/cubits/paymentSubmissionCubit.dart';
+import 'package:eschool/cubits/payment/paymentSubmissionCubit.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';

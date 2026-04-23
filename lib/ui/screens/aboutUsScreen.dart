@@ -5,7 +5,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animate_do/animate_do.dart';
 
-import 'package:eschool/cubits/appSettingsCubit.dart';
+import 'package:eschool/cubits/system/appSettingsCubit.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';

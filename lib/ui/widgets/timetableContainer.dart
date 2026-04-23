@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/timeTableCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/academic/timeTableCubit.dart';
 import 'package:eschool/data/models/timeTableSlot.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';

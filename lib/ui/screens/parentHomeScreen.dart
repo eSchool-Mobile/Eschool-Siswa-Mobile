@@ -1,6 +1,6 @@
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/appConfigurationCubit.dart';
-import 'package:eschool/cubits/authCubit.dart';
+import 'package:eschool/cubits/system/appConfigurationCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/ui/widgets/appUnderMaintenanceContainer.dart';
 import 'package:eschool/ui/widgets/borderedProfilePictureContainer.dart';

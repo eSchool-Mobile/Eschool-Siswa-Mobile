@@ -1,5 +1,5 @@
-import 'package:eschool/cubits/attendanceCubit.dart';
-import 'package:eschool/cubits/authCubit.dart';
+import 'package:eschool/cubits/student/attendanceCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/ui/widgets/attendanceContainer.dart';
 import 'package:flutter/material.dart';

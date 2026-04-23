@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:eschool/cubits/appSettingsCubit.dart';
+import 'package:eschool/cubits/system/appSettingsCubit.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/utils/utils.dart';

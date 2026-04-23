@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/schoolGalleryCubit.dart';
-import 'package:eschool/cubits/schoolSessionYearsCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/system/schoolGalleryCubit.dart';
+import 'package:eschool/cubits/system/schoolSessionYearsCubit.dart';
 import 'package:eschool/data/models/sessionYear.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';

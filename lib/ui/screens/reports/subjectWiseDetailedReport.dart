@@ -1,6 +1,6 @@
-import 'package:eschool/cubits/assignmentReportCubit.dart';
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/onlineExamReportCubit.dart';
+import 'package:eschool/cubits/academic/assignmentReportCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/exam/onlineExamReportCubit.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
 import 'package:eschool/ui/widgets/noDataContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
@@ -8,7 +8,7 @@ import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:eschool/utils/systemModules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/cubits/reportTabSelectionCubit.dart';
+import 'package:eschool/cubits/exam/reportTabSelectionCubit.dart';
 import 'package:eschool/data/models/subject.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';

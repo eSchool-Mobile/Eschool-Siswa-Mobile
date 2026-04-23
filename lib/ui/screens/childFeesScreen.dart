@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/childFeeDetailsCubit.dart';
+import 'package:eschool/cubits/payment/childFeeDetailsCubit.dart';
 // import 'package:eschool/data/repositories/paymentRepository.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
@@ -14,7 +14,7 @@ import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
 import 'package:eschool/ui/screens/payment/xenditOnlyPaymentScreen.dart';
 
-import 'package:eschool/cubits/xenditInvoiceCubit.dart';
+import 'package:eschool/cubits/payment/xenditInvoiceCubit.dart';
 import 'package:eschool/data/repositories/xenditRepository.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';

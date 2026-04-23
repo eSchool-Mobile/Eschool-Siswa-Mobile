@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:eschool/data/repositories/onlineExamRepository.dart';
-import 'package:eschool/cubits/submitOnlineExamAnswersCubit.dart';
+import 'package:eschool/cubits/exam/submitOnlineExamAnswersCubit.dart';
 
 class ExamSubmitSyncService {
   static const String _key = 'exam_data';

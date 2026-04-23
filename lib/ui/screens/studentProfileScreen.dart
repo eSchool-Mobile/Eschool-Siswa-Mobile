@@ -1,5 +1,5 @@
-import 'package:eschool/cubits/schoolConfigurationCubit.dart';
-import 'package:eschool/cubits/studentAllProfileDetailsCubit.dart';
+import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
+import 'package:eschool/cubits/student/studentAllProfileDetailsCubit.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/ui/styles/colors.dart';

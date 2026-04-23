@@ -4,12 +4,12 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
-import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/chatDeleteMessageCubit.dart';
-import 'package:eschool/cubits/chatMessagesCubit.dart';
-import 'package:eschool/cubits/chatReadMessageCubit.dart';
-import 'package:eschool/cubits/sendMessageCubit.dart';
-import 'package:eschool/cubits/socketSettingCubit.dart';
+import 'package:eschool/cubits/auth/authCubit.dart';
+import 'package:eschool/cubits/chat/chatDeleteMessageCubit.dart';
+import 'package:eschool/cubits/chat/chatMessagesCubit.dart';
+import 'package:eschool/cubits/chat/chatReadMessageCubit.dart';
+import 'package:eschool/cubits/chat/sendMessageCubit.dart';
+import 'package:eschool/cubits/system/socketSettingCubit.dart';
 import 'package:eschool/data/models/chatMessage.dart';
 import 'package:eschool/ui/screens/chat/widgets/selectAttachmentBottomsheet.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';

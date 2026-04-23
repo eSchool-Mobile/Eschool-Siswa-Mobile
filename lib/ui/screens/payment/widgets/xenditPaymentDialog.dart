@@ -1,4 +1,4 @@
-import 'package:eschool/cubits/paymentConfirmationCubit.dart';
+import 'package:eschool/cubits/payment/paymentConfirmationCubit.dart';
 import 'package:eschool/data/models/xenditInvoice.dart';
 import 'package:eschool/data/repositories/paymentConfirmationRepository.dart';
 import 'package:eschool/ui/screens/payment/widgets/paymentWebView.dart';
