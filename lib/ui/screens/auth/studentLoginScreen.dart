@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
@@ -7,6 +6,10 @@ import 'package:eschool/cubits/auth/signInCubit.dart';
 import 'package:eschool/data/repositories/auth/authRepository.dart';
 import 'package:eschool/ui/screens/auth/widgets/requestResetPasswordBottomsheet.dart';
 import 'package:eschool/ui/screens/auth/widgets/termsAndConditionAndPrivacyPolicyContainer.dart';
+import 'package:eschool/ui/widgets/auth/loginAnimatedBackground.dart';
+import 'package:eschool/ui/widgets/auth/loginAnimatedLogo.dart';
+import 'package:eschool/ui/widgets/auth/loginTextField.dart';
+import 'package:eschool/ui/widgets/auth/rememberMeRow.dart';
 import 'package:eschool/ui/widgets/system/customCircularProgressIndicator.dart';
 import 'package:eschool/utils/system/constants.dart';
 import 'package:eschool/utils/system/hiveBoxKeys.dart';
@@ -38,33 +41,26 @@ class StudentLoginScreen extends StatefulWidget {
 
 class _StudentLoginScreenState extends State<StudentLoginScreen>
     with TickerProviderStateMixin {
-  // Animation controllers
+  // ─── Animation controllers ───────────────────────────────────────────────
   late final AnimationController _backgroundAnimationController;
   late final AnimationController _formAnimationController;
   late final AnimationController _logoAnimationController;
   late final AnimationController _floatingParticlesController;
   late final AnimationController _pulseAnimationController;
 
-  // Animations for background elements
+  // ─── Animations ──────────────────────────────────────────────────────────
   late final Animation<double> _backgroundFadeAnimation;
-
-  // Animations for form elements
   late final Animation<Offset> _formSlideAnimation;
   late final Animation<double> _formFadeAnimation;
-
-  // Animations for individual form fields
   late final Animation<Offset> _schoolCodeSlideAnimation;
   late final Animation<Offset> _usernameSlideAnimation;
   late final Animation<Offset> _passwordSlideAnimation;
   late final Animation<Offset> _buttonSlideAnimation;
   late final Animation<Offset> _switchToParentSlideAnimation;
-
-  // Logo animation
   late final Animation<double> _logoScaleAnimation;
-
   late final Animation<double> _pulseAnimation;
 
-  // Text controllers
+  // ─── Text controllers ────────────────────────────────────────────────────
   final TextEditingController _grNumberTextEditingController =
       TextEditingController(
           text: showDefaultCredentials ? defaultStudentGRNumber : null);
@@ -77,27 +73,26 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
     text: showDefaultCredentials ? defaultSchoolCode : null,
   );
 
-  // State variables
+  // ─── State ───────────────────────────────────────────────────────────────
   bool _hidePassword = true;
   bool _isSchoolCodeFocused = false;
   bool _isUsernameFocused = false;
   bool _isPasswordFocused = false;
   bool _rememberMe = false;
 
-  // Auth repository for Remember Me
   late final AuthRepository _authRepository;
 
-  // Focus nodes
+  // ─── Focus nodes ─────────────────────────────────────────────────────────
   late final FocusNode _schoolCodeFocusNode = FocusNode();
   late final FocusNode _usernameFocusNode = FocusNode();
   late final FocusNode _passwordFocusNode = FocusNode();
 
-  // Colors
+  // ─── Brand colors ─────────────────────────────────────────────────────────
   final Color _primaryRed = const Color(0xFFE63946);
   final Color _secondaryRed = const Color(0xFFFF8A80);
-
   final Color _bgWhite = const Color(0xFFF1FAEE);
 
+  // ─────────────────────────────────────────────────────────────────────────
   @override
   void initState() {
     super.initState();
@@ -123,7 +118,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
   }
 
   void _initializeAnimations() {
-    // Initialize controllers with different durations
     _backgroundAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
@@ -149,7 +143,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       duration: const Duration(seconds: 3),
     )..repeat(reverse: true);
 
-    // Background animations
     _backgroundFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _backgroundAnimationController,
@@ -157,7 +150,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       ),
     );
 
-    // Form animations
     _formSlideAnimation = Tween<Offset>(
       begin: const Offset(0, 0.3),
       end: Offset.zero,
@@ -175,7 +167,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       ),
     );
 
-    // Individual field animations with staggered timing
     _schoolCodeSlideAnimation = Tween<Offset>(
       begin: const Offset(0.5, 0),
       end: Offset.zero,
@@ -226,7 +217,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       ),
     );
 
-    // Logo animations
     _logoScaleAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(begin: 0.0, end: 1.2),
@@ -263,21 +253,13 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
 
   void _setupFocusListeners() {
     _schoolCodeFocusNode.addListener(() {
-      setState(() {
-        _isSchoolCodeFocused = _schoolCodeFocusNode.hasFocus;
-      });
+      setState(() => _isSchoolCodeFocused = _schoolCodeFocusNode.hasFocus);
     });
-
     _usernameFocusNode.addListener(() {
-      setState(() {
-        _isUsernameFocused = _usernameFocusNode.hasFocus;
-      });
+      setState(() => _isUsernameFocused = _usernameFocusNode.hasFocus);
     });
-
     _passwordFocusNode.addListener(() {
-      setState(() {
-        _isPasswordFocused = _passwordFocusNode.hasFocus;
-      });
+      setState(() => _isPasswordFocused = _passwordFocusNode.hasFocus);
     });
   }
 
@@ -296,6 +278,8 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
     _passwordFocusNode.dispose();
     super.dispose();
   }
+
+  // ─── Business logic ───────────────────────────────────────────────────────
 
   void _signInStudent() {
     if (_schoolCodeController.text.trim().isEmpty) {
@@ -327,7 +311,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       return;
     }
 
-    // Save or clear credentials based on Remember Me checkbox
     if (_rememberMe) {
       _authRepository.setRememberMeStudent(true);
       _authRepository.setSavedSchoolCode(_schoolCodeController.text.trim());
@@ -355,310 +338,23 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       useRootNavigator: true,
       isDismissible: true,
       builder: (context) => Container(
-        // margin: EdgeInsets.only(
-        //   bottom: MediaQuery.of(context).viewInsets.bottom /
-        //       3, // This makes the bottom sheet expand with keyboard
-        // ),
-        child: Container(
-          // constraints: BoxConstraints(
-          //   maxHeight: MediaQuery.of(context).size.height * 0.6,
-          // ),
-          // decoration: BoxDecoration(
-          //   color: Theme.of(context).scaffoldBackgroundColor,
-          //   borderRadius: const BorderRadius.only(
-          //     topLeft: Radius.circular(20),
-          //     topRight: Radius.circular(20),
-          //   ),
-          // ),
-          child: BlocProvider(
-            create: (_) => RequestResetPasswordCubit(AuthRepository()),
-            child: const RequestResetPasswordBottomsheet(),
-          ),
+        child: BlocProvider(
+          create: (_) => RequestResetPasswordCubit(AuthRepository()),
+          child: const RequestResetPasswordBottomsheet(),
         ),
       ),
     ).then((value) {
       if (value != null && !value['error']) {
         Utils.showCustomSnackBar(
           context: context,
-          errorMessage: "${Utils.getTranslatedLabel(
-            passwordUpdateLinkSentKey,
-          )}",
+          errorMessage: "${Utils.getTranslatedLabel(passwordUpdateLinkSentKey)}",
           backgroundColor: Theme.of(context).colorScheme.onPrimary,
         );
       }
     });
   }
 
-  Widget _buildAnimatedBackground() {
-    return AnimatedBuilder(
-      animation: _backgroundAnimationController,
-      builder: (context, child) {
-        return Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                _primaryRed.withValues(alpha: 0.9),
-                _primaryRed.withRed((_primaryRed.r * 255.0 * 0.85).round()),
-                _secondaryRed.withValues(alpha: 0.9),
-              ],
-              stops: const [0.0, 0.6, 1.0],
-            ),
-          ),
-          child: Stack(
-            children: [
-              // Animated pattern
-              Opacity(
-                opacity: _backgroundFadeAnimation.value * 0.7,
-                child: CustomPaint(
-                  painter: ModernBackgroundPatternPainter(
-                    color: Colors.white.withValues(alpha: 0.09),
-                  ),
-                  size: Size.infinite,
-                ),
-              ),
-
-              // Floating particles
-              // AnimatedBuilder(
-              //   animation: _floatingParticlesController,
-              //   builder: (context, _) {
-              //     return CustomPaint(
-              //       painter: EnhancedFloatingParticlesPainter(
-              //         animation: _floatingParticlesController.value,
-              //         particleColor: Colors.white.withValues(alpha: 0.09),
-              //       ),
-              //       size: Size.infinite,
-              //     );
-              //   },
-              // ),
-
-              // Decorative elements
-              Positioned(
-                top: -80,
-                right: -80,
-                child: AnimatedBuilder(
-                  animation: _backgroundFadeAnimation,
-                  builder: (context, _) {
-                    return Transform.scale(
-                      scale: _backgroundFadeAnimation.value,
-                      child: Container(
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _secondaryRed.withValues(alpha: 0.3),
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.15),
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              Positioned(
-                top: MediaQuery.of(context).size.height * 0.3,
-                left: -20,
-                child: AnimatedBuilder(
-                  animation: _backgroundFadeAnimation,
-                  builder: (context, _) {
-                    return Transform.scale(
-                      scale: _backgroundFadeAnimation.value,
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _secondaryRed.withValues(alpha: 0.3),
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.15),
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildGlassyFormContainer() {
-    return FadeTransition(
-      opacity: _formFadeAnimation,
-      child: SlideTransition(
-        position: _formSlideAnimation,
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.85),
-            borderRadius: BorderRadius.circular(24.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 10,
-                spreadRadius: 1,
-                offset: const Offset(0, 5),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(24.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 4.0,
-                sigmaY: 4.0,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: _buildLoginFormContent(),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAnimatedLogo() {
-    return AnimatedBuilder(
-      animation: Listenable.merge(
-          [_logoAnimationController, _pulseAnimationController]),
-      builder: (context, child) {
-        return Transform.scale(
-          scale: _logoScaleAnimation.value * _pulseAnimation.value,
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: _bgWhite,
-              boxShadow: [
-                BoxShadow(
-                  color: _primaryRed.withValues(alpha: 0.3),
-                  blurRadius: 15,
-                  spreadRadius: 3,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: Center(
-              child: Container(
-                width: 88,
-                height: 88,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      _primaryRed.withValues(alpha: 0.9),
-                      _primaryRed,
-                    ],
-                    center: Alignment.topLeft,
-                    radius: 1.0,
-                  ),
-                ),
-                child: const Icon(
-                  Icons.school_rounded,
-                  size: 50,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildRememberMeAndForgotPasswordRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // Remember Me Checkbox
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 20,
-              width: 20,
-              child: Checkbox(
-                value: _rememberMe,
-                onChanged: (value) {
-                  setState(() {
-                    _rememberMe = value!;
-                  });
-                },
-                activeColor: _primaryRed,
-                checkColor: Colors.white,
-                fillColor: WidgetStateProperty.resolveWith<Color>(
-                  (Set<WidgetState> states) {
-                    if (states.contains(WidgetState.selected)) {
-                      return _primaryRed;
-                    }
-                    return Colors.transparent;
-                  },
-                ),
-                side: WidgetStateBorderSide.resolveWith(
-                  (states) => BorderSide(
-                    color: states.contains(WidgetState.selected)
-                        ? _primaryRed
-                        : Colors.grey.shade400,
-                    width: 2,
-                  ),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  _rememberMe = !_rememberMe;
-                });
-              },
-              child: Text(
-                "Ingat Saya",
-                style: TextStyle(
-                  color: Colors.grey.shade700,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
-        ),
-        // Forgot Password Button
-        TextButton(
-          onPressed: _showResetPasswordBottomSheet,
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          child: Text(
-            "${Utils.getTranslatedLabel(resetPasswordKey)}?",
-            style: TextStyle(
-              color: _primaryRed,
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // ─── UI builders ──────────────────────────────────────────────────────────
 
   Widget _buildSignInButton() {
     return SlideTransition(
@@ -674,7 +370,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                   student: state.student,
                 );
 
-            // ✅ CEK apakah ada pending notification yang perlu dibuka
             try {
               final authBox = Hive.box(authBoxKey);
               final pendingRoute = authBox.get(pendingNotificationRouteKey);
@@ -682,18 +377,12 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                   authBox.get(pendingNotificationArgumentsKey);
 
               if (pendingRoute != null && pendingRoute is String) {
-                debugPrint(
-                    '🔔 Login berhasil! Redirect ke pending notification: $pendingRoute');
-                debugPrint('🔔 Arguments: $pendingArguments');
-
-                // Clear pending notification
                 authBox.delete(pendingNotificationRouteKey);
                 authBox.delete(pendingNotificationArgumentsKey);
 
-                // Navigate to home first, then to pending notification
-                Get.offNamedUntil(Routes.home, (Route<dynamic> route) => false);
+                Get.offNamedUntil(
+                    Routes.home, (Route<dynamic> route) => false);
 
-                // Delay untuk memastikan home screen sudah ready
                 Future.delayed(const Duration(milliseconds: 500), () {
                   if (pendingArguments != null && pendingArguments is Map) {
                     Get.toNamed(pendingRoute, arguments: pendingArguments);
@@ -702,12 +391,10 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                   }
                 });
               } else {
-                // Normal login flow tanpa pending notification
                 Get.offNamedUntil(Routes.home, (Route<dynamic> route) => false);
               }
             } catch (e) {
               debugPrint('⚠️ Error saat cek pending notification: $e');
-              // Fallback ke normal login flow
               Get.offNamedUntil(Routes.home, (Route<dynamic> route) => false);
             }
           } else if (state is SignInFailure) {
@@ -839,115 +526,20 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
     );
   }
 
-  Widget _buildElegantTextField({
-    required TextEditingController controller,
-    required String hintText,
-    required String labelText,
-    required bool obscureText,
-    required IconData icon,
-    required Animation<Offset> slideAnimation,
-    Widget? suffixWidget,
-    required bool isFocused,
-    required FocusNode focusNode,
-  }) {
-    final Color darkTextColor = const Color(0xFF303030);
-
-    return SlideTransition(
-      position: slideAnimation,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: isFocused
-              ? [
-                  BoxShadow(
-                    color: _primaryRed.withValues(alpha: 0.25),
-                    blurRadius: 15,
-                    offset: const Offset(0, 5),
-                  )
-                ]
-              : [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  )
-                ],
-          border: Border.all(
-            color: isFocused ? _primaryRed : Colors.grey.shade200,
-            width: 1.5,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 10),
-              child: Text(
-                labelText,
-                style: TextStyle(
-                  color: isFocused ? _primaryRed : Colors.grey.shade600,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.3,
-                ),
-              ),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 50,
-                  child: Center(
-                    child: Icon(
-                      icon,
-                      color: isFocused ? _primaryRed : Colors.grey.shade500,
-                      size: 20,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: controller,
-                    focusNode: focusNode,
-                    obscureText: obscureText,
-                    style: TextStyle(
-                      color: darkTextColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: hintText,
-                      hintStyle: TextStyle(
-                        color: Colors.grey.shade400,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 14),
-                      isDense: true,
-                    ),
-                  ),
-                ),
-                if (suffixWidget != null)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: suffixWidget,
-                  ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildLoginFormContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(child: _buildAnimatedLogo()),
+        Center(
+          child: LoginAnimatedLogo(
+            logoScaleAnimation: _logoScaleAnimation,
+            pulseAnimation: _pulseAnimation,
+            logoController: _logoAnimationController,
+            pulseController: _pulseAnimationController,
+            primaryColor: _primaryRed,
+            bgColor: _bgWhite,
+          ),
+        ),
         const SizedBox(height: 24),
         Text(
           Utils.getTranslatedLabel(letsSignInKey),
@@ -969,7 +561,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
           ),
         ),
         const SizedBox(height: 28),
-        _buildElegantTextField(
+        LoginTextField(
           controller: _schoolCodeController,
           hintText: Utils.getTranslatedLabel(schoolCodeKey),
           labelText: Utils.getTranslatedLabel("schoolCode"),
@@ -978,8 +570,9 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
           slideAnimation: _schoolCodeSlideAnimation,
           isFocused: _isSchoolCodeFocused,
           focusNode: _schoolCodeFocusNode,
+          primaryColor: _primaryRed,
         ),
-        _buildElegantTextField(
+        LoginTextField(
           controller: _grNumberTextEditingController,
           hintText: Utils.getTranslatedLabel(grNumberKey),
           labelText: Utils.getTranslatedLabel(grNumberKey),
@@ -988,31 +581,34 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
           slideAnimation: _usernameSlideAnimation,
           isFocused: _isUsernameFocused,
           focusNode: _usernameFocusNode,
+          primaryColor: _primaryRed,
         ),
-        _buildElegantTextField(
+        LoginTextField(
           controller: _passwordTextEditingController,
           hintText: "••••••••",
           labelText: Utils.getTranslatedLabel(passwordKey),
           obscureText: _hidePassword,
           icon: FontAwesomeIcons.lock,
           slideAnimation: _passwordSlideAnimation,
+          isFocused: _isPasswordFocused,
+          focusNode: _passwordFocusNode,
+          primaryColor: _primaryRed,
           suffixWidget: IconButton(
             icon: Icon(
               _hidePassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
               color: _isPasswordFocused ? _primaryRed : Colors.grey.shade500,
               size: 18,
             ),
-            onPressed: () {
-              setState(() {
-                _hidePassword = !_hidePassword;
-              });
-            },
+            onPressed: () => setState(() => _hidePassword = !_hidePassword),
           ),
-          isFocused: _isPasswordFocused,
-          focusNode: _passwordFocusNode,
         ),
         const SizedBox(height: 12),
-        _buildRememberMeAndForgotPasswordRow(),
+        RememberMeRow(
+          rememberMe: _rememberMe,
+          onRememberMeChanged: (val) => setState(() => _rememberMe = val),
+          onForgotPassword: _showResetPasswordBottomSheet,
+          primaryColor: _primaryRed,
+        ),
         const SizedBox(height: 8),
         _buildSignInButton(),
         Center(child: _buildSwitchToParentButton()),
@@ -1024,6 +620,40 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
     );
   }
 
+  Widget _buildGlassyFormContainer() {
+    return FadeTransition(
+      opacity: _formFadeAnimation,
+      child: SlideTransition(
+        position: _formSlideAnimation,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.85),
+            borderRadius: BorderRadius.circular(24.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 10,
+                spreadRadius: 1,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24.0),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: _buildLoginFormContent(),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -1031,10 +661,11 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       child: Scaffold(
         body: Stack(
           children: [
-            // Stylish background with animated elements
-            _buildAnimatedBackground(),
-
-            // Main scrollable content
+            LoginAnimatedBackground(
+              backgroundFadeAnimation: _backgroundFadeAnimation,
+              primaryColor: _primaryRed,
+              secondaryColor: _secondaryRed,
+            ),
             SafeArea(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -1059,109 +690,4 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       ),
     );
   }
-}
-
-class ModernBackgroundPatternPainter extends CustomPainter {
-  final Color color;
-
-  ModernBackgroundPatternPainter({required this.color});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1.2
-      ..style = PaintingStyle.stroke;
-
-    final double spacing = 40;
-    final double dashLength = 5;
-    final double dashSpace = 5;
-
-    // Draw diagonal dashed lines
-    for (double i = -size.height; i <= size.width + size.height; i += spacing) {
-      double x = i;
-      double y = 0;
-
-      while (x < size.width && y < size.height) {
-        // Draw a small dash
-        canvas.drawLine(
-          Offset(x, y),
-          Offset(x + dashLength, y + dashLength),
-          paint,
-        );
-
-        x += dashLength + dashSpace;
-        y += dashLength + dashSpace;
-      }
-    }
-
-    // Draw subtle circles
-    for (int i = 0; i < 10; i++) {
-      final double x = (i * spacing * 1.5) % size.width;
-      final double y = (i * spacing * 2) % size.height;
-      final double radius = 25 + (i % 3) * 15;
-
-      final circlePaint = Paint()
-        ..color = color.withValues(alpha: 0.08)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 0.8;
-
-      canvas.drawCircle(Offset(x, y), radius, circlePaint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(ModernBackgroundPatternPainter oldDelegate) => false;
-}
-
-class EnhancedFloatingParticlesPainter extends CustomPainter {
-  final double animation;
-  final Color particleColor;
-  final int particleCount = 30;
-
-  EnhancedFloatingParticlesPainter({
-    required this.animation,
-    required this.particleColor,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    // final custom random = Random(42);
-
-    for (int i = 0; i < particleCount; i++) {
-      final seed = i * 10;
-      final randomX = Random(seed);
-      final randomY = Random(seed + 5);
-      final randomSize = Random(seed + 10);
-
-      final x = randomX.nextDouble() * size.width;
-      final baseSpeed = randomY.nextDouble() * 0.6 + 0.2; // Different speeds
-      final y =
-          (randomY.nextDouble() * size.height + animation * 100 * baseSpeed) %
-              size.height;
-
-      // Different sizes and opacities for particles
-      final radius = randomSize.nextDouble() * 3 + 1;
-      final opacity = randomSize.nextDouble() * 0.5 + 0.3;
-
-      final paint = Paint()
-        ..color = particleColor.withValues(alpha: opacity)
-        ..style = PaintingStyle.fill;
-
-      canvas.drawCircle(Offset(x, y), radius, paint);
-
-      // Add glow effect to some particles
-      if (i % 3 == 0) {
-        final glowPaint = Paint()
-          ..color = particleColor.withValues(alpha: opacity * 0.3)
-          ..style = PaintingStyle.fill
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
-
-        canvas.drawCircle(Offset(x, y), radius * 2, glowPaint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(EnhancedFloatingParticlesPainter oldDelegate) => true;
 }

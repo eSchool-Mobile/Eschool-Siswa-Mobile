@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:eschool/utils/payment/CurencyFormater.dart';
+
 import 'package:eschool/utils/system/labelKeys.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -15,8 +15,13 @@ import 'package:eschool/data/models/payment/paymentMethodModel.dart';
 import 'package:eschool/ui/widgets/system/customBackButton.dart';
 import 'package:eschool/ui/widgets/system/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/system/utils.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:eschool/utils/system/errorMessageKeysAndCodes.dart';
+import 'package:eschool/ui/widgets/payment/installmentFeeInfoCard.dart';
+import 'package:eschool/ui/widgets/payment/installmentAmountInput.dart';
+import 'package:eschool/ui/widgets/payment/installmentPaymentMethodSelector.dart';
+import 'package:eschool/ui/widgets/payment/installmentProofUpload.dart';
+import 'package:eschool/ui/widgets/payment/installmentSubmitButton.dart';
 
 class InstallmentPaymentScreen extends StatefulWidget {
   final ChildFeeDetails feeDetails;
@@ -557,19 +562,55 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                       bottom: 30, // Normal padding
                     ),
                     children: [
-                      _buildFeeInfoCard(),
+                      InstallmentFeeInfoCard(
+                        animationController: _animationController,
+                        feeDetails: widget.feeDetails,
+                        child: widget.child,
+                      ),
                       SizedBox(height: 20),
-                      _buildAmountInputSection(),
+                      InstallmentAmountInput(
+                        animationController: _animationController,
+                        amountController: _amountController,
+                        amountError: amountError,
+                        feeDetails: widget.feeDetails,
+                        onAmountChanged: _validateAmount,
+                      ),
                       SizedBox(height: 20),
-                      _buildProofUploadSection(),
+                      InstallmentProofUpload(
+                        animationController: _animationController,
+                        uploadController: _uploadController,
+                        isUploading: isUploading,
+                        uploadError: uploadError,
+                        selectedProofFile: selectedProofFile,
+                        onSelectFile: _selectProofFile,
+                        onClearFile: () {
+                          setState(() {
+                            selectedProofFile = null;
+                            uploadError = null;
+                          });
+                        },
+                        onImageTap: _showImagePreview,
+                      ),
                       SizedBox(height: 20),
-                      _buildPaymentMethodSection(),
+                      InstallmentPaymentMethodSelector(
+                        animationController: _animationController,
+                        selectedPaymentMethod: selectedPaymentMethod,
+                        onMethodSelected: (method) {
+                          setState(() {
+                            selectedPaymentMethod = method;
+                          });
+                        },
+                      ),
                       SizedBox(height: 24),
 
                       // Button as part of content (not floating)
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 0),
-                        child: _buildSubmitButton(),
+                        child: InstallmentSubmitButton(
+                          canProceed: _canProceedPayment(),
+                          hintMessage: _getButtonHintMessage(),
+                          onProcessPayment: _processPayment,
+                        ),
                       ),
                       SizedBox(height: 20),
                     ],
@@ -583,647 +624,46 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
     );
   }
 
-  Widget _buildFeeInfoCard() {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, child) {
-        return Transform.translate(
-            offset: Offset(0, 50 * (1 - _animationController.value)),
-            child: Opacity(
-              opacity: _animationController.value,
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.grey.shade200),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.04),
-                      blurRadius: 8,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.receipt_long_rounded,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 20,
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                feeInformationTitle,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              Text(
-                                widget.feeDetails.name ?? unknownFee,
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    // Student info
-                    Container(
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade50,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.person_outline,
-                            size: 16,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              '$studentLabel${widget.child.getFullName()}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey.shade700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      '$feeIdLabel${widget.feeDetails.id}',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey.shade500,
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    _buildInfoRow(
-                      totalFeeLabel,
-                      _formatCurrency(widget.feeDetails.getTotalAmount()),
-                      Icons.account_balance_wallet_rounded,
-                    ),
-                    SizedBox(height: 16),
-                    _buildInfoRow(
-                      remainingFeeLabel,
-                      _formatCurrency(
-                          widget.feeDetails.remainingFeeAmountToPay()),
-                      Icons.pending_actions_rounded,
-                    ),
-
-                    SizedBox(height: 16),
-                  ],
-                ),
-              ),
-            ));
-      },
-    );
-  }
-
-  Widget _buildInfoRow(String label, String value, IconData icon) {
-    return Row(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+  void _showImagePreview() {
+    if (selectedProofFile == null) return;
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withValues(alpha: 0.8),
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.zero,
+          child: Stack(
             children: [
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey.shade700,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAmountInputSection() {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, child) {
-        return Transform.translate(
-            offset: Offset(0, 50 * (1 - _animationController.value)),
-            child: Opacity(
-              opacity: _animationController.value,
-              child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.grey.shade200),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.04),
-                      blurRadius: 8,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.payments_outlined,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 20,
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                paymentAmountTitle,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              Text(
-                                paymentAmountSubtitle,
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    TextField(
-                      controller: _amountController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        CurrencyInputFormatter(),
-                      ],
-                      onChanged: _validateAmount,
-                      decoration: InputDecoration(
-                        hintText: enterAmountPlaceholder,
-                        prefixText: 'Rp ',
-                        prefixStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.grey.shade300),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.primary,
-                            width: 2,
-                          ),
-                        ),
-                        errorText: amountError,
-                        filled: true,
-                        fillColor: Colors.grey.shade50,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.orange.shade50,
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: Colors.orange.shade200),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.info_outline,
-                            color: Colors.orange.shade600,
-                            size: 16,
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              '$maxAmountInfo${_formatCurrency(widget.feeDetails.remainingFeeAmountToPay())}',
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.orange.shade700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ));
-      },
-    );
-  }
-
-  Widget _buildPaymentMethodSection() {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, child) {
-        return Transform.translate(
-            offset: Offset(0, 50 * (1 - _animationController.value)),
-            child: Opacity(
-              opacity: _animationController.value,
-              child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.grey.shade200),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.04),
-                      blurRadius: 8,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.account_balance_wallet_outlined,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 20,
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                Utils.getTranslatedLabel(paymentMethodKey),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              Text(
-                                paymentMethodSubtitle,
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    BlocBuilder<PaymentMethodCubit, PaymentMethodState>(
-                      builder: (context, state) {
-                        if (state is PaymentMethodLoaded) {
-                          if (state.paymentMethods.isEmpty) {
-                            return Container(
-                              padding: EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey.shade600,
-                                    size: 20,
-                                  ),
-                                  SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      noPaymentMethodsAvailable,
-                                      style: TextStyle(
-                                        color: Colors.grey.shade600,
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                          return Column(
-                            children: state.paymentMethods.map((method) {
-                              if (method.id == 16) return SizedBox.shrink();
-                              final isSelected =
-                                  selectedPaymentMethod?.id == method.id;
-
-                              return Animate(
-                                effects: [
-                                  FadeEffect(
-                                      duration: Duration(milliseconds: 400)),
-                                  SlideEffect(
-                                    begin: Offset(0.3, 0),
-                                    duration: Duration(milliseconds: 500),
-                                    curve: Curves.easeOutCubic,
-                                  ),
-                                ],
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedPaymentMethod = method;
-                                    });
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.only(bottom: 12),
-                                    padding: EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(16),
-                                      border: Border.all(
-                                        color: isSelected
-                                            ? Theme.of(context)
-                                                .colorScheme
-                                                .primary
-                                            : Colors.grey.shade200,
-                                        width: isSelected ? 2 : 1,
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: isSelected
-                                              ? Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                                  .withValues(alpha: 0.1)
-                                              : Colors.black
-                                                  .withValues(alpha: 0.04),
-                                          blurRadius: isSelected ? 8 : 4,
-                                          offset: Offset(0, isSelected ? 4 : 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        // Payment method image or icon
-                                        Container(
-                                          width: 48,
-                                          height: 48,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            color:
-                                                (method.imageUrl?.isNotEmpty ==
-                                                        true)
-                                                    ? Colors.white
-                                                    : Theme.of(context)
-                                                        .colorScheme
-                                                        .primary
-                                                        .withValues(alpha: 0.9),
-                                            border: (method
-                                                        .imageUrl?.isNotEmpty ==
-                                                    true)
-                                                ? Border.all(
-                                                    color: Colors.grey.shade200,
-                                                    width: 1)
-                                                : null,
-                                          ),
-                                          child: (method.imageUrl?.isNotEmpty ==
-                                                  true)
-                                              ? ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl: method.imageUrl!,
-                                                    width: 48,
-                                                    height: 48,
-                                                    fit: BoxFit.cover,
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Container(
-                                                      width: 48,
-                                                      height: 48,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors
-                                                            .grey.shade100,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                      ),
-                                                      child: Center(
-                                                        child: SizedBox(
-                                                          width: 20,
-                                                          height: 20,
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            valueColor:
-                                                                AlwaysStoppedAnimation<
-                                                                    Color>(
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary,
-                                                            ),
-                                                            strokeWidth: 2,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    errorWidget:
-                                                        (context, url, error) {
-                                                      return Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          gradient:
-                                                              LinearGradient(
-                                                            colors: [
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary
-                                                                  .withValues(
-                                                                      alpha:
-                                                                          0.9),
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary
-                                                                  .withValues(
-                                                                      alpha:
-                                                                          0.7),
-                                                            ],
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(12),
-                                                        ),
-                                                        child: Icon(
-                                                          Icons.payment_rounded,
-                                                          color: Colors.white,
-                                                          size: 24,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                )
-                                              : Icon(
-                                                  Icons.payment_rounded,
-                                                  color: Colors.white,
-                                                  size: 24,
-                                                ),
-                                        ),
-                                        SizedBox(width: 16),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                method.name,
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                                ),
-                                              ),
-                                              if (method.description != null &&
-                                                  method.name !=
-                                                      method.description) ...[
-                                                SizedBox(height: 4),
-                                                Text(
-                                                  method.description ??
-                                                      unknownMethod,
-                                                  style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .secondary,
-                                                  ),
-                                                ),
-                                              ],
-                                              SizedBox(height: 4),
-                                              if (method.accountNumber
-                                                      .isNotEmpty ==
-                                                  true) ...[
-                                                Text(
-                                                  method.accountNumber,
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.grey.shade600,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                              if (method.accountHolder
-                                                      .isNotEmpty ==
-                                                  true) ...[
-                                                SizedBox(height: 2),
-                                                Text(
-                                                  '$accountHolder${method.accountHolder}',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.grey.shade500,
-                                                    fontStyle: FontStyle.italic,
-                                                  ),
-                                                ),
-                                              ],
-                                            ],
-                                          ),
-                                        ),
-                                        // Checklist indicator
-                                        AnimatedContainer(
-                                          duration: Duration(milliseconds: 200),
-                                          width: 24,
-                                          height: 24,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: isSelected
-                                                ? Theme.of(context)
-                                                    .colorScheme
-                                                    .primary
-                                                : Colors.transparent,
-                                            border: Border.all(
-                                              color: isSelected
-                                                  ? Theme.of(context)
-                                                      .colorScheme
-                                                      .primary
-                                                  : Colors.grey.shade400,
-                                              width: 2,
-                                            ),
-                                          ),
-                                          child: isSelected
-                                              ? Icon(
-                                                  Icons.check,
-                                                  size: 16,
-                                                  color: Colors.white,
-                                                )
-                                              : null,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          );
-                        }
+              InteractiveViewer(
+                minScale: 0.7,
+                maxScale: 4.0,
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.file(
+                      selectedProofFile!,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) {
                         return Container(
-                          padding: EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                          child: Row(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Theme.of(context).colorScheme.primary,
-                                  ),
-                                  strokeWidth: 2,
-                                ),
+                              Icon(
+                                Icons.broken_image_outlined,
+                                size: 48,
+                                color: Colors.grey.shade600,
                               ),
-                              SizedBox(width: 12),
+                              SizedBox(height: 8),
                               Text(
-                                loadingPaymentMethods,
+                                failedToLoadImage,
                                 style: TextStyle(
                                   color: Colors.grey.shade600,
+                                  fontSize: 12,
                                 ),
                               ),
                             ],
@@ -1231,507 +671,21 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                         );
                       },
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ));
-      },
-    );
-  }
-
-  Widget _buildProofUploadSection() {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, child) {
-        return Transform.translate(
-            offset: Offset(0, 50 * (1 - _animationController.value)),
-            child: Opacity(
-              opacity: _animationController.value,
-              child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.grey.shade200),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.04),
-                      blurRadius: 8,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.cloud_upload_outlined,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 20,
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                paymentProofTitle,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              Text(
-                                paymentProofSubtitle,
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    if (selectedProofFile != null) ...[
-                      // Show selected file with image preview
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.green.shade50,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.green.shade200),
-                        ),
-                        child: Column(
-                          children: [
-                            // Image preview
-                            Container(
-                              width: double.infinity,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border:
-                                    Border.all(color: Colors.green.shade300),
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    barrierColor:
-                                        Colors.black.withValues(alpha: 0.8),
-                                    builder: (context) {
-                                      return Dialog(
-                                        backgroundColor: Colors.transparent,
-                                        insetPadding: EdgeInsets.zero,
-                                        child: Stack(
-                                          children: [
-                                            InteractiveViewer(
-                                              minScale: 0.7,
-                                              maxScale: 4.0,
-                                              child: Center(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                  child: Image.file(
-                                                    selectedProofFile!,
-                                                    fit: BoxFit.contain,
-                                                    errorBuilder: (context,
-                                                        error, stackTrace) {
-                                                      return Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors
-                                                              .grey.shade200,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(16),
-                                                        ),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Icon(
-                                                              Icons
-                                                                  .broken_image_outlined,
-                                                              size: 48,
-                                                              color: Colors.grey
-                                                                  .shade600,
-                                                            ),
-                                                            SizedBox(height: 8),
-                                                            Text(
-                                                              failedToLoadImage,
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade600,
-                                                                fontSize: 12,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              top: 30,
-                                              right: 30,
-                                              child: IconButton(
-                                                icon: Icon(Icons.close,
-                                                    color: Colors.white,
-                                                    size: 32),
-                                                onPressed: () =>
-                                                    Navigator.of(context).pop(),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.file(
-                                    selectedProofFile!,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.broken_image_outlined,
-                                              size: 48,
-                                              color: Colors.grey.shade600,
-                                            ),
-                                            SizedBox(height: 8),
-                                            Text(
-                                              failedToLoadImage,
-                                              style: TextStyle(
-                                                color: Colors.grey.shade600,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 12),
-                            Text(
-                              selectedProofFile!.path.split('/').last,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.green.shade700,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: _selectProofFile,
-                              icon: Icon(Icons.edit_outlined, size: 16),
-                              label: Text(changeFile),
-                              style: OutlinedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 12),
-                                side: BorderSide(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 12),
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: () {
-                                setState(() {
-                                  selectedProofFile = null;
-                                  uploadError = null;
-                                });
-                              },
-                              icon: Icon(Icons.delete_outline, size: 16),
-                              label: Text(deleteFile),
-                              style: OutlinedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 12),
-                                side: BorderSide(color: Colors.red.shade400),
-                                foregroundColor: Colors.red.shade400,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ] else ...[
-                      GestureDetector(
-                        onTap: isUploading ? null : _selectProofFile,
-                        child: Container(
-                          width: double.infinity,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withValues(alpha: 0.04),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withValues(alpha: 0.3),
-                              width: 2,
-                              style: BorderStyle.solid,
-                            ),
-                          ),
-                          child: AnimatedBuilder(
-                            animation: _uploadController,
-                            builder: (context, child) {
-                              if (isUploading) {
-                                return Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 32,
-                                      height: 32,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          Theme.of(context).colorScheme.primary,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 12),
-                                    Text(
-                                      processing,
-                                      style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }
-
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.cloud_upload_outlined,
-                                    size: 40,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                                  SizedBox(height: 12),
-                                  Text(
-                                    tapToSelectFile,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    'JPG, PNG (Max 5MB)',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                    if (uploadError != null) ...[
-                      SizedBox(height: 12),
-                      Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.red.shade50,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.red.shade200),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.error_outline,
-                              color: Colors.red.shade600,
-                              size: 16,
-                            ),
-                            SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                uploadError!,
-                                style: TextStyle(
-                                  color: Colors.red.shade600,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ));
-      },
-    );
-  }
-
-  Widget _buildSubmitButton() {
-    return SafeArea(
-      child: BlocBuilder<PaymentSubmissionCubit, PaymentSubmissionState>(
-        builder: (context, state) {
-          final isSubmitting = state is PaymentSubmissionInProgress;
-          final canProceed = _canProceedPayment();
-          final isEnabled = canProceed && !isSubmitting;
-
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Hint message when disabled
-              if (!isEnabled && !isSubmitting)
-                Animate(
-                  effects: [
-                    FadeEffect(duration: Duration(milliseconds: 300)),
-                    SlideEffect(
-                      begin: Offset(0, -0.2),
-                      duration: Duration(milliseconds: 300),
-                    ),
-                  ],
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    margin: EdgeInsets.only(bottom: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.orange.shade50,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.orange.shade200),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.info_outline,
-                          color: Colors.orange.shade700,
-                          size: 20,
-                        ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            _getButtonHintMessage(),
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.orange.shade700,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-              // Main button
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                child: ElevatedButton(
-                  onPressed: isEnabled ? _processPayment : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: isEnabled
-                        ? Theme.of(context).colorScheme.primary
-                        : Colors.grey.shade400,
-                    foregroundColor: Colors.white,
-                    disabledBackgroundColor: Colors.grey.shade400,
-                    disabledForegroundColor: Colors.white70,
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    elevation: isEnabled ? 8 : 2,
-                    shadowColor: isEnabled
-                        ? Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withValues(alpha: 0.3)
-                        : Colors.transparent,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (isSubmitting) ...[
-                        SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
-                            strokeWidth: 2,
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        Text(
-                          processingPayment,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ] else ...[
-                        Icon(
-                          isEnabled
-                              ? Icons.payment_rounded
-                              : Icons.lock_outline,
-                          size: 20,
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          submitInstallmentPayment,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
+              Positioned(
+                top: 30,
+                right: 30,
+                child: IconButton(
+                  icon: Icon(Icons.close, color: Colors.white, size: 32),
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
